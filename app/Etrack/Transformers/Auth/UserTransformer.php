@@ -12,6 +12,11 @@ use App\Etrack\Entities\Auth\User;
 class UserTransformer extends TransformerAbstract
 {
 
+    protected $availableIncludes = [
+        'roles',
+        'permissions'
+    ];
+
     /**
      * Transform the \User entity
      * @param User $model
@@ -21,12 +26,45 @@ class UserTransformer extends TransformerAbstract
     public function transform(User $model)
     {
         return [
-            'id'         => (int) $model->id,
-
-            /* place your other model properties here */
-
-            'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at
+            'id'                  => (int)$model->id,
+            'first_name'          => $model->first_name,
+            'last_name'           => $model->last_name,
+            'email'               => $model->email,
+            'isSuperUser'         => $model->isSuperUser(),
+            'active'              => $model->active,
+            'company_admin'       => $model->company_admin,
+            'birthday'            => $model->birthday ? $model->birthday->toDateString() : null,
+            'rut_passport'        => $model->rut_passport,
+            'position'            => $model->position,
+            'address'             => $model->address,
+            'country'             => $model->country,
+            'state'               => $model->state,
+            'city'                => $model->city,
+            'telephone'           => $model->telephone,
+            'emergency_telephone' => $model->emergency_telephone,
+            'emergency_contact'   => $model->emergency_contact,
+            'medical_information' => $model->medical_information
         ];
     }
+
+    /**
+     * Transform the Role entity of an user
+     * @param User $model
+     * @return \League\Fractal\Resource\Collection
+     */
+    public function includeRoles(User $model)
+    {
+        return $this->collection($model->roles, new RoleTransformer(), 'parent');
+    }
+
+    /**
+     * get the users permissions
+     * @param User $model
+     * @return \League\Fractal\Resource\Item
+     */
+    public function includePermissions(User $model)
+    {
+        return $this->item($model->getPermissions(), new PermissionsTransformer(), 'parent');
+    }
 }
+
