@@ -14,18 +14,25 @@ class UserSeeder extends Seeder
     {
         $users = collect([
             [
-                'first_name' => 'Pedro',
-                'last_name'  => 'Gorrin',
-                'email'      => 'pedro.gorrin@etrack.com',
-                'password'   => bcrypt('password'),
-                'active'     => true
+                'company_id'    => null,
+                'first_name'    => 'Pedro',
+                'last_name'     => 'Gorrin',
+                'email'         => 'pedro.gorrin@etrack.com',
+                'password'      => bcrypt('password'),
+                'active'        => true,
+                'rut_passport'  => '17259720',
+                'position'      => 'Ingeniero',
+                'company_admin' => false
             ],
             [
-                'first_name' => 'Javier',
-                'last_name'  => 'Bastidas',
-                'email'      => 'javier.bastidas@etrack.com',
-                'password'   => bcrypt('password'),
-                'active'     => true
+                'first_name'    => 'Javier',
+                'last_name'     => 'Bastidas',
+                'email'         => 'javier.bastidas@etrack.com',
+                'password'      => bcrypt('password'),
+                'active'        => true,
+                'rut_passport'  => '17259720',
+                'position'      => 'Ingeniero',
+                'company_admin' => false
             ]
         ]);
 
