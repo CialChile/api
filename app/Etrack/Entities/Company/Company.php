@@ -8,23 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * App\Etrack\Entities\Company\Company
  *
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Etrack\Entities\Auth\User[] $users
- * @mixin \Eloquent
  * @property int $id
- * @property string $name
- * @property bool $active
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereActive($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereUpdatedAt($value)
- * @property int $user_id
  * @property int $field_id
+ * @property string $name
  * @property string $commercial_name
  * @property string $fiscal_identification
- * @property int $country_id
+ * @property string $country
  * @property string $state
  * @property string $city
  * @property string $zip_code
@@ -32,24 +21,32 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $email
  * @property string $telephone
  * @property string $fax
+ * @property bool $active
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
  * @property string $deleted_at
+ * @property-read \App\Etrack\Entities\Company\CompanyFields $field
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Etrack\Entities\Auth\User[] $users
+ * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereActive($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereAddress($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereCity($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereCommercialName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereCountryId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereCountry($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereDeletedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereEmail($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereFax($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereFieldId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereFiscalIdentification($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereName($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereState($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereTelephone($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereZipCode($value)
- * @property string $country
- * @property-read \App\Etrack\Entities\Company\CompanyFields $field
- * @property-read \App\Etrack\Entities\Auth\User $user
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereCountry($value)
+ * @mixin \Eloquent
+ * @property int $users_number
+ * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereUsersNumber($value)
  */
 class Company extends Model
 {
@@ -59,7 +56,19 @@ class Company extends Model
 
     protected $fillable = [
         'name',
-        'active'
+        'active',
+        'field_id',
+        'commercial_name',
+        'fiscal_identification',
+        'country',
+        'state',
+        'city',
+        'zip_code',
+        'address',
+        'email',
+        'telephone',
+        'fax',
+        'users_number'
     ];
 
     public function users()
@@ -71,7 +80,5 @@ class Company extends Model
     {
         return $this->belongsTo(CompanyFields::class, 'field_id');
     }
-
-
 
 }

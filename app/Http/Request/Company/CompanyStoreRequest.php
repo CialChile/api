@@ -23,7 +23,35 @@ class CompanyStoreRequest extends FormRequest
     public function rules()
     {
         return [
+            'user.email'            => 'email|unique:users,email|required',
+            'user.first_name'       => 'required',
+            'user.last_name'        => 'required',
+            'user.position'         => 'required',
+            'user.rut_passport'     => 'required',
+            'name'                  => 'required',
+            'commercial_name'       => 'required',
+            'email'                 => 'email|required',
+            'fiscal_identification' => 'required',
+            'field_id'              => 'required',
+            'country'               => 'required',
+            'state'                 => 'required',
+            'city'                  => 'required',
+            'address'               => 'required',
+            'zip_code'              => 'required',
+            'users_number'          => 'required',
+        ];
+    }
 
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'user.email.unique' => 'Ya existe un usuario con ese correo electrónico.',
         ];
     }
 }

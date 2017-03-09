@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Admin\Company;
 
+use App\Etrack\Entities\Auth\User;
 use App\Etrack\Entities\Company\Company;
 use App\Etrack\Repositories\Auth\UserRepository;
 use App\Etrack\Repositories\Company\CompanyRepository;
@@ -48,36 +49,55 @@ class CompanyController extends Controller
             ->make(true);
     }
 
-    public function show(Company $company)
+    public function show($companyId)
     {
         $this->userCan('see');
-        return $this->response->item($company, new CompanyTransformer());
+        return $this->response->item($this->companyRepository->find($companyId), new CompanyTransformer());
 
     }
 
     public function store(CompanyStoreRequest $request)
     {
         $this->userCan('create');
-        $data = $request->get('company');
-        $userData = $request->get('user');
+        $data = $request->all();
+        $data['active'] = true;
+        $userData = $data['user'];
+        unset($data['user']);
         $randomPassword = str_random(8);
         $userData['password'] = bcrypt($randomPassword);
+        $userData['company_admin'] = true;
+        /** @var Company $company */
         $company = $this->companyRepository->create($data);
-        $user = $this->userRepository->create($userData);
+        /** @var User $user */
+        $user = $company->users()->create($userData);
         Mail::to($user->email)->send(new UserRegistered($user, $randomPassword));
 
         return $this->response->item($company, new CompanyTransformer());
 
     }
 
-    public function update(CompanyUpdateRequest $request, Company $company)
+    public function update(CompanyUpdateRequest $request, $companyId)
     {
         $this->userCan('update');
+        $company = $this->companyRepository->find($companyId);
         $data = $request->all();
-
+        $userData = $data['user'];
+        unset($data['user']);
         $company->fill($data);
         $company->save();
 
+        $user = User::where('company_id', $company->id)->where('company_admin', true)->first();
+        if ($user->email != $userData['email']) {
+            $randomPassword = str_random(8);
+            $userData['password'] = bcrypt($randomPassword);
+            $user->fill($userData);
+            $user->save();
+            Mail::to($user->email)->send(new UserRegistered($user, $randomPassword));
+        } else {
+            $user->fill($userData);
+            unset($userData['password']);
+            $user->save();
+        }
         return $this->response->item($company, new CompanyTransformer());
 
     }

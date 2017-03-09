@@ -1,6 +1,7 @@
 <?php
 namespace App\Etrack\Transformers\Company;
 
+use App\Etrack\Entities\Auth\User;
 use App\Etrack\Entities\Company\Company;
 use App\Etrack\Transformers\Auth\UserTransformer;
 use League\Fractal\TransformerAbstract;
@@ -11,7 +12,7 @@ class CompanyTransformer extends TransformerAbstract
     protected $availableIncludes = [
         'users',
         'field',
-        'country'
+        'user'
     ];
 
     public function transform(Company $model)
@@ -25,9 +26,12 @@ class CompanyTransformer extends TransformerAbstract
             'telephone'             => $model->telephone,
             'fax'                   => $model->fax,
             'address'               => $model->address,
+            'country'               => $model->country,
             'state'                 => $model->state,
             'city'                  => $model->city,
-            'zip_code'              => $model->zip_code
+            'zip_code'              => $model->zip_code,
+            'field_id'              => $model->field_id,
+            'users_number'          => $model->users_number
         ];
     }
 
@@ -35,6 +39,14 @@ class CompanyTransformer extends TransformerAbstract
     {
         return $this->collection($model->users, new UserTransformer(), 'parent');
     }
+
+    public function includeUser(Company $model)
+    {
+        $user = User::where('company_id', $model->id)->where('company_admin', true)->first();
+        if ($user)
+            return $this->item($user, new UserTransformer(), 'parent');
+    }
+
 
     public function includeField(Company $model)
     {

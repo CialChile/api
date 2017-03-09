@@ -72,7 +72,7 @@ class User extends Authenticatable
         'company_admin' => 'boolean'
     ];
     protected $fillable = [
-        'name', 'email', 'password', 'active', 'company_id',
+        'first_name', 'last_name', 'email', 'password', 'active', 'company_id',
         'company_admin', 'medical_information', 'emergency_contact', 'emergency_telephone',
         'telephone', 'city', 'state', 'country', 'address', 'birthday', 'position', 'rut_passport'
     ];
