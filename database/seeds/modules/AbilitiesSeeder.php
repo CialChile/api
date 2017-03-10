@@ -12,7 +12,7 @@ class AbilitiesSeeder extends Seeder
      */
     public function run()
     {
-        $abilities = collect(['list', 'see', 'create', 'update', 'destroy']);
+        $abilities = collect(['list', 'show', 'store', 'update', 'destroy']);
         $abilities->each(function ($ability) {
             $abilityDd = Ability::where('ability', $ability)->first();
             if (!$abilityDd) {

@@ -4,6 +4,7 @@ namespace App\Etrack\Entities\Company;
 
 use App\Etrack\Entities\Auth\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Etrack\Entities\Company\Company
@@ -50,8 +51,14 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Company extends Model
 {
+    use SoftDeletes;
+
     protected $casts = [
         'active' => 'boolean'
+    ];
+
+    protected $dates = [
+        'deleted_at'
     ];
 
     protected $fillable = [

@@ -1,16 +1,13 @@
 <?php
 namespace App\Http\Controllers\Admin\Company;
 
-use App\Etrack\Entities\Auth\User;
 use App\Etrack\Entities\Company\Company;
-use App\Etrack\Repositories\Auth\UserRepository;
 use App\Etrack\Repositories\Company\CompanyRepository;
+use App\Etrack\Services\Admin\Company\CompanyService;
 use App\Etrack\Transformers\Company\CompanyTransformer;
 use App\Http\Controllers\Controller;
 use App\Http\Request\Company\CompanyStoreRequest;
 use App\Http\Request\Company\CompanyUpdateRequest;
-use App\Mail\UserRegistered;
-use Mail;
 use Yajra\Datatables\Datatables;
 
 class CompanyController extends Controller
@@ -20,15 +17,16 @@ class CompanyController extends Controller
      */
     private $companyRepository;
     /**
-     * @var UserRepository
+     * @var CompanyService
      */
-    private $userRepository;
+    private $companyService;
 
-    public function __construct(CompanyRepository $companyRepository, UserRepository $userRepository)
+    public function __construct(CompanyRepository $companyRepository,
+                                CompanyService $companyService)
     {
-        $this->module = 'company';
+        $this->module = 'admin-company';
         $this->companyRepository = $companyRepository;
-        $this->userRepository = $userRepository;
+        $this->companyService = $companyService;
     }
 
     public function index()
@@ -51,27 +49,20 @@ class CompanyController extends Controller
 
     public function show($companyId)
     {
-        $this->userCan('see');
+        $this->userCan('show');
         return $this->response->item($this->companyRepository->find($companyId), new CompanyTransformer());
 
     }
 
     public function store(CompanyStoreRequest $request)
     {
-        $this->userCan('create');
+        $this->userCan('store');
         $data = $request->all();
         $data['active'] = true;
         $userData = $data['user'];
         unset($data['user']);
-        $randomPassword = str_random(8);
-        $userData['password'] = bcrypt($randomPassword);
-        $userData['company_admin'] = true;
-        /** @var Company $company */
         $company = $this->companyRepository->create($data);
-        /** @var User $user */
-        $user = $company->users()->create($userData);
-        Mail::to($user->email)->send(new UserRegistered($user, $randomPassword));
-
+        $this->companyService->saveAdminUser($company, $userData);
         return $this->response->item($company, new CompanyTransformer());
 
     }
@@ -85,19 +76,9 @@ class CompanyController extends Controller
         unset($data['user']);
         $company->fill($data);
         $company->save();
+        $this->companyService->updateAdminUser($company, $userData);
 
-        $user = User::where('company_id', $company->id)->where('company_admin', true)->first();
-        if ($user->email != $userData['email']) {
-            $randomPassword = str_random(8);
-            $userData['password'] = bcrypt($randomPassword);
-            $user->fill($userData);
-            $user->save();
-            Mail::to($user->email)->send(new UserRegistered($user, $randomPassword));
-        } else {
-            $user->fill($userData);
-            unset($userData['password']);
-            $user->save();
-        }
+
         return $this->response->item($company, new CompanyTransformer());
 
     }

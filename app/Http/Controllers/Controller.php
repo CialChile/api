@@ -26,6 +26,10 @@ class Controller extends BaseController
         if (!str_contains($this->module, 'especial')) {
             $module = Module::with('relatedModules')->where('slug', $this->module)->first();
 
+            if (!$module) {
+                throw new Exception('El modulo establecido en el controlador no se ha encontrado');
+            }
+
             $relatedModules = $module->relatedModules;
             $relatedModules->each(function ($relatedModule) use (&$permissions) {
                 if (is_array($permissions)) {
@@ -43,7 +47,6 @@ class Controller extends BaseController
         foreach ($permissions as $permission) {
             $permissionsString = $this->formatPermissionAsString($module, $permission, $permissionsString);
         }
-
         if (!$this->loggedInUser()->can($permissionsString)) {
             $permissions = explode('|', $permissionsString);
 
@@ -52,7 +55,6 @@ class Controller extends BaseController
                 $mod = array_key_exists(1, $permissionMod) ? $permissionMod[1] : $this->module;
                 $module = Module::where('slug', $mod)->first();
                 throw new PermissionException('No tiene permisos para ' . $permissionMod[0] . ' ' . $module->name);
-
             }
         }
     }

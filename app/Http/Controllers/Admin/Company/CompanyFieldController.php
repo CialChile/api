@@ -14,7 +14,7 @@ class CompanyFieldController extends Controller
 
     public function __construct(CompanyFieldsRepository $companyRepository)
     {
-        $this->module = 'company';
+        $this->module = 'admin-company';
         $this->companyFieldRepository = $companyRepository;
     }
 
@@ -39,7 +39,7 @@ class CompanyFieldController extends Controller
 
     public function list()
     {
-        $this->userCan('see');
+        $this->userCan('show');
         $companies = $this->companyFieldRepository->scopeQuery(function (CompanyFields $query) {
             return $query->latest();
         })->all(['name', 'id']);
@@ -49,7 +49,7 @@ class CompanyFieldController extends Controller
 
     public function show(CompanyFields $companyFields)
     {
-        $this->userCan('see');
+        $this->userCan('show');
         return $this->response->item($companyFields, new CompanyFieldTransformer());
 
     }
@@ -57,7 +57,7 @@ class CompanyFieldController extends Controller
 
     public function store(\Request $request)
     {
-        $this->userCan('create');
+        $this->userCan('store');
         $data = $request->all();
         $companyFields = $this->companyFieldRepository->create($data);
         return $this->response->item($companyFields, new CompanyFieldTransformer());

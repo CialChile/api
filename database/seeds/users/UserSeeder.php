@@ -1,7 +1,11 @@
 <?php
 
+use App\Etrack\Entities\Auth\Role;
 use App\Etrack\Entities\Auth\User;
+use App\Etrack\Entities\Modules\Ability;
+use App\Etrack\Entities\Modules\Module;
 use Illuminate\Database\Seeder;
+use Kodeine\Acl\Models\Eloquent\Permission;
 
 class UserSeeder extends Seeder
 {
@@ -43,6 +47,24 @@ class UserSeeder extends Seeder
                 $userDb->save();
                 if ($userDb->email == 'pedro.gorrin@etrack.com') {
                     $userDb->assignRole('administrator');
+                    $role = Role::where('slug', 'administrator')->first();
+                    if ($role) {
+                        $adminModules = Module::where('slug', 'like', 'admin.%')->with('abilities')->get();
+                        $adminModules->each(function (Module $module) use ($role) {
+                            $permissions = [];
+                            $module->abilities->each(function (Ability $ability) use (&$permissions) {
+                                $permissions[$ability->ability] = true;
+                            });
+
+                            $permission = new Permission();
+                            $permissionsRole = $permission->create([
+                                'name'        => $module->slug,
+                                'slug'        => $permissions,
+                                'description' => 'Maneja los permisos del modulo ' . $module->name
+                            ]);
+                            $role->assignPermission($permissionsRole);
+                        });
+                    }
                 } else {
                     $userDb->assignRole('client');
                 }

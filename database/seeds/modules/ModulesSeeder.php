@@ -17,9 +17,9 @@ class ModulesSeeder extends Seeder
             [
                 'data'      => [
                     'name' => 'Empresa',
-                    'slug' => 'company'
+                    'slug' => 'admin-company'
                 ],
-                'abilities' => ['list', 'see', 'create', 'update', 'destroy']
+                'abilities' => ['list', 'show', 'store', 'update', 'destroy']
             ]
         ]);
         $modules->each(function ($module) {
