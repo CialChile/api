@@ -33,17 +33,6 @@ class UserTransformer extends TransformerAbstract
             'isSuperUser'         => $model->isSuperUser(),
             'active'              => $model->active,
             'company_admin'       => $model->company_admin,
-            'birthday'            => $model->birthday ? $model->birthday->toDateString() : null,
-            'rut_passport'        => $model->rut_passport,
-            'position'            => $model->position,
-            'address'             => $model->address,
-            'country'             => $model->country,
-            'state'               => $model->state,
-            'city'                => $model->city,
-            'telephone'           => $model->telephone,
-            'emergency_telephone' => $model->emergency_telephone,
-            'emergency_contact'   => $model->emergency_contact,
-            'medical_information' => $model->medical_information
         ];
     }
 

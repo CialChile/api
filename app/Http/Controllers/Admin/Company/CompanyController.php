@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Admin\Company;
 
 use App\Etrack\Entities\Company\Company;
 use App\Etrack\Repositories\Company\CompanyRepository;
+use App\Etrack\Scopes\CompanyScope;
 use App\Etrack\Services\Admin\Company\CompanyService;
 use App\Etrack\Transformers\Company\CompanyTransformer;
 use App\Http\Controllers\Controller;
@@ -50,7 +51,8 @@ class CompanyController extends Controller
     public function show($companyId)
     {
         $this->userCan('show');
-        return $this->response->item($this->companyRepository->find($companyId), new CompanyTransformer());
+        $company = Company::find($companyId);
+        return $this->response->item($company, new CompanyTransformer());
 
     }
 
@@ -59,10 +61,11 @@ class CompanyController extends Controller
         $this->userCan('store');
         $data = $request->all();
         $data['active'] = true;
-        $userData = $data['user'];
-        unset($data['user']);
+        $userData = $data['responsible'];
+        unset($data['responsible']);
         $company = $this->companyRepository->create($data);
-        $this->companyService->saveAdminUser($company, $userData);
+        $worker = $this->companyService->saveWorker($company, $userData);
+        $this->companyService->saveAdminUser($company, $userData, $worker);
         return $this->response->item($company, new CompanyTransformer());
 
     }
@@ -72,12 +75,12 @@ class CompanyController extends Controller
         $this->userCan('update');
         $company = $this->companyRepository->find($companyId);
         $data = $request->all();
-        $userData = $data['user'];
-        unset($data['user']);
+        $userData = $data['responsible'];
+        unset($data['responsible']);
         $company->fill($data);
         $company->save();
-        $this->companyService->updateAdminUser($company, $userData);
-
+        $user = $this->companyService->updateAdminUser($company, $userData);
+        $worker = $this->companyService->updateWorker($userData, $user);
 
         return $this->response->item($company, new CompanyTransformer());
 

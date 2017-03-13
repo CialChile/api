@@ -4,6 +4,7 @@ namespace App\Etrack\Transformers\Company;
 use App\Etrack\Entities\Auth\User;
 use App\Etrack\Entities\Company\Company;
 use App\Etrack\Transformers\Auth\UserTransformer;
+use App\Etrack\Transformers\Worker\WorkerTransformer;
 use League\Fractal\TransformerAbstract;
 
 class CompanyTransformer extends TransformerAbstract
@@ -12,7 +13,8 @@ class CompanyTransformer extends TransformerAbstract
     protected $availableIncludes = [
         'users',
         'field',
-        'user'
+        'responsible',
+        'workers'
     ];
 
     public function transform(Company $model)
@@ -31,7 +33,8 @@ class CompanyTransformer extends TransformerAbstract
             'city'                  => $model->city,
             'zip_code'              => $model->zip_code,
             'field_id'              => $model->field_id,
-            'users_number'          => $model->users_number
+            'users_number'          => $model->users_number,
+            'active'                => $model->active
         ];
     }
 
@@ -40,11 +43,18 @@ class CompanyTransformer extends TransformerAbstract
         return $this->collection($model->users, new UserTransformer(), 'parent');
     }
 
-    public function includeUser(Company $model)
+    public function includeWorkers(Company $model)
     {
-        $user = User::where('company_id', $model->id)->where('company_admin', true)->first();
-        if ($user)
-            return $this->item($user, new UserTransformer(), 'parent');
+        if ($model->workers)
+            return $this->collection($model->workers, new WorkerTransformer(), 'parent');
+    }
+
+
+    public function includeResponsible(Company $model)
+    {
+        $user = User::with('worker')->where('company_id', $model->id)->where('company_admin', true)->first();
+        if ($user->worker)
+            return $this->item($user->worker, new WorkerTransformer(), 'parent');
     }
 
 

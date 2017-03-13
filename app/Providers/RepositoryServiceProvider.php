@@ -29,6 +29,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(\App\Etrack\Repositories\Modules\ModuleRepository::class, \App\Etrack\Repositories\Modules\ModuleRepositoryEloquent::class);
         $this->app->bind(\App\Etrack\Repositories\Modules\AbilityRepository::class, \App\Etrack\Repositories\Modules\AbilityRepositoryEloquent::class);
         $this->app->bind(\App\Etrack\Repositories\Company\CompanyFieldsRepository::class, \App\Etrack\Repositories\Company\CompanyFieldsRepositoryEloquent::class);
+        $this->app->bind(\App\Etrack\Repositories\Worker\WorkerRepository::class, \App\Etrack\Repositories\Worker\WorkerRepositoryEloquent::class);
         //:end-bindings:
     }
 }

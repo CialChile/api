@@ -26,24 +26,24 @@ class CompanyUpdateRequest extends FormRequest
     {
         $user = User::where('company_id', $this->route('company'))->where('company_admin', true)->first();
         return [
-            'user.email'            => ['email',
-                                        Rule::unique('users', 'email')->ignore($user->id),
-                                        'required'],
-            'user.first_name'       => 'required',
-            'user.last_name'        => 'required',
-            'user.position'         => 'required',
-            'user.rut_passport'     => 'required',
-            'name'                  => 'required',
-            'commercial_name'       => 'required',
-            'email'                 => 'email|required',
-            'fiscal_identification' => 'required',
-            'field_id'              => 'required',
-            'country'               => 'required',
-            'state'                 => 'required',
-            'city'                  => 'required',
-            'address'               => 'required',
-            'zip_code'              => 'required',
-            'users_number'          => 'required',
+            'responsible.email'        => ['email',
+                                           Rule::unique('users', 'email')->ignore($user->id),
+                                           'required'],
+            'responsible.first_name'   => 'required',
+            'responsible.last_name'    => 'required',
+            'responsible.position'     => 'required',
+            'responsible.rut_passport' => 'required',
+            'name'                     => 'required',
+            'commercial_name'          => 'required',
+            'email'                    => 'email|required',
+            'fiscal_identification'    => 'required',
+            'field_id'                 => 'required',
+            'country'                  => 'required',
+            'state'                    => 'required',
+            'city'                     => 'required',
+            'address'                  => 'required',
+            'zip_code'                 => 'required',
+            'users_number'             => 'required',
         ];
     }
 
@@ -55,7 +55,18 @@ class CompanyUpdateRequest extends FormRequest
     public function messages()
     {
         return [
-            'user.email.unique' => 'Ya existe un usuario con ese correo electrónico.',
+            'responsible.email.unique' => 'Ya existe un usuario con ese correo electrónico.',
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'responsible.email'        => 'correo Electrónico del usuario administrador',
+            'responsible.first_name'   => 'nombre del usuario administrador',
+            'responsible.last_name'    => 'apellido del usuario administrador',
+            'responsible.position'     => 'cargo del usuario administrador',
+            'responsible.rut_passport' => 'Rut/Pasaporte del usuario administrador',
         ];
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Etrack\Entities\Company;
 
 use App\Etrack\Entities\Auth\User;
+use App\Etrack\Entities\Worker\Worker;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -48,6 +49,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @mixin \Eloquent
  * @property int $users_number
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereUsersNumber($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Etrack\Entities\Worker\Worker[] $workers
  */
 class Company extends Model
 {
@@ -86,6 +88,11 @@ class Company extends Model
     public function field()
     {
         return $this->belongsTo(CompanyFields::class, 'field_id');
+    }
+
+    public function workers()
+    {
+        return $this->hasMany(Worker::class, 'company_id');
     }
 
 }

@@ -4,6 +4,7 @@ namespace App\Etrack\Services\Admin\Company;
 use App\Etrack\Entities\Auth\Role;
 use App\Etrack\Entities\Auth\User;
 use App\Etrack\Entities\Company\Company;
+use App\Etrack\Entities\Worker\Worker;
 use App\Etrack\Services\Auth\RoleService;
 use App\Etrack\Services\Auth\UserService;
 
@@ -30,12 +31,13 @@ class CompanyService
         $this->roleService = $roleService;
     }
 
-    public function saveAdminUser(Company $company, array $userData)
+    public function saveAdminUser(Company $company, array $userData, Worker $worker)
     {
         /** @var User $user */
         $randomPassword = $this->userService->generateRandomPassword();
         $userData['password'] = bcrypt($randomPassword);
         $userData['company_admin'] = true;
+        $userData['worker_id'] = $worker['id'];
         $user = $company->users()->create($userData);
         $roleData = [
             'name'        => 'Administrador',
@@ -49,6 +51,11 @@ class CompanyService
         return $this->userService->sendUserWasRegisteredMail($user, $randomPassword);
     }
 
+    /**
+     * @param Company $company
+     * @param array $userData
+     * @return User
+     */
     public function updateAdminUser(Company $company, array $userData):User
     {
         $user = User::where('company_id', $company->id)->where('company_admin', true)->first();
@@ -57,7 +64,7 @@ class CompanyService
             $userData['password'] = bcrypt($randomPassword);
             $user->fill($userData);
             $user->save();
-            return $this->userService->sendUserWasRegisteredMail($user, $randomPassword);
+            $this->userService->sendUserWasRegisteredMail($user, $randomPassword);
         } else {
             $user->fill($userData);
             unset($userData['password']);
@@ -65,5 +72,23 @@ class CompanyService
         }
 
         return $user;
+    }
+
+    /**
+     * @param Company $company
+     * @param array $userData
+     * @return Worker|\Illuminate\Database\Eloquent\Model
+     */
+    public function saveWorker(Company $company, array $userData)
+    {
+        return $company->workers()->create($userData);
+    }
+
+    public function updateWorker(array $userData, User $user):Worker
+    {
+        $worker = $user->worker;
+        $worker->fill($userData);
+        $worker->save();
+        return $worker;
     }
 }

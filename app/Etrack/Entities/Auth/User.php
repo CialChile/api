@@ -3,6 +3,7 @@
 namespace App\Etrack\Entities\Auth;
 
 use App\Etrack\Entities\Company\Company;
+use App\Etrack\Entities\Worker\Worker;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Kodeine\Acl\Traits\HasRole;
@@ -60,6 +61,9 @@ use Kodeine\Acl\Traits\HasRole;
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User whereRutPassport($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User whereState($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User whereTelephone($value)
+ * @property int $worker_id
+ * @property-read \App\Etrack\Entities\Worker\Worker $worker
+ * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User whereWorkerId($value)
  */
 class User extends Authenticatable
 {
@@ -69,15 +73,13 @@ class User extends Authenticatable
     protected $casts = [
         'active'        => 'boolean',
         'company_id'    => 'integer',
-        'company_admin' => 'boolean'
+        'company_admin' => 'boolean',
+        'worker_id'     => 'integer'
     ];
     protected $fillable = [
         'first_name', 'last_name', 'email', 'password', 'active', 'company_id',
-        'company_admin', 'medical_information', 'emergency_contact', 'emergency_telephone',
-        'telephone', 'city', 'state', 'country', 'address', 'birthday', 'position', 'rut_passport'
+        'company_admin', 'worker_id'
     ];
-
-    protected $dates = ['birthday'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -96,5 +98,10 @@ class User extends Authenticatable
     public function company()
     {
         return $this->belongsTo(Company::class, 'company_id');
+    }
+
+    public function worker()
+    {
+        return $this->belongsTo(Worker::class, 'worker_id');
     }
 }
