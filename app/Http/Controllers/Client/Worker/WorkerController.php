@@ -28,7 +28,7 @@ class WorkerController extends Controller
     {
         $this->userCan('list');
         $workers = $this->workerRepository->scopeQuery(function (Worker $query) {
-            return $query->latest();
+            return $query->inCompany()->latest();
         })->paginate(10);
 
         return $this->response->paginator($workers, new WorkerTransformer());
@@ -37,7 +37,7 @@ class WorkerController extends Controller
     public function datatable()
     {
         $this->userCan('list');
-        return Datatables::of(Worker::query())
+        return Datatables::of(Worker::inCompany())
             ->setTransformer(WorkerTransformer::class)
             ->make(true);
     }
