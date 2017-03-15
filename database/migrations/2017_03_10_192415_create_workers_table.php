@@ -19,7 +19,7 @@ class CreateWorkersTable extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email')->unique();
-            $table->string('rut_passport');
+            $table->string('rut_passport')->nullable();
             $table->date('birthday')->nullable();
             $table->string('position')->nullable();
             $table->text('address')->nullable();

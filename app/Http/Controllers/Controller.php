@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Etrack\Entities\Auth\User;
 use App\Etrack\Entities\Modules\Module;
 use App\Exceptions\Permissions\PermissionException;
 use Dingo\Api\Routing\Helpers;
@@ -16,6 +17,7 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests, Helpers;
 
     public $module;
+    public $loggeduser;
 
     public function userCan($permissions, $module = null)
     {
@@ -72,9 +74,12 @@ class Controller extends BaseController
         }
     }
 
-    public function loggedInUser()
+    public function loggedInUser():User
     {
-        return \Auth::user();
+        if (!$this->loggeduser) {
+            $this->loggeduser = \JWTAuth::parseToken()->authenticate();
+        }
+        return $this->loggeduser;
     }
 
 }

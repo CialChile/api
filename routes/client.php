@@ -22,8 +22,15 @@ $api->version('v1', function ($api) {
     //protected Routes
     $api->group(['prefix' => 'client', 'middleware' => ['api.auth'], 'namespace' => 'App\Http\Controllers'], function ($api) {
         /** @var Router $api */
-        $api->get('worker/datatable', 'Admin\Worker\WorkerController@datatable');
-        $api->resource('company', 'Admin\Worker\WorkerController', ['except' => ['edit', 'create']]);
+        $api->put('user/{id}', 'Client\User\UserController@update');
+        $api->post('user/change-password', 'Client\User\UserController@changePassword');
+        $api->get('permission', 'Client\Permission\PermissionController@index');
+        $api->get('role/datatable', 'Client\Role\RoleController@datatable');
+        $api->get('secure-user/datatable', 'Client\User\SecureUserController@datatable');
+        $api->get('worker/datatable', 'Client\Worker\WorkerController@datatable');
+        $api->resource('worker', 'Client\Worker\WorkerController', ['except' => ['edit', 'create']]);
+        $api->resource('role', 'Client\Role\RoleController', ['except' => ['edit', 'create']]);
+        $api->resource('secure-user', 'Client\User\SecureUserController', ['except' => ['edit', 'create']]);
     });
 
 });

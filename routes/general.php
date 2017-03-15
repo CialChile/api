@@ -11,7 +11,7 @@ $api->version('v1', function ($api) {
         /** @var Router $api */
         $api->get('auth/permissions', 'Auth\AuthController@permissions');
         $api->post('auth/logout', 'Auth\AuthController@logout');
-        $api->get('auth/user', 'Auth\AuthController@user');
+        $api->get('auth/user', 'Auth\AuthController@getUser');
 
         $api->get('company-field/list', 'Admin\Company\CompanyFieldController@list');
         $api->get('company-field/datatable', 'Admin\Company\CompanyFieldController@datatable');

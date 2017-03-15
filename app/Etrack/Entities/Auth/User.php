@@ -4,6 +4,7 @@ namespace App\Etrack\Entities\Auth;
 
 use App\Etrack\Entities\Company\Company;
 use App\Etrack\Entities\Worker\Worker;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Kodeine\Acl\Traits\HasRole;
@@ -64,11 +65,15 @@ use Kodeine\Acl\Traits\HasRole;
  * @property int $worker_id
  * @property-read \App\Etrack\Entities\Worker\Worker $worker
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User whereWorkerId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User inCompany()
+ * @property \Carbon\Carbon $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User whereDeletedAt($value)
  */
 class User extends Authenticatable
 {
-    use Notifiable, HasRole;
+    use Notifiable, HasRole, SoftDeletes;
 
+    protected $dates = ['deleted_at'];
 
     protected $casts = [
         'active'        => 'boolean',
@@ -76,6 +81,7 @@ class User extends Authenticatable
         'company_admin' => 'boolean',
         'worker_id'     => 'integer'
     ];
+
     protected $fillable = [
         'first_name', 'last_name', 'email', 'password', 'active', 'company_id',
         'company_admin', 'worker_id'
@@ -103,5 +109,11 @@ class User extends Authenticatable
     public function worker()
     {
         return $this->belongsTo(Worker::class, 'worker_id');
+    }
+
+    public function scopeInCompany($query)
+    {
+        $company_id = \Auth::user()->company_id;
+        return $query->where('company_id', $company_id);
     }
 }

@@ -37,12 +37,13 @@ class CompanyService
         $randomPassword = $this->userService->generateRandomPassword();
         $userData['password'] = bcrypt($randomPassword);
         $userData['company_admin'] = true;
+        $userData['active'] = true;
         $userData['worker_id'] = $worker['id'];
         $user = $company->users()->create($userData);
         $roleData = [
             'name'        => 'Administrador',
             'company_id'  => $company->id,
-            'slug'        => 'admin',
+            'slug'        => str_slug($company->id . '-' . 'Administrador'),
             'description' => 'Usuario Administrador'
         ];
         $role = new Role($roleData);

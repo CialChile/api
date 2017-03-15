@@ -7,6 +7,8 @@ use App\Etrack\Transformers\Worker\WorkerTransformer;
 use App\Http\Controllers\Controller;
 use App\Http\Request\Worker\WorkerStoreRequest;
 use App\Http\Request\Worker\WorkerUpdateRequest;
+use DB;
+use Exception;
 use Yajra\Datatables\Datatables;
 
 class WorkerController extends Controller
@@ -18,7 +20,7 @@ class WorkerController extends Controller
 
     public function __construct(WorkerRepository $workerRepository)
     {
-        $this->module = 'client-worker';
+        $this->module = 'client-rrhh-workers';
         $this->workerRepository = $workerRepository;
     }
 
@@ -50,8 +52,17 @@ class WorkerController extends Controller
     public function store(WorkerStoreRequest $request)
     {
         $this->userCan('store');
+        $user = $this->loggedInUser();
         $data = $request->all();
-        $worker = $this->workerRepository->create($data);
+        $data['company_id'] = $user->company_id;
+        DB::beginTransaction();
+        try {
+            $worker = $this->workerRepository->create($data);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw new Exception($e->getMessage());
+        }
+        DB::commit();
         return $this->response->item($worker, new WorkerTransformer());
 
     }
@@ -59,10 +70,17 @@ class WorkerController extends Controller
     public function update(WorkerUpdateRequest $request, $workerId)
     {
         $this->userCan('update');
-        $worker = $this->workerRepository->find($workerId);
-        $data = $request->all();
-        $worker->fill($data);
-        $worker->save();
+        DB::beginTransaction();
+        try {
+            $worker = $this->workerRepository->find($workerId);
+            $data = $request->all();
+            $worker->fill($data);
+            $worker->save();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw new Exception($e->getMessage());
+        }
+        DB::commit();
 
         return $this->response->item($worker, new WorkerTransformer());
 
@@ -71,10 +89,28 @@ class WorkerController extends Controller
     public function destroy($workerId)
     {
         $this->userCan('destroy');
-        $worker = $this->workerRepository->find($workerId);
-        $worker->delete();
+        $workerToDestroy = Worker::with('user')->inCompany()->find($workerId);
+        if (!$workerToDestroy) {
+            $this->response->errorForbidden('No tiene permiso para eliminar este trabajador');
+        }
+        if ($workerToDestroy->user) {
+            if ($workerToDestroy->user->company_admin) {
+                $this->response->errorForbidden('No puede eliminar este trabajador porque esta asociado al usuario administrador de la empresa');
+            }
+        }
+        DB::beginTransaction();
+        try {
+            if ($workerToDestroy->user) {
+                $workerToDestroy->user()->delete();
+            }
+            $workerToDestroy->delete();
 
-        return $this->response->accepted();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw new Exception($e->getMessage());
+        }
+        DB::commit();
+        return response()->json(['message' => 'Trabajador Eliminado con Exito']);
 
     }
 

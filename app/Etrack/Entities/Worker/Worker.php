@@ -2,8 +2,12 @@
 
 namespace App\Etrack\Entities\Worker;
 
+use App\Etrack\Entities\Auth\User;
+use App\Etrack\Entities\BaseModel;
+use App\Etrack\Entities\Company\Company;
 use App\Etrack\Scopes\CompanyScope;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Etrack\Entities\Worker\Worker
@@ -47,16 +51,37 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Worker\Worker whereTelephone($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Worker\Worker whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\BaseModel inCompany()
+ * @property bool $active
+ * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Worker\Worker whereActive($value)
+ * @property-read \App\Etrack\Entities\Company\Company $company
+ * @property-read \App\Etrack\Entities\Auth\User $user
+ * @property string $zip_code
+ * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Worker\Worker whereZipCode($value)
  */
-class Worker extends Model
+class Worker extends BaseModel
 {
+
+    use SoftDeletes;
+    protected $casts = [
+        'company_id' => 'integer',
+        'active'     => 'boolean'
+    ];
 
     protected $fillable = [
         'company_id', 'first_name', 'last_name', 'emergency_contact',
-        'emergency_telephone', 'telephone', 'city', 'state',
-        'country', 'address', 'birthday', 'position', 'rut_passport', 'email'
+        'emergency_telephone', 'telephone', 'city', 'state', 'zip_code', 'medical_information',
+        'country', 'address', 'birthday', 'position', 'rut_passport', 'email', 'active'
     ];
-    protected $dates = ['birthday'];
+    protected $dates = ['birthday', 'deleted_at'];
 
+    public function user()
+    {
+        return $this->hasOne(User::class, 'worker_id');
+    }
 
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
 }

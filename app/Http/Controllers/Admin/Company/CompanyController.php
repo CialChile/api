@@ -25,7 +25,7 @@ class CompanyController extends Controller
     public function __construct(CompanyRepository $companyRepository,
                                 CompanyService $companyService)
     {
-        $this->module = 'admin-company';
+        $this->module = 'admin-companies';
         $this->companyRepository = $companyRepository;
         $this->companyService = $companyService;
     }

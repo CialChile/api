@@ -3,6 +3,7 @@
 namespace App\Etrack\Entities\Auth;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 use \Kodeine\Acl\Models\Eloquent\Role as KodeineRole;
@@ -27,9 +28,20 @@ use \Kodeine\Acl\Models\Eloquent\Role as KodeineRole;
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\Role whereSlug($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\Role whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\Role company()
+ * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\Role inCompany()
+ * @property \Carbon\Carbon $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\Role whereDeletedAt($value)
  */
 class Role extends KodeineRole
 {
+    use SoftDeletes;
     protected $fillable = ['company_id', 'name', 'slug', 'description'];
+    protected $dates = ['deleted_at'];
 
+    public function scopeInCompany($query)
+    {
+        $company_id = \Auth::user()->company_id;
+        return $query->where('company_id', $company_id);
+    }
 }

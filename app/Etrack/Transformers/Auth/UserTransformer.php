@@ -13,7 +13,7 @@ class UserTransformer extends TransformerAbstract
 {
 
     protected $availableIncludes = [
-        'roles',
+        'role',
         'permissions'
     ];
 
@@ -26,24 +26,24 @@ class UserTransformer extends TransformerAbstract
     public function transform(User $model)
     {
         return [
-            'id'                  => (int)$model->id,
-            'first_name'          => $model->first_name,
-            'last_name'           => $model->last_name,
-            'email'               => $model->email,
-            'isSuperUser'         => $model->isSuperUser(),
-            'active'              => $model->active,
-            'company_admin'       => $model->company_admin,
+            'id'            => (int)$model->id,
+            'first_name'    => $model->first_name,
+            'last_name'     => $model->last_name,
+            'email'         => $model->email,
+            'isSuperUser'   => $model->isSuperUser(),
+            'active'        => $model->active,
+            'company_admin' => $model->company_admin,
         ];
     }
 
     /**
      * Transform the Role entity of an user
      * @param User $model
-     * @return \League\Fractal\Resource\Collection
+     * @return \League\Fractal\Resource\Item
      */
-    public function includeRoles(User $model)
+    public function includeRole(User $model)
     {
-        return $this->collection($model->roles, new RoleTransformer(), 'parent');
+        return $this->item($model->roles->first(), new RoleTransformer(), 'parent');
     }
 
     /**

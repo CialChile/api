@@ -23,7 +23,19 @@ class WorkerStoreRequest extends FormRequest
     public function rules()
     {
         return [
-
+            'first_name'          => 'required',
+            'last_name'           => 'required',
+            'rut_passport'        => 'required',
+            'email'               => 'required|email|unique:workers,email',
+            'position'            => 'required',
+            'birthday'            => 'required',
+            'country'             => 'required',
+            'state'               => 'required',
+            'city'                => 'required',
+            'address'             => 'required',
+            'zip_code'            => 'required',
+            'emergency_telephone' => 'required',
+            'emergency_contact'   => 'required',
         ];
     }
 

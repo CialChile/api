@@ -9,7 +9,7 @@ use Tymon\JWTAuth\JWTAuth;
 
 class AuthController extends Controller
 {
-    
+
     public function login(Request $request, JWTAuth $JWTAuth)
     {
         $credentials = $request->only('email', 'password');
@@ -56,9 +56,9 @@ class AuthController extends Controller
         return response()->json(['message' => 'ok']);
     }
 
-    public function user()
+    public function getUser(JWTAuth $JWTAuth)
     {
-        $user = \Auth::user();
+        $user = $JWTAuth->parseToken()->authenticate();
         $user->load('roles');
         return $this->response->item($user, new UserTransformer());
     }

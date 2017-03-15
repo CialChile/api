@@ -2,6 +2,7 @@
 namespace App\Http\Request\Worker;
 
 use App\Etrack\Entities\Auth\User;
+use App\Etrack\Entities\Worker\Worker;
 use Dingo\Api\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -24,7 +25,25 @@ class WorkerUpdateRequest extends FormRequest
      */
     public function rules()
     {
+        $worker = Worker::find($this->route('worker'));
 
+        return [
+            'first_name'          => 'required',
+            'last_name'           => 'required',
+            'rut_passport'        => 'required',
+            'email'               => ['email',
+                                      Rule::unique('workers', 'email')->ignore($worker->id),
+                                      'required'],
+            'position'            => 'required',
+            'birthday'            => 'required',
+            'country'             => 'required',
+            'state'               => 'required',
+            'city'                => 'required',
+            'address'             => 'required',
+            'zip_code'            => 'required',
+            'emergency_telephone' => 'required',
+            'emergency_contact'   => 'required',
+        ];
     }
 
     /**

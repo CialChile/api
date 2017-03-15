@@ -12,6 +12,10 @@ use App\Etrack\Entities\Auth\Role;
 class RoleTransformer extends TransformerAbstract
 {
 
+    protected $availableIncludes = [
+        'permissions'
+    ];
+
     /**
      * Transform the \Role entity
      * @param Role $model
@@ -20,9 +24,16 @@ class RoleTransformer extends TransformerAbstract
     public function transform(Role $model)
     {
         return [
-            'id'   => (int)$model->id,
-            'name' => $model->name,
-            'slug' => $model->slug,
+            'id'          => (int)$model->id,
+            'name'        => $model->name,
+            'slug'        => $model->slug,
+            'description' => $model->description,
         ];
+    }
+
+    public function includePermissions(Role $model)
+    {
+        $permissions = $model->permissions;
+        return $this->collection($permissions,new PermissionsRoleTransformer(),'parent');
     }
 }

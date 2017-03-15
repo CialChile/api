@@ -3,6 +3,7 @@
 namespace App\Etrack\Entities\Company;
 
 use App\Etrack\Entities\Auth\User;
+use App\Etrack\Entities\BaseModel;
 use App\Etrack\Entities\Worker\Worker;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -50,8 +51,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $users_number
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereUsersNumber($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Etrack\Entities\Worker\Worker[] $workers
+ * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\BaseModel inCompany()
  */
-class Company extends Model
+class Company extends BaseModel
 {
     use SoftDeletes;
 

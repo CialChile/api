@@ -82,7 +82,7 @@ return [
     ],
     'string'               => 'El campo :attribute debe ser una cadena de caracteres.',
     'timezone'             => 'El :attribute debe ser una zona válida.',
-    'unique'               => ':attribute ya ha sido registrado.',
+    'unique'               => ':attribute ya ha se encuentra registrado.',
     'uploaded'             => 'Subir :attribute ha fallado.',
     'url'                  => 'El formato :attribute es inválido.',
 
@@ -97,7 +97,7 @@ return [
     |
     */
 
-    'custom'               => [
+    'custom' => [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
@@ -114,10 +114,10 @@ return [
     |
     */
 
-    'attributes'           => [
+    'attributes' => [
         'name'                  => 'nombre',
         'username'              => 'usuario',
-        'email'                 => 'correo electrónico',
+        'email'                 => 'el correo electrónico',
         'first_name'            => 'nombre',
         'last_name'             => 'apellido',
         'password'              => 'contraseña',

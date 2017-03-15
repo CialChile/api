@@ -17,7 +17,28 @@ class ModulesSeeder extends Seeder
             [
                 'data'      => [
                     'name' => 'Empresa',
-                    'slug' => 'admin-company'
+                    'slug' => 'admin-companies'
+                ],
+                'abilities' => ['list', 'show', 'store', 'update', 'destroy']
+            ],
+            [
+                'data'      => [
+                    'name' => 'Trabajadores',
+                    'slug' => 'client-rrhh-workers'
+                ],
+                'abilities' => ['list', 'show', 'store', 'update', 'destroy']
+            ],
+            [
+                'data'      => [
+                    'name' => 'Roles',
+                    'slug' => 'client-security-roles'
+                ],
+                'abilities' => ['list', 'show', 'store', 'update', 'destroy']
+            ],
+            [
+                'data'      => [
+                    'name' => 'Usuarios',
+                    'slug' => 'client-security-users'
                 ],
                 'abilities' => ['list', 'show', 'store', 'update', 'destroy']
             ]
