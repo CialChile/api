@@ -95,4 +95,13 @@ class CompanyController extends Controller
 
     }
 
+    public function toggleActive($companyId)
+    {
+        $this->userCan('update');
+        $company = $this->companyRepository->find($companyId);
+        $company->active = !$company->active;
+        $company->save();
+        return $this->response->item($company, new CompanyTransformer());
+    }
+
 }

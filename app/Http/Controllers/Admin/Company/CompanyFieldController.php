@@ -14,7 +14,7 @@ class CompanyFieldController extends Controller
 
     public function __construct(CompanyFieldsRepository $companyRepository)
     {
-        $this->module = 'admin-company';
+        $this->module = 'admin-companies';
         $this->companyFieldRepository = $companyRepository;
     }
 
