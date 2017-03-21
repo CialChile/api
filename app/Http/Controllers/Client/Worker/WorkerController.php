@@ -7,6 +7,7 @@ use App\Etrack\Transformers\Worker\WorkerTransformer;
 use App\Http\Controllers\Controller;
 use App\Http\Request\Worker\WorkerStoreRequest;
 use App\Http\Request\Worker\WorkerUpdateRequest;
+use Carbon\Carbon;
 use DB;
 use Exception;
 use Yajra\Datatables\Datatables;
@@ -54,10 +55,15 @@ class WorkerController extends Controller
         $this->userCan('store');
         $user = $this->loggedInUser();
         $data = $request->all();
+        $data['birthday'] = Carbon::createFromFormat('d/m/Y', $data['birthday']);
         $data['company_id'] = $user->company_id;
         DB::beginTransaction();
         try {
             $worker = $this->workerRepository->create($data);
+            if ($request->hasFile('image')) {
+                $worker->clearMediaCollection('profile');
+                $worker->addMedia($request->file('image'))->preservingOriginal()->toMediaLibrary('profile');
+            }
         } catch (\Exception $e) {
             DB::rollBack();
             throw new Exception($e->getMessage());
@@ -70,12 +76,22 @@ class WorkerController extends Controller
     public function update(WorkerUpdateRequest $request, $workerId)
     {
         $this->userCan('update');
+        //  dd($request->hasFile('image') ? 'si' : 'no');
         DB::beginTransaction();
         try {
+            /** @var Worker $worker */
             $worker = $this->workerRepository->find($workerId);
             $data = $request->all();
+            $data['birthday'] = Carbon::createFromFormat('d/m/Y', $data['birthday']);
+            $data['active'] = $data['active'] ? 1 : 0;
             $worker->fill($data);
             $worker->save();
+            if ($request->hasFile('image')) {
+                $worker->clearMediaCollection('profile');
+                $worker->addMedia($request->file('image'))->preservingOriginal()->toMediaLibrary('profile');
+            } elseif ($request->has('removeImage')) {
+                $worker->clearMediaCollection('profile');
+            }
         } catch (\Exception $e) {
             DB::rollBack();
             throw new Exception($e->getMessage());

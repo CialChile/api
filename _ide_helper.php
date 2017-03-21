@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.4.15 on 2017-03-07.
+ * Generated for Laravel 5.4.15 on 2017-03-20.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -11668,6 +11668,85 @@ namespace PragmaRX\Countries {
     }         
 }
     
+namespace Yajra\Datatables\Facades {
+
+    class Datatables {
+        
+        /**
+         * Gets query and returns instance of class.
+         *
+         * @param mixed $source
+         * @return mixed 
+         * @throws \Exception
+         * @static 
+         */
+        public static function of($source)
+        {
+            return \Yajra\Datatables\Datatables::of($source);
+        }
+        
+        /**
+         * Get request object.
+         *
+         * @return \Yajra\Datatables\Request 
+         * @static 
+         */
+        public static function getRequest()
+        {
+            return \Yajra\Datatables\Datatables::getRequest();
+        }
+        
+        /**
+         * Datatables using Query Builder.
+         *
+         * @param \Illuminate\Database\Query\Builder|mixed $builder
+         * @return \Yajra\Datatables\Engines\QueryBuilderEngine 
+         * @static 
+         */
+        public static function queryBuilder($builder)
+        {
+            return \Yajra\Datatables\Datatables::queryBuilder($builder);
+        }
+        
+        /**
+         * Datatables using Eloquent Builder.
+         *
+         * @param \Illuminate\Database\Eloquent\Builder|mixed $builder
+         * @return \Yajra\Datatables\Engines\EloquentEngine 
+         * @static 
+         */
+        public static function eloquent($builder)
+        {
+            return \Yajra\Datatables\Datatables::eloquent($builder);
+        }
+        
+        /**
+         * Datatables using Collection.
+         *
+         * @param \Illuminate\Support\Collection|mixed $collection
+         * @return \Yajra\Datatables\Engines\CollectionEngine 
+         * @static 
+         */
+        public static function collection($collection)
+        {
+            return \Yajra\Datatables\Datatables::collection($collection);
+        }
+        
+        /**
+         * Get html builder instance.
+         *
+         * @return \Yajra\Datatables\Html\Builder 
+         * @throws \Exception
+         * @static 
+         */
+        public static function getHtmlBuilder()
+        {
+            return \Yajra\Datatables\Datatables::getHtmlBuilder();
+        }
+        
+    }         
+}
+    
     
 namespace {
 
@@ -13675,6 +13754,8 @@ namespace {
     class JWTFactory extends \Tymon\JWTAuth\Facades\JWTFactory {}
     
     class Countries extends \PragmaRX\Countries\Facade {}
+    
+    class Datatables extends \Yajra\Datatables\Facades\Datatables {}
     
 }
 

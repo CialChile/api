@@ -12,15 +12,15 @@ class UserController extends Controller
     public function update(UserUpdateRequest $request, $id)
     {
         $user = $this->loggedInUser();
-        $user->load('worker');
         $user->first_name = $request->get('first_name');
         $user->last_name = $request->get('last_name');
         $user->save();
-
-        $worker = $user->worker;
-        $worker->first_name = $request->get('first_name');
-        $worker->last_name = $request->get('last_name');
-        $worker->save();
+        if ($request->hasFile('image')) {
+            $user->clearMediaCollection('profile');
+            $user->addMedia($request->file('image'))->preservingOriginal()->toMediaLibrary('profile');
+        } elseif ($request->has('removeImage')) {
+            $user->clearMediaCollection('profile');
+        }
 
         return $this->response->item($user, new UserTransformer());
     }

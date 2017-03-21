@@ -8,17 +8,18 @@ use League\Fractal\TransformerAbstract;
 class WorkerTransformer extends TransformerAbstract
 {
     protected $availableIncludes = [
-        'user'
+        'user',
     ];
 
     public function transform(Worker $model)
     {
+        $profilePicture = $model->getFirstMediaUrl('profile', 'normal');
         return [
             'id'                  => $model->id,
             'first_name'          => $model->first_name,
             'last_name'           => $model->last_name,
             'email'               => $model->email,
-            'birthday'            => $model->birthday ? $model->birthday->toDateString() : null,
+            'birthday'            => $model->birthday ? $model->birthday->format('d/m/Y') : null,
             'rut_passport'        => $model->rut_passport,
             'position'            => $model->position,
             'address'             => $model->address,
@@ -30,7 +31,8 @@ class WorkerTransformer extends TransformerAbstract
             'emergency_telephone' => $model->emergency_telephone,
             'emergency_contact'   => $model->emergency_contact,
             'medical_information' => $model->medical_information,
-            'active'              => $model->active
+            'active'              => $model->active,
+            'image'               => $profilePicture ? env('APP_URL') . $profilePicture : null
         ];
     }
 

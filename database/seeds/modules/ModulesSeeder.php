@@ -41,6 +41,12 @@ class ModulesSeeder extends Seeder
                     'slug' => 'client-security-users'
                 ],
                 'abilities' => ['list', 'show', 'store', 'update', 'destroy']
+            ],[
+                'data'      => [
+                    'name' => 'Activos',
+                    'slug' => 'client-assets'
+                ],
+                'abilities' => ['list', 'show', 'store', 'update', 'destroy']
             ]
         ]);
         $modules->each(function ($module) {

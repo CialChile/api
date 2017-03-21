@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Kodeine\Acl\Traits\HasRole;
+use Spatie\Image\Manipulations;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
 /**
  * App\Etrack\Entities\Auth\User
@@ -69,9 +72,9 @@ use Kodeine\Acl\Traits\HasRole;
  * @property \Carbon\Carbon $deleted_at
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User whereDeletedAt($value)
  */
-class User extends Authenticatable
+class User extends Authenticatable implements HasMediaConversions
 {
-    use Notifiable, HasRole, SoftDeletes;
+    use Notifiable, HasRole, SoftDeletes, HasMediaTrait;
 
     protected $dates = ['deleted_at'];
 
@@ -95,6 +98,21 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function registerMediaConversions()
+    {
+        $this->addMediaConversion('normal')
+            ->fit(Manipulations::FIT_CONTAIN, 300, 400)
+            ->performOnCollections('profile');
+
+        $this->addMediaConversion('small')
+            ->fit(Manipulations::FIT_CONTAIN, 100, 133)
+            ->performOnCollections('profile');
+
+        $this->addMediaConversion('thumbnail')
+            ->fit(Manipulations::FIT_CROP, 100, 100)
+            ->performOnCollections('profile');
+    }
 
     public function isSuperUser()
     {

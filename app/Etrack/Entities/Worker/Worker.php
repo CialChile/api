@@ -8,6 +8,10 @@ use App\Etrack\Entities\Company\Company;
 use App\Etrack\Scopes\CompanyScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Image\Manipulations;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
 /**
  * App\Etrack\Entities\Worker\Worker
@@ -59,9 +63,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $zip_code
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Worker\Worker whereZipCode($value)
  */
-class Worker extends BaseModel
+class Worker extends BaseModel implements HasMediaConversions
 {
-
+    use HasMediaTrait;
     use SoftDeletes;
     protected $casts = [
         'company_id' => 'integer',
@@ -74,6 +78,19 @@ class Worker extends BaseModel
         'country', 'address', 'birthday', 'position', 'rut_passport', 'email', 'active'
     ];
     protected $dates = ['birthday', 'deleted_at'];
+
+    public function registerMediaConversions()
+    {
+        $this->addMediaConversion('normal')
+            ->fit(Manipulations::FIT_CONTAIN, 300, 400)
+            ->performOnCollections('profile');
+
+        $this->addMediaConversion('thumbnail')
+            ->fit(Manipulations::FIT_CONTAIN, 100, 133)
+            ->performOnCollections('profile');
+
+
+    }
 
     public function user()
     {
