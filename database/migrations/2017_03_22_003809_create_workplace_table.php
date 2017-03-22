@@ -13,13 +13,14 @@ class CreateWorkplaceTable extends Migration
      */
     public function up()
     {
-        Schema::create('workplace', function (Blueprint $table) {
+        Schema::create('workplaces', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
             $table->integer('company_id')->unsigned()->index();
+            $table->string('name');
             $table->foreign('company_id')->references('id')->on('companies');
+            $table->nullableTimestamps();
             $table->softDeletes();
-            $table->timestamps();
+
         });
     }
 
@@ -30,6 +31,6 @@ class CreateWorkplaceTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('workplace');
+        Schema::dropIfExists('workplaces');
     }
 }

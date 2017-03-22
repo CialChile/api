@@ -13,13 +13,13 @@ class CreateDocumentationAssetsTable extends Migration
      */
     public function up()
     {
-        Schema::create('documentation_assets', function (Blueprint $table) {
+        Schema::create('assets_documents', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('document_id')->unsigned();
-            $table->foreign('document_id')->references('id')->on('document');
+            $table->foreign('document_id')->references('id')->on('documents');
             $table->integer('assets_id')->unsigned();
             $table->foreign('assets_id')->references('id')->on('assets');
-            $table->timestamps();
+            $table->nullableTimestamps();
             $table->softDeletes();
 
         });
@@ -32,6 +32,6 @@ class CreateDocumentationAssetsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('documentation_assets');
+        Schema::dropIfExists('assets_documents');
     }
 }

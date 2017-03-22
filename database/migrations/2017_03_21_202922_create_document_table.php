@@ -13,10 +13,10 @@ class CreateDocumentTable extends Migration
      */
     public function up()
     {
-        Schema::create('document', function (Blueprint $table) {
+        Schema::create('documents', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->timestamps();
+            $table->nullableTimestamps();
             $table->softDeletes();
 
         });
@@ -29,6 +29,6 @@ class CreateDocumentTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('document');
+        Schema::dropIfExists('documents');
     }
 }

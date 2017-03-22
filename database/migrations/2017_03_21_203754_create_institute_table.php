@@ -13,7 +13,7 @@ class CreateInstituteTable extends Migration
      */
     public function up()
     {
-        Schema::create('institute', function (Blueprint $table) {
+        Schema::create('institutes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('rut');
@@ -22,7 +22,7 @@ class CreateInstituteTable extends Migration
             $table->string('contact')->nullable();
             $table->string('telephone_contact')->nullable();
             $table->string('email_contact')->unique();
-            $table->timestamps();
+            $table->nullableTimestamps();
             $table->softDeletes();
         });
     }
@@ -34,6 +34,6 @@ class CreateInstituteTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('institute');
+        Schema::dropIfExists('institutes');
     }
 }

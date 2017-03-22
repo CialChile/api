@@ -13,15 +13,15 @@ class CreateAssetsWorkerTable extends Migration
      */
     public function up()
     {
-        Schema::create('assets_worker', function (Blueprint $table) {
+        Schema::create('assets_workers', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('worker_id')->unsigned();
             $table->foreign('worker_id')->references('id')->on('workers');
             $table->integer('assets_id')->unsigned();
             $table->foreign('assets_id')->references('id')->on('assets');
-            $table->date('assign_date');
-            $table->date('unassign_date');
-            $table->timestamps();
+            $table->date('assign_date')->nullable();
+            $table->date('unassign_date')->nullable();
+            $table->nullableTimestamps();
             $table->softDeletes();
 
         });
@@ -34,6 +34,6 @@ class CreateAssetsWorkerTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('assets_worker');
+        Schema::dropIfExists('assets_workers');
     }
 }

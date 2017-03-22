@@ -13,22 +13,22 @@ class CreateCertificationTable extends Migration
      */
     public function up()
     {
-        Schema::create('certification', function (Blueprint $table) {
+        Schema::create('certifications', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('company_id')->unsigned()->index();
+            $table->integer('institute_id')->unsigned();
+            $table->integer('certification_type_id')->unsigned();
+            $table->integer('status_id')->unsigned();
             $table->string('sku');
             $table->string('name');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->integer('validity_time');
-            $table->boolean('validity');
-            $table->integer('institute_id')->unsigned();
-            $table->foreign('institute_id')->references('id')->on('institute');
-            $table->integer('type_certification_id')->unsigned();
-            $table->foreign('type_certification_id')->references('id')->on('type_certification');
-            $table->integer('status_id')->unsigned();
+            $table->boolean('validity')->default(0);
+            $table->foreign('institute_id')->references('id')->on('institutes');
+            $table->foreign('certification_type_id')->references('id')->on('certification_types');
             $table->foreign('status_id')->references('id')->on('status');
-            $table->integer('company_id')->unsigned()->index();
             $table->foreign('company_id')->references('id')->on('companies');
-            $table->timestamps();
+            $table->nullableTimestamps();
             $table->softDeletes();
 
         });
@@ -41,6 +41,6 @@ class CreateCertificationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('certification');
+        Schema::dropIfExists('certifications');
     }
 }

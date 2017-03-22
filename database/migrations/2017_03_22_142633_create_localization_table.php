@@ -13,16 +13,16 @@ class CreateLocalizationTable extends Migration
      */
     public function up()
     {
-        Schema::create('localization', function (Blueprint $table) {
+        Schema::create('localizations', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('assets_id')->unsigned();
             $table->foreign('assets_id')->references('id')->on('assets');
-            $table->date('location_date');
-            $table->timestamps();
+            $table->date('location_date')->nullable();
+            $table->nullableTimestamps();
             $table->softDeletes();
 
         });
-        DB::statement('ALTER TABLE localization ADD location point');
+        DB::statement('ALTER TABLE localizations ADD location point after location_date');
     }
 
     /**
@@ -32,6 +32,6 @@ class CreateLocalizationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('localization');
+        Schema::dropIfExists('localizations');
     }
 }

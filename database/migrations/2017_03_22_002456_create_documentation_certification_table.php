@@ -13,13 +13,13 @@ class CreateDocumentationCertificationTable extends Migration
      */
     public function up()
     {
-        Schema::create('documentation_certification', function (Blueprint $table) {
+        Schema::create('certification_documents', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('document_id')->unsigned();
-            $table->foreign('document_id')->references('id')->on('document');
             $table->integer('certification_id')->unsigned();
-            $table->foreign('certification_id')->references('id')->on('certification');
-            $table->timestamps();
+            $table->foreign('document_id')->references('id')->on('documents');
+            $table->foreign('certification_id')->references('id')->on('certifications');
+            $table->nullableTimestamps();
             $table->softDeletes();
 
         });
@@ -32,6 +32,6 @@ class CreateDocumentationCertificationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('documentation_certification');
+        Schema::dropIfExists('certification_documents');
     }
 }

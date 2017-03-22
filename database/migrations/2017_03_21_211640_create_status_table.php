@@ -16,10 +16,9 @@ class CreateStatusTable extends Migration
         Schema::create('status', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('type'); // puede referir a un activo o a un documento
-            $table->timestamps();
+            $table->tinyInteger('type')->default(0)->comment('can refer to an asset (0) or an document (1)'); // puede referir a un activo o a un documento
+            $table->nullableTimestamps();
             $table->softDeletes();
-
         });
     }
 

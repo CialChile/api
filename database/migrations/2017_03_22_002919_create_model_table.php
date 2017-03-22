@@ -13,12 +13,12 @@ class CreateModelTable extends Migration
      */
     public function up()
     {
-        Schema::create('model', function (Blueprint $table) {
+        Schema::create('models', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
             $table->integer('brand_id')->unsigned();
-            $table->foreign('brand_id')->references('id')->on('brand');
-            $table->timestamps();
+            $table->string('name');
+            $table->foreign('brand_id')->references('id')->on('brands');
+            $table->nullableTimestamps();
             $table->softDeletes();
         });
     }
@@ -30,6 +30,6 @@ class CreateModelTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('model');
+        Schema::dropIfExists('models');
     }
 }

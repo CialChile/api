@@ -13,10 +13,10 @@ class CreateTypeCertificationTable extends Migration
      */
     public function up()
     {
-        Schema::create('type_certification', function (Blueprint $table) {
+        Schema::create('certification_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->timestamps();
+            $table->nullableTimestamps();
             $table->softDeletes();
 
         });
@@ -29,6 +29,6 @@ class CreateTypeCertificationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('type_certification');
+        Schema::dropIfExists('certification_types');
     }
 }
