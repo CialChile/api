@@ -24,9 +24,10 @@ class UserSeeder extends Seeder
                 'email'         => 'pedro.gorrin@etrack.com',
                 'password'      => bcrypt('password'),
                 'active'        => true,
-                'rut_passport'  => '17259720',
-                'position'      => 'Ingeniero',
-                'company_admin' => false
+               // 'rut_passport'  => '17259720',
+              //  'position'      => 'Ingeniero',
+                'company_admin' => false,
+                'worker_id' => '1'
             ],
             [
                 'first_name'    => 'Javier',
@@ -34,9 +35,11 @@ class UserSeeder extends Seeder
                 'email'         => 'javier.bastidas@etrack.com',
                 'password'      => bcrypt('password'),
                 'active'        => true,
-                'rut_passport'  => '17259720',
-                'position'      => 'Ingeniero',
-                'company_admin' => false
+               // 'rut_passport'  => '17259720',
+               // 'position'      => 'Ingeniero',
+                'company_admin' => false,
+                'worker_id' => '1'
+
             ]
         ]);
 

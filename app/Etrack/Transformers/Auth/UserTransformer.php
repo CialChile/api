@@ -25,6 +25,9 @@ class UserTransformer extends TransformerAbstract
      */
     public function transform(User $model)
     {
+        $profilePicture = $model->getFirstMediaUrl('profile', 'normal');
+        $profilePictureThumb = $model->getFirstMediaUrl('profile', 'thumbnail');
+
         return [
             'id'            => (int)$model->id,
             'first_name'    => $model->first_name,
@@ -33,6 +36,8 @@ class UserTransformer extends TransformerAbstract
             'isSuperUser'   => $model->isSuperUser(),
             'active'        => $model->active,
             'company_admin' => $model->company_admin,
+            'image'         => $profilePicture ? env('APP_URL') . $profilePicture : null,
+            'thumb'         => $profilePictureThumb ? env('APP_URL') . $profilePictureThumb : null
         ];
     }
 

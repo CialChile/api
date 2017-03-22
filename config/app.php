@@ -176,6 +176,7 @@ return [
         Kodeine\Acl\AclServiceProvider::class,
         PragmaRX\Countries\ServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
+        Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
 
         /*
          * Application Service Providers...
