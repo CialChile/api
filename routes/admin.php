@@ -22,9 +22,9 @@ $api->version('v1', function ($api) {
     //protected Routes
     $api->group(['prefix' => 'admin', 'middleware' => ['api.auth'], 'namespace' => 'App\Http\Controllers'], function ($api) {
         /** @var Router $api */
-        $api->get('company/datatable', 'Admin\Company\CompanyController@datatable');
-        $api->put('company/toggle-active/{id}', 'Admin\Company\CompanyController@toggleActive');
-        $api->resource('company', 'Admin\Company\CompanyController', ['except' => ['edit', 'create']]);
+        $api->get('companies/datatable', 'Admin\Company\CompanyController@datatable');
+        $api->put('companies/toggle-active/{id}', 'Admin\Company\CompanyController@toggleActive');
+        $api->resource('companies', 'Admin\Company\CompanyController', ['except' => ['edit', 'create']]);
     });
 
 });

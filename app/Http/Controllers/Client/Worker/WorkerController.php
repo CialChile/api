@@ -55,8 +55,9 @@ class WorkerController extends Controller
         $this->userCan('store');
         $user = $this->loggedInUser();
         $data = $request->all();
-        $data['birthday'] = Carbon::createFromFormat('d/m/Y', $data['birthday']);
+        $data['birthday'] = Carbon::parse($data['birthday']);
         $data['company_id'] = $user->company_id;
+        $data['active'] = $data['active'] ? 1 : 0;
         DB::beginTransaction();
         try {
             $worker = $this->workerRepository->create($data);
@@ -82,7 +83,7 @@ class WorkerController extends Controller
             /** @var Worker $worker */
             $worker = $this->workerRepository->find($workerId);
             $data = $request->all();
-            $data['birthday'] = Carbon::createFromFormat('d/m/Y', $data['birthday']);
+            $data['birthday'] = Carbon::parse($data['birthday']);
             $data['active'] = $data['active'] ? 1 : 0;
             $worker->fill($data);
             $worker->save();

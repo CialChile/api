@@ -13,12 +13,12 @@ $api->version('v1', function ($api) {
         $api->post('auth/logout', 'Auth\AuthController@logout');
         $api->get('auth/user', 'Auth\AuthController@getUser');
 
-        $api->get('company-field/list', 'Admin\Company\CompanyFieldController@list');
-        $api->get('company-field/datatable', 'Admin\Company\CompanyFieldController@datatable');
-        $api->resource('company-field', 'Admin\Company\CompanyFieldController', ['except' => ['edit', 'create']]);
+        $api->get('company-fields/list', 'Admin\Company\CompanyFieldController@list');
+        $api->get('company-fields/datatable', 'Admin\Company\CompanyFieldController@datatable');
+        $api->resource('company-fields', 'Admin\Company\CompanyFieldController', ['except' => ['edit', 'create']]);
 
-        $api->get('country', 'Location\CountryController@index');
-        $api->get('state/{country}', 'Location\StateController@index');
+        $api->get('countries', 'Location\CountryController@index');
+        $api->get('states/{country}', 'Location\StateController@index');
     });
 
 //unprotected Routes
