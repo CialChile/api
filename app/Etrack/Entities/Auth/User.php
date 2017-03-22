@@ -71,6 +71,7 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User inCompany()
  * @property \Carbon\Carbon $deleted_at
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User whereDeletedAt($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\MediaLibrary\Media[] $media
  */
 class User extends Authenticatable implements HasMediaConversions
 {

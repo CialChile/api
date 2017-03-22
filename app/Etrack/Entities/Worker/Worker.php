@@ -62,6 +62,7 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
  * @property-read \App\Etrack\Entities\Auth\User $user
  * @property string $zip_code
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Worker\Worker whereZipCode($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\MediaLibrary\Media[] $media
  */
 class Worker extends BaseModel implements HasMediaConversions
 {
