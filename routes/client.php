@@ -22,7 +22,7 @@ $api->version('v1', function ($api) {
     //protected Routes
     $api->group(['prefix' => 'client', 'middleware' => ['api.auth'], 'namespace' => 'App\Http\Controllers'], function ($api) {
         /** @var Router $api */
-        $api->put('user/{id}', 'Client\User\UsersController@update');
+        $api->put('user/{id}', 'Client\Users\UsersController@update');
         $api->post('user/change-password', 'Client\Users\UsersController@changePassword');
         $api->get('permissions', 'Client\Permissions\PermissionsController@index');
 
