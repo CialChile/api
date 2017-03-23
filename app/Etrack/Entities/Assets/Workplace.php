@@ -3,6 +3,7 @@
 namespace App\Etrack\Entities\Assets;
 
 use App\Etrack\Entities\BaseModel;
+use App\Etrack\Entities\Company\Company;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\Builder;
 
@@ -23,6 +24,8 @@ use Illuminate\Database\Query\Builder;
  * @method static Builder|Workplace whereName($value)
  * @method static Builder|Workplace whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Etrack\Entities\Assets\Asset[] $assets
+ * @property-read \App\Etrack\Entities\Company\Company $company
  */
 class Workplace extends BaseModel
 {
@@ -32,5 +35,15 @@ class Workplace extends BaseModel
     protected $dates = [
         'deleted_at'
     ];
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id');
+    }
+
+    public function assets()
+    {
+        return $this->hasMany(Asset::class, 'workplace_id');
+    }
 
 }

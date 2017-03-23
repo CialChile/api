@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Client\User;
+namespace App\Http\Controllers\Client\Users;
 
 use App\Etrack\Entities\Auth\User;
 use App\Etrack\Entities\Worker\Worker;
@@ -14,7 +14,7 @@ use DB;
 use Exception;
 use Yajra\Datatables\Datatables;
 
-class SecureUserController extends Controller
+class SecureUsersController extends Controller
 {
 
     /**

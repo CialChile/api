@@ -1,10 +1,10 @@
 <?php
-namespace App\Http\Controllers\Location;
+namespace App\Http\Controllers\Locations;
 
 use App\Etrack\Transformers\Location\CountryTransformer;
 use App\Http\Controllers\Controller;
 
-class CountryController extends Controller
+class CountriesController extends Controller
 {
 
     public function index()

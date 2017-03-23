@@ -2,6 +2,7 @@
 
 namespace App\Etrack\Entities\Assets;
 
+use App\Etrack\Entities\Company\Company;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\Builder;
@@ -23,6 +24,8 @@ use Illuminate\Database\Query\Builder;
  * @method static Builder|BrandModel whereName($value)
  * @method static Builder|BrandModel whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Etrack\Entities\Assets\Asset[] $assets
+ * @property-read \App\Etrack\Entities\Company\Company $company
  */
 class BrandModel extends Model
 {
@@ -37,5 +40,15 @@ class BrandModel extends Model
     public function brand()
     {
         return $this->belongsTo(Brand::class, 'brand_id');
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id');
+    }
+
+    public function assets()
+    {
+        return $this->hasMany(Asset::class, 'model_id');
     }
 }

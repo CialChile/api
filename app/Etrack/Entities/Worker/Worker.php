@@ -12,6 +12,7 @@ use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
+use Venturecraft\Revisionable\RevisionableTrait;
 
 /**
  * App\Etrack\Entities\Worker\Worker
@@ -63,11 +64,13 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
  * @property string $zip_code
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Worker\Worker whereZipCode($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\MediaLibrary\Media[] $media
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Venturecraft\Revisionable\Revision[] $revisionHistory
  */
 class Worker extends BaseModel implements HasMediaConversions
 {
     use HasMediaTrait;
     use SoftDeletes;
+    use RevisionableTrait;
     protected $casts = [
         'company_id' => 'integer',
         'active'     => 'boolean'
@@ -79,6 +82,12 @@ class Worker extends BaseModel implements HasMediaConversions
         'country', 'address', 'birthday', 'position', 'rut_passport', 'email', 'active'
     ];
     protected $dates = ['birthday', 'deleted_at'];
+
+    protected $revisionEnabled = true;
+    protected $revisionCreationsEnabled = true;
+    protected $dontKeepRevisionOf = array(
+        'birthday'
+    );
 
     public function registerMediaConversions()
     {

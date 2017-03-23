@@ -1,7 +1,7 @@
 <?php
-namespace App\Http\Controllers\Location;
+namespace App\Http\Controllers\Locations;
 
-class StateController
+class StatesController
 {
 
     public function index($country)

@@ -1,12 +1,12 @@
 <?php
-namespace App\Http\Controllers\Client\User;
+namespace App\Http\Controllers\Client\Users;
 
 use App\Etrack\Transformers\Auth\UserTransformer;
 use App\Http\Controllers\Controller;
 use App\Http\Request\User\UserChangePasswordRequest;
 use App\Http\Request\User\UserUpdateRequest;
 
-class UserController extends Controller
+class UsersController extends Controller
 {
 
     public function update(UserUpdateRequest $request, $id)

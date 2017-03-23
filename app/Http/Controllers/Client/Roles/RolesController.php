@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Client\Role;
+namespace App\Http\Controllers\Client\Roles;
 
 use App\Etrack\Entities\Auth\Role;
 use App\Etrack\Repositories\Auth\RoleRepository;
@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Kodeine\Acl\Models\Eloquent\Permission;
 use Yajra\Datatables\Datatables;
 
-class RoleController extends Controller
+class RolesController extends Controller
 {
     /**
      * @var RoleRepository

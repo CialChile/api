@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Client\Worker;
+namespace App\Http\Controllers\Client\Workers;
 
 use App\Etrack\Entities\Worker\Worker;
 use App\Etrack\Repositories\Worker\WorkerRepository;
@@ -12,7 +12,7 @@ use DB;
 use Exception;
 use Yajra\Datatables\Datatables;
 
-class WorkerController extends Controller
+class WorkersController extends Controller
 {
     /**
      * @var WorkerRepository
@@ -55,9 +55,10 @@ class WorkerController extends Controller
         $this->userCan('store');
         $user = $this->loggedInUser();
         $data = $request->all();
-        $data['birthday'] = Carbon::parse($data['birthday']);
+        $data['birthday'] = Carbon::parse($data['birthday'])->toDateString();
         $data['company_id'] = $user->company_id;
-        $data['active'] = $data['active'] ? 1 : 0;
+        $data['active'] = $data['active'] == 'true' ? 1 : 0;
+        $data['medical_information'] = !$data['medical_information'] || $data['medical_information'] == 'null' ? NULL : $data['medical_information'];
         DB::beginTransaction();
         try {
             $worker = $this->workerRepository->create($data);
@@ -83,8 +84,9 @@ class WorkerController extends Controller
             /** @var Worker $worker */
             $worker = $this->workerRepository->find($workerId);
             $data = $request->all();
-            $data['birthday'] = Carbon::parse($data['birthday']);
-            $data['active'] = $data['active'] ? 1 : 0;
+            $data['birthday'] = Carbon::createFromFormat('d/m/Y', $data['birthday'])->toDateString();
+            $data['active'] = $data['active'] == 'true' ? 1 : 0;
+            $data['medical_information'] = !$data['medical_information'] || $data['medical_information'] == 'null' ? NULL : $data['medical_information'];
             $worker->fill($data);
             $worker->save();
             if ($request->hasFile('image')) {

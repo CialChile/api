@@ -67,6 +67,7 @@ use Illuminate\Database\Query\Builder;
  * @method static Builder|Asset whereWorkerId($value)
  * @method static Builder|Asset whereWorkplaceId($value)
  * @mixin \Eloquent
+ * @property-read \App\Etrack\Entities\Assets\BrandModel $brandModel
  */
 class Asset extends BaseModel
 {
@@ -115,7 +116,7 @@ class Asset extends BaseModel
         return $this->belongsTo(Status::class, 'brand_id');
     }
 
-    public function model()
+    public function brandModel()
     {
         return $this->belongsTo(BrandModel::class, 'model_id');
     }

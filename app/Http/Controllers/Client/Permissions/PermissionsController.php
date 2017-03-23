@@ -1,11 +1,11 @@
 <?php
-namespace App\Http\Controllers\Client\Permission;
+namespace App\Http\Controllers\Client\Permissions;
 
 use App\Etrack\Entities\Modules\Ability;
 use App\Etrack\Entities\Modules\Module;
 use App\Http\Controllers\Controller;
 
-class PermissionController extends Controller
+class PermissionsController extends Controller
 {
     public function index()
     {

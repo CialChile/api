@@ -17,8 +17,8 @@ $api->version('v1', function ($api) {
         $api->get('company-fields/datatable', 'Admin\Company\CompanyFieldController@datatable');
         $api->resource('company-fields', 'Admin\Company\CompanyFieldController', ['except' => ['edit', 'create']]);
 
-        $api->get('countries', 'Location\CountryController@index');
-        $api->get('states/{country}', 'Location\StateController@index');
+        $api->get('countries', 'Locations\CountriesController@index');
+        $api->get('states/{country}', 'Locations\StatesController@index');
     });
 
 //unprotected Routes

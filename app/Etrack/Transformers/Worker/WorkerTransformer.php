@@ -18,6 +18,7 @@ class WorkerTransformer extends TransformerAbstract
             'id'                  => $model->id,
             'first_name'          => $model->first_name,
             'last_name'           => $model->last_name,
+            'full_name'           => $model->first_name . ' ' . $model->last_name,
             'email'               => $model->email,
             'birthday'            => $model->birthday ? $model->birthday->format('d/m/Y') : null,
             'rut_passport'        => $model->rut_passport,
