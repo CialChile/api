@@ -41,10 +41,52 @@ class ModulesSeeder extends Seeder
                     'slug' => 'client-security-users'
                 ],
                 'abilities' => ['list', 'show', 'store', 'update', 'destroy']
-            ],[
+            ], [
                 'data'      => [
                     'name' => 'Activos',
                     'slug' => 'client-assets'
+                ],
+                'abilities' => ['list', 'show', 'store', 'update', 'destroy']
+            ],
+            [
+                'data'      => [
+                    'name' => 'Configuración Marcas',
+                    'slug' => 'client-config-assets-brands'
+                ],
+                'abilities' => ['list', 'show', 'store', 'update', 'destroy']
+            ],
+            [
+                'data'      => [
+                    'name' => 'Configuración Modelos',
+                    'slug' => 'client-config-assets-brand-models'
+                ],
+                'abilities' => ['list', 'show', 'store', 'update', 'destroy']
+            ],
+            [
+                'data'      => [
+                    'name' => 'Configuración Categoriás',
+                    'slug' => 'client-config-assets-categories'
+                ],
+                'abilities' => ['list', 'show', 'store', 'update', 'destroy']
+            ],
+            [
+                'data'      => [
+                    'name' => 'Configuración Subcategoriás',
+                    'slug' => 'client-config-assets-subcategories'
+                ],
+                'abilities' => ['list', 'show', 'store', 'update', 'destroy']
+            ],
+            [
+                'data'      => [
+                    'name' => 'Configuración Lugares de Trabajo',
+                    'slug' => 'client-config-assets-workplaces'
+                ],
+                'abilities' => ['list', 'show', 'store', 'update', 'destroy']
+            ],
+            [
+                'data'      => [
+                    'name' => 'Configuración Estados',
+                    'slug' => 'client-config-status'
                 ],
                 'abilities' => ['list', 'show', 'store', 'update', 'destroy']
             ]

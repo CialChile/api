@@ -20,6 +20,7 @@ class AssetTransformer extends TransformerAbstract
         'brand',
         'brandModel',
         'status',
+        'workplace',
         'category',
         'subcategory'
     ];
@@ -34,18 +35,25 @@ class AssetTransformer extends TransformerAbstract
     {
         return [
             'id'                    => (int)$model->id,
+            'worker_id'             => $model->worker_id,
+            'brand_id'              => $model->brand_id,
+            'model_id'              => $model->model_id,
+            'category_id'           => $model->category_id,
+            'sub_category_id'       => $model->sub_category_id,
+            'workplace_id'          => $model->workplace_id,
+            'status_id'             => $model->status_id,
+            'sku'                   => $model->sku,
+            'name'                  => $model->name,
             'tag_rfid'              => $model->tag_rfid,
             'location'              => $model->location,
-            'sku'                   => $model->sku,
             'serial'                => $model->serial,
             'validity_time'         => $model->validity_time,
-            'integration_date'      => $model->integration_date,
-            'end_service_life_date' => $model->end_service_life_date,
-            'warranty_date'         => $model->warranty_date,
-            'disincorporation_date' => $model->disincorporation_date,
+            'integration_date'      => $model->integration_date ? $model->integration_date->format('d/m/Y') : null,
+            'end_service_life_date' => $model->end_service_life_date ? $model->end_service_life_date->format('d/m/Y') : null,
+            'warranty_date'         => $model->warranty_date ? $model->warranty_date->format('d/m/Y') : null,
+            'disincorporation_date' => $model->disincorporation_date ? $model->disincorporation_date->format('d/m/Y') : null,
             'custom_fields'         => $model->custom_fields,
-            'created_at'            => $model->created_at,
-            'updated_at'            => $model->updated_at
+            'created_at'            => $model->created_at ? $model->created_at->format('d/m/Y') : null,
         ];
     }
 
@@ -89,6 +97,12 @@ class AssetTransformer extends TransformerAbstract
     public function includeCategory(Asset $model)
     {
         return $this->item($model->category, new CategoryTransformer(), 'parent');
+
+    }
+
+    public function includeWorkplace(Asset $model)
+    {
+        return $this->item($model->workplace, new WorkplaceTransformer(), 'parent');
 
     }
 

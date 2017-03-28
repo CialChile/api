@@ -32,7 +32,7 @@ use Illuminate\Database\Query\Builder;
 class Status extends BaseModel
 {
     use SoftDeletes;
-    protected $fillable = ['name', 'type'];
+    protected $fillable = ['name', 'type', 'company_id'];
     protected $table = 'status';
     protected $casts = [
         'type' => 'integer'

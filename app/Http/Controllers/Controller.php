@@ -7,6 +7,7 @@ use App\Etrack\Entities\Modules\Module;
 use App\Exceptions\Permissions\PermissionException;
 use Dingo\Api\Routing\Helpers;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -17,7 +18,7 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests, Helpers;
 
     public $module;
-    public $loggeduser;
+    public $loggedUser;
 
     public function userCan($permissions, $module = null)
     {
@@ -25,19 +26,25 @@ class Controller extends BaseController
             throw new Exception('Debe establecer la variable module en el controlador');
         }
 
-        if (!str_contains($this->module, 'especial')) {
+        if (!str_contains($this->module, 'special')) {
             $module = Module::with('relatedModules')->where('slug', $this->module)->first();
 
             if (!$module) {
                 throw new Exception('El modulo establecido en el controlador no se ha encontrado');
             }
 
+            /** @var Collection $relatedModules */
             $relatedModules = $module->relatedModules;
             $relatedModules->each(function ($relatedModule) use (&$permissions) {
                 if (is_array($permissions)) {
-                    array_push($permissions, 'see.' . $relatedModule->slug);
+                    if ($permissions[0] == 'list') {
+                        array_push($permissions, 'show.' . $relatedModule->slug);
+                        array_push($permissions, 'store.' . $relatedModule->slug);
+                        array_push($permissions, 'update.' . $relatedModule->slug);
+                    }
                 } else {
-                    $permissions .= '|see.' . $relatedModule->slug;
+                    if ($permissions == 'list')
+                        $permissions .= '|show.' . $relatedModule->slug . '|store.' . $relatedModule->slug . '|update.' . $relatedModule->slug;
                 }
             });
         }
@@ -76,10 +83,10 @@ class Controller extends BaseController
 
     public function loggedInUser():User
     {
-        if (!$this->loggeduser) {
-            $this->loggeduser = \JWTAuth::parseToken()->authenticate();
+        if (!$this->loggedUser) {
+            $this->loggedUser = \JWTAuth::parseToken()->authenticate();
         }
-        return $this->loggeduser;
+        return $this->loggedUser;
     }
 
 }

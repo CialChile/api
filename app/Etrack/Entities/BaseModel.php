@@ -15,7 +15,7 @@ class BaseModel extends Model
     public function scopeInCompany($query)
     {
         $company_id = \Auth::user()->company_id;
-        return $query->where('company_id', $company_id);
+        return $query->where($this->getTable() . '.company_id', $company_id);
     }
 
 }

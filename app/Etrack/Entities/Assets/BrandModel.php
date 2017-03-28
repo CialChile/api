@@ -30,7 +30,7 @@ use Illuminate\Database\Query\Builder;
 class BrandModel extends Model
 {
     use SoftDeletes;
-    protected $table = 'model';
+    protected $table = 'models';
     protected $fillable = ['name', 'brand_id'];
 
     protected $dates = [

@@ -26,11 +26,6 @@ $api->version('v1', function ($api) {
         $api->post('user/change-password', 'Client\Users\UsersController@changePassword');
         $api->get('permissions', 'Client\Permissions\PermissionsController@index');
 
-        $api->get('workers/datatable', 'Client\Workers\WorkersController@datatable');
-        $api->resource('workers', 'Client\Workers\WorkersController', ['except' => ['edit', 'create']]);
-
-        $api->get('assets/datatable', 'Client\Assets\AssetsController@datatable');
-
         $api->get('roles/datatable', 'Client\Roles\RolesController@datatable');
         $api->resource('roles', 'Client\Roles\RolesController', ['except' => ['edit', 'create']]);
 

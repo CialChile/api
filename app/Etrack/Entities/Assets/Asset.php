@@ -6,8 +6,12 @@ use App\Etrack\Entities\BaseModel;
 use App\Etrack\Entities\Company\Company;
 use App\Etrack\Entities\Status;
 use App\Etrack\Entities\Worker\Worker;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\Builder;
+use Spatie\Image\Manipulations;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
 /**
  * App\Etrack\Entities\Assets\Asset
@@ -68,15 +72,18 @@ use Illuminate\Database\Query\Builder;
  * @method static Builder|Asset whereWorkplaceId($value)
  * @mixin \Eloquent
  * @property-read \App\Etrack\Entities\Assets\BrandModel $brandModel
+ * @property string $name
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Etrack\Entities\Worker\Worker[] $workers
+ * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Assets\Asset whereName($value)
  */
-class Asset extends BaseModel
+class Asset extends BaseModel implements HasMediaConversions
 {
-
+    use HasMediaTrait;
     use SoftDeletes;
     protected $fillable = [
-        'company_id', 'worker_id', 'status_id', 'brand_id', 'model_id', 'category_id',
+        'company_id', 'worker_id', 'status_id', 'workplace_id', 'brand_id', 'model_id', 'category_id',
         'sub_category_id', 'tag_rfid', 'location', 'sku', 'serial', 'validity_time',
-        'integration_date', 'end_service_life_date',
+        'integration_date', 'end_service_life_date', 'name',
         'warranty_date', 'disincorporation_date', 'custom_fields'
     ];
 
@@ -96,6 +103,23 @@ class Asset extends BaseModel
         'custom_fields'   => 'array',
     ];
 
+    public function registerMediaConversions()
+    {
+        $this->addMediaConversion('large')
+            ->fit(Manipulations::FIT_CONTAIN, 800, 450)
+            ->performOnCollections('cover', 'images');
+
+        $this->addMediaConversion('normal')
+            ->fit(Manipulations::FIT_CONTAIN, 400, 225)
+            ->performOnCollections('cover', 'images');
+
+        $this->addMediaConversion('thumbnail')
+            ->fit(Manipulations::FIT_CONTAIN, 133, 75)
+            ->performOnCollections('cover', 'images');
+
+
+    }
+
     public function company()
     {
         return $this->belongsTo(Company::class);
@@ -106,6 +130,11 @@ class Asset extends BaseModel
         return $this->belongsTo(Worker::class, 'worker_id');
     }
 
+    public function workers()
+    {
+        return $this->belongsToMany(Worker::class, 'assets_workers', 'asset_id', 'worker_id')->withPivot(['assign_date', 'unassign_date']);
+    }
+
     public function status()
     {
         return $this->belongsTo(Status::class, 'status_id');
@@ -113,7 +142,7 @@ class Asset extends BaseModel
 
     public function brand()
     {
-        return $this->belongsTo(Status::class, 'brand_id');
+        return $this->belongsTo(Brand::class, 'brand_id');
     }
 
     public function brandModel()
@@ -129,6 +158,43 @@ class Asset extends BaseModel
     public function subcategory()
     {
         return $this->belongsTo(Subcategory::class, 'sub_category_id');
+    }
+
+    public function workplace()
+    {
+        return $this->belongsTo(Workplace::class, 'workplace_id');
+    }
+
+    public function setIntegrationDateAttribute($value)
+    {
+        $this->attributes['integration_date'] = $this->getDate($value);
+    }
+
+    public function setEndServiceLifeDateAttribute($value)
+    {
+        $this->attributes['end_service_life_date'] = $this->getDate($value);
+    }
+
+    public function setWarrantyDateAttribute($value)
+    {
+        $this->attributes['warranty_date'] = $this->getDate($value);
+    }
+
+    public function setDisincorporationDateAttribute($value)
+    {
+        $this->attributes['disincorporation_date'] = $this->getDate($value);
+    }
+
+    private function getDate($value)
+    {
+        if ($value == 'null' || !$value) {
+            return null;
+        }
+
+        if ($value instanceof Carbon) {
+            return $value;
+        }
+        return Carbon::parse($value);
     }
 
 }

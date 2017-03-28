@@ -26,8 +26,10 @@ class CategoryTransformer extends TransformerAbstract
     public function transform(Category $model)
     {
         return [
-            'id'   => (int)$model->id,
-            'name' => $model->name,
+            'id'                   => (int)$model->id,
+            'name'                 => $model->name,
+            'custom_fields_config' => $model->custom_fields_config,
+            'created_at'           => $model->created_at ? $model->created_at->format('d/m/Y') : null,
         ];
     }
 

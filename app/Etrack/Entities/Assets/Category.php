@@ -27,11 +27,15 @@ use Illuminate\Database\Query\Builder;
  * @property-read \App\Etrack\Entities\Company\Company $company
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\BaseModel inCompany()
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Assets\Category whereCompanyId($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Etrack\Entities\Assets\Subcategory[] $subcategories
  */
 class Category extends BaseModel
 {
     use SoftDeletes;
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'company_id','custom_fields_config'];
+    protected $casts = [
+        'custom_fields_config' => 'array',
+    ];
 
     protected $dates = [
         'deleted_at'
@@ -45,6 +49,11 @@ class Category extends BaseModel
     public function assets()
     {
         return $this->hasMany(Asset::class, 'category_id');
+    }
+
+    public function subcategories()
+    {
+        return $this->hasMany(Subcategory::class, 'category_id');
     }
 
 }

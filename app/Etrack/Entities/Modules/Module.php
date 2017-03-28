@@ -32,6 +32,6 @@ class Module extends Model
 
     public function relatedModules()
     {
-        return $this->belongsToMany(Module::class, 'modules_relations', 'related_module_id', 'module_id');
+        return $this->belongsToMany(Module::class, 'modules_relations', 'module_id','related_module_id');
     }
 }

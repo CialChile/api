@@ -26,8 +26,9 @@ class WorkplaceTransformer extends TransformerAbstract
     public function transform(Workplace $model)
     {
         return [
-            'id'   => (int)$model->id,
-            'name' => $model->name,
+            'id'         => (int)$model->id,
+            'name'       => $model->name,
+            'created_at' => $model->created_at ? $model->created_at->format('d/m/Y') : null,
         ];
     }
 

@@ -1,0 +1,44 @@
+<?php
+
+namespace App\Http\Request\Asset;
+
+
+use App\Etrack\Entities\Assets\Asset;
+use Dingo\Api\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
+class AssetUpdateRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            'sku'                   => [Rule::unique('assets', 'sku')->ignore($this->route('asset')),
+                                        'required'],
+            'name'                  => 'required',
+            'category_id'           => 'required',
+            'brand_id'              => 'required',
+            'workplace_id'          => 'required',
+            'worker_id'             => 'required',
+            'status_id'             => 'required',
+            'serial'                => 'required',
+            'validity_time'         => 'required',
+            'integration_date'      => 'required',
+            'end_service_life_date' => 'required',
+        ];
+    }
+}

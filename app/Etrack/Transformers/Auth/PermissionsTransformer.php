@@ -34,6 +34,13 @@ class PermissionsTransformer extends TransformerAbstract
         }
 
         if ($resultPermissions->contains(function ($value, $key) {
+            return str_contains($value, 'config');
+        })
+        ) {
+            $resultPermissions->push('client-configuration');
+        }
+
+        if ($resultPermissions->contains(function ($value, $key) {
             return str_contains($value, 'security');
         })
         ) {

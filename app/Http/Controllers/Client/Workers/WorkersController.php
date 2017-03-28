@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Client\Workers;
 
 use App\Etrack\Entities\Worker\Worker;
 use App\Etrack\Repositories\Worker\WorkerRepository;
+use App\Etrack\Transformers\Asset\WorkplaceTransformer;
 use App\Etrack\Transformers\Worker\WorkerTransformer;
 use App\Http\Controllers\Controller;
 use App\Http\Request\Worker\WorkerStoreRequest;
@@ -46,8 +47,12 @@ class WorkersController extends Controller
     public function show($workerId)
     {
         $this->userCan('show');
-        return $this->response->item($this->workerRepository->find($workerId), new WorkerTransformer());
+        $worker = Worker::inCompany()->find($workerId);
+        if (!$worker) {
+            $this->response->errorForbidden('No tienes permiso para ver este trabajador');
+        }
 
+        return $this->response->item($worker, new WorkerTransformer());
     }
 
     public function store(WorkerStoreRequest $request)
@@ -78,12 +83,17 @@ class WorkersController extends Controller
     public function update(WorkerUpdateRequest $request, $workerId)
     {
         $this->userCan('update');
-        //  dd($request->hasFile('image') ? 'si' : 'no');
+        $user = $this->loggedInUser();
+        /** @var Worker $worker */
+        $worker = Worker::inCompany()->find($workerId);
+        if (!$worker) {
+            $this->response->errorForbidden('No tiene permiso para actualizar este trabajador');
+        }
+
         DB::beginTransaction();
         try {
-            /** @var Worker $worker */
-            $worker = $this->workerRepository->find($workerId);
             $data = $request->all();
+            $data['company_id'] = $user->company_id;
             $data['birthday'] = Carbon::createFromFormat('d/m/Y', $data['birthday'])->toDateString();
             $data['active'] = $data['active'] == 'true' ? 1 : 0;
             $data['medical_information'] = !$data['medical_information'] || $data['medical_information'] == 'null' ? NULL : $data['medical_information'];
@@ -131,6 +141,17 @@ class WorkersController extends Controller
         DB::commit();
         return response()->json(['message' => 'Trabajador Eliminado con Exito']);
 
+    }
+
+    public function searchByName($name = '')
+    {
+        $workers = Worker::inCompany();
+        if ($name) {
+            $workers->whereRaw("CONCAT(workers.first_name,' ',workers.last_name)  like ?", ["%{$name}%"]);
+        }
+
+        $workers = $workers->take(10)->get();
+        return $this->response->collection($workers, new WorkerTransformer());
     }
 
 }

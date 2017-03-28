@@ -14,7 +14,8 @@ class SubcategoryTransformer extends TransformerAbstract
 {
     protected $availableIncludes = [
         'company',
-        'assets'
+        'assets',
+        'category'
     ];
 
     /**
@@ -27,8 +28,9 @@ class SubcategoryTransformer extends TransformerAbstract
     {
         return [
             'id'          => (int)$model->id,
-            'category_id' => (int)$model->id,
+            'category_id' => (int)$model->category_id,
             'name'        => $model->name,
+            'created_at'  => $model->created_at ? $model->created_at->format('d/m/Y') : null,
         ];
     }
 
@@ -40,5 +42,10 @@ class SubcategoryTransformer extends TransformerAbstract
     public function includeAssets(Subcategory $model)
     {
         return $this->collection($model->assets, new AssetTransformer(), 'parent');
+    }
+
+    public function includeCategory(Subcategory $model)
+    {
+        return $this->item($model->category, new CategoryTransformer(), 'parent');
     }
 }

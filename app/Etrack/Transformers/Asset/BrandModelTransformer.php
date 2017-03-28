@@ -14,7 +14,8 @@ class BrandModelTransformer extends TransformerAbstract
 {
     protected $availableIncludes = [
         'company',
-        'assets'
+        'assets',
+        'brand'
     ];
 
     /**
@@ -26,9 +27,10 @@ class BrandModelTransformer extends TransformerAbstract
     public function transform(BrandModel $model)
     {
         return [
-            'id'       => (int)$model->id,
-            'brand_id' => (int)$model->brand_id,
-            'name'     => $model->name,
+            'id'         => (int)$model->id,
+            'brand_id'   => (int)$model->brand_id,
+            'name'       => $model->name,
+            'created_at' => $model->created_at ? $model->created_at->format('d/m/Y') : null
         ];
     }
 
@@ -40,5 +42,10 @@ class BrandModelTransformer extends TransformerAbstract
     public function includeAssets(BrandModel $model)
     {
         return $this->collection($model->assets, new AssetTransformer(), 'parent');
+    }
+
+    public function includeBrand(BrandModel $model)
+    {
+        return $this->item($model->brand, new BrandTransformer(), 'parent');
     }
 }

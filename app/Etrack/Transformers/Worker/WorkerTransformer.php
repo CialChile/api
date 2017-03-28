@@ -14,6 +14,7 @@ class WorkerTransformer extends TransformerAbstract
     public function transform(Worker $model)
     {
         $profilePicture = $model->getFirstMediaUrl('profile', 'normal');
+        $profilePictureThumb = $model->getFirstMediaUrl('profile', 'thumbnail');
         return [
             'id'                  => $model->id,
             'first_name'          => $model->first_name,
@@ -33,7 +34,8 @@ class WorkerTransformer extends TransformerAbstract
             'emergency_contact'   => $model->emergency_contact,
             'medical_information' => $model->medical_information,
             'active'              => $model->active,
-            'image'               => $profilePicture ? env('APP_URL') . $profilePicture : null
+            'image'               => $profilePicture ? env('APP_URL') . $profilePicture : null,
+            'thumbnail'           => $profilePictureThumb ? env('APP_URL') . $profilePictureThumb : null
         ];
     }
 

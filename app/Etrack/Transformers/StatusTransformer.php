@@ -28,9 +28,10 @@ class StatusTransformer extends TransformerAbstract
     public function transform(Status $model)
     {
         return [
-            'id'   => (int)$model->id,
-            'name' => $model->name,
-            'type' => $model->type,
+            'id'         => (int)$model->id,
+            'name'       => $model->name,
+            'type'       => $model->type,
+            'created_at' => $model->created_at ? $model->created_at->format('d/m/Y') : null
         ];
     }
 
