@@ -20,6 +20,7 @@ class ActivityTransformer extends TransformerAbstract
         'measure_unit',
         'template'
     ];
+
     /**
      * Transform the \Activity entity
      * @param Activity $model
@@ -29,23 +30,23 @@ class ActivityTransformer extends TransformerAbstract
     public function transform(Activity $model)
     {
         return [
-            'id'                => (int) $model->id,
-            'company_id'        => $model->company_id,
-            'program_type_id'   => $model->program_type_id,
-            'measure_unit_id'   => $model->measure_unit_id,
-            'template_id'       => $model->template_id,
-            'number'            => $model->number,
-            'name'              => $model->name,
-            'description'       => $model->description,
-            'process_type'      => $model->process_type,
-            'estimated_time'     => $model->estimated_time,
-            'start_date'        => $model->start_date ? $model->start_date->format('d/m/Y') : null,
-            'end_date'          => $model->end_date ? $model->end_date->format('d/m/Y') : null,
-            'start_hour'        => $model->start_hour,
-            'end_hour'          => $model->end_hour,
-            'validity'          => $model->validity,
-            'created_at'        => $model->created_at ? $model->created_at->format('d/m/Y') : null,
-            'updated_at'        => $model->updated_at
+            'id'              => (int)$model->id,
+            'company_id'      => $model->company_id,
+            'program_type_id' => $model->program_type_id,
+            'measure_unit_id' => $model->measure_unit_id,
+            'template_id'     => $model->template_id,
+            'number'          => $model->number,
+            'name'            => $model->name,
+            'description'     => $model->description,
+            'process_type'    => $model->process_type,
+            'estimated_time'  => $model->estimated_time,
+            'start_date'      => $model->start_date ? $model->start_date->format('d/m/Y') : null,
+            'end_date'        => $model->end_date ? $model->end_date->format('d/m/Y') : null,
+            'start_hour'      => $model->start_hour,
+            'end_hour'        => $model->end_hour,
+            'validity'        => $model->validity,
+            'created_at'      => $model->created_at ? $model->created_at->format('d/m/Y') : null,
+            'updated_at'      => $model->updated_at ? $model->updated_at->format('d/m/Y') : null,
         ];
     }
 

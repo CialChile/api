@@ -52,29 +52,26 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \App\Etrack\Entities\Activity\ProgramType $programType
  * @property-read \App\Etrack\Entities\Template\Template $template
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\BaseModel inCompany()
+ * @property int $estimated_time
+ * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\Activity whereEstimatedTime($value)
  */
 class Activity extends BaseModel
 {
     use SoftDeletes;
 
-    protected $fillable = ['company_id',
-                           'program_type_id',
-                           'measure_unit_id',
-                           'template_id',
-                           'number',
-                           'name',
-                           'description',
-                           'process_type',
-                           'stimated_time',
-                           'start_date',
-                           'end_date',
-                           'start_hour',
-                           'end_hour',
-                           'validity'];
+    protected $fillable = [
+        'company_id', 'program_type_id', 'measure_unit_id',
+        'template_id', 'number', 'name',
+        'description', 'process_type', 'estimated_time',
+        'start_date', 'end_date', 'start_hour',
+        'end_hour', 'validity'
+    ];
 
-    protected $dates = ['start_date',
-                        'end_date',
-                        'deleted_at'];
+    protected $dates = [
+        'start_date',
+        'end_date',
+        'deleted_at'
+    ];
 
     public function programType()
     {

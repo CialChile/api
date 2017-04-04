@@ -27,8 +27,8 @@ class SpecialityTransformer extends TransformerAbstract
             'id'         => (int) $model->id,
             'company_id' => $model->company_id,
             'name'       => $model->name,
-            'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at
+            'created_at' => $model->created_at ? $model->created_at->format('d/m/Y') : null,
+            'updated_at' => $model->updated_at ? $model->updated_at->format('d/m/Y') : null,
         ];
     }
 

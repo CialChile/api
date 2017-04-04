@@ -15,6 +15,7 @@ class TemplateTypeTransformer extends TransformerAbstract
     protected $availableIncludes = [
         'company'
     ];
+
     /**
      * Transform the \TemplateType entity
      * @param TemplateType $model
@@ -24,11 +25,11 @@ class TemplateTypeTransformer extends TransformerAbstract
     public function transform(TemplateType $model)
     {
         return [
-            'id'          => (int) $model->id,
-            'company_id'  => $model->company_id,
-            'name'        => $model->name,
-            'created_at'  => $model->created_at,
-            'updated_at'  => $model->updated_at
+            'id'         => (int)$model->id,
+            'company_id' => $model->company_id,
+            'name'       => $model->name,
+            'created_at' => $model->created_at ? $model->created_at->format('d/m/Y') : null,
+            'updated_at' => $model->updated_at ? $model->updated_at->format('d/m/Y') : null,
         ];
     }
 

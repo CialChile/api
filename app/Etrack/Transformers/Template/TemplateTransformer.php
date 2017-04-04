@@ -44,8 +44,8 @@ class TemplateTransformer extends TransformerAbstract
             'name_activity'            => $model->name_activity,
             'description_activity'     => $model->description_activity,
             'execution_estimated_time' => $model->execution_estimated_time,
-            'created_at'               => $model->created_at,
-            'updated_at'               => $model->updated_at
+            'created_at'               => $model->created_at ? $model->created_at->format('d/m/Y') : null,
+            'updated_at'               => $model->updated_at ? $model->updated_at->format('d/m/Y') : null,
         ];
     }
 

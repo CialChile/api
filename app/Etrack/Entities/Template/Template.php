@@ -47,23 +47,23 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \App\Etrack\Entities\Activity\ProgramType $programType
  * @property-read \App\Etrack\Entities\Template\TemplateType $templateType
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\BaseModel inCompany()
+ * @property int $execution_estimated_time
+ * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Template\Template whereExecutionEstimatedTime($value)
  */
 class Template extends BaseModel
 {
     use SoftDeletes;
 
-    protected $fillable = ['company_id',
-                           'template_type_id',
-                           'program_type_id',
-                           'measure_unit_id',
-                           'frequency_id',
-                           'periodicity_id',
-                           'name_template',
-                           'name_activity',
-                           'description_activity',
-                           'execution_stimated_time'];
+    protected $fillable = [
+        'company_id', 'template_type_id', 'program_type_id',
+        'measure_unit_id', 'frequency_id', 'periodicity_id',
+        'name_template', 'name_activity', 'description_activity',
+        'execution_estimated_time'
+    ];
 
-    protected $dates = ['deleted_at'];
+    protected $dates = [
+        'deleted_at'
+    ];
 
     public function frequency()
     {
