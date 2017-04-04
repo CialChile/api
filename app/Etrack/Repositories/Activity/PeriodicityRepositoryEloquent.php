@@ -4,9 +4,7 @@ namespace App\Etrack\Repositories\Activity;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Etrack\Repositories\Activity\PeriodicityRepository;
 use App\Etrack\Entities\Activity\Periodicity;
-use App\Etrack\Validators\Activity\PeriodicityValidator;
 
 /**
  * Class PeriodicityRepositoryEloquent

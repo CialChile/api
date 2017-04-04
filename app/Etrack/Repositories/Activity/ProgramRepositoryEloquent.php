@@ -4,9 +4,7 @@ namespace App\Etrack\Repositories\Activity;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Etrack\Repositories\Activity\ProgramRepository;
 use App\Etrack\Entities\Activity\Program;
-use App\Etrack\Validators\Activity\ProgramValidator;
 
 /**
  * Class ProgramRepositoryEloquent

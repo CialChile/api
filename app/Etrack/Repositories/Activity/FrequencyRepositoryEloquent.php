@@ -4,9 +4,7 @@ namespace App\Etrack\Repositories\Activity;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Etrack\Repositories\Activity\FrequencyRepository;
 use App\Etrack\Entities\Activity\Frequency;
-use App\Etrack\Validators\Activity\FrequencyValidator;
 
 /**
  * Class FrequencyRepositoryEloquent

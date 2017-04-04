@@ -4,9 +4,7 @@ namespace App\Etrack\Repositories\Template;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Etrack\Repositories\Template\PositionRepository;
 use App\Etrack\Entities\Template\Position;
-use App\Etrack\Validators\Template\PositionValidator;
 
 /**
  * Class PositionRepositoryEloquent

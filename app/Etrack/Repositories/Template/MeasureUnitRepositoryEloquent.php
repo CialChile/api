@@ -4,9 +4,7 @@ namespace App\Etrack\Repositories\Template;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Etrack\Repositories\Template\MeasureUnitRepository;
 use App\Etrack\Entities\Template\MeasureUnit;
-use App\Etrack\Validators\Template\MeasureUnitValidator;
 
 /**
  * Class MeasureUnitRepositoryEloquent

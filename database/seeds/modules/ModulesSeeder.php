@@ -96,6 +96,48 @@ class ModulesSeeder extends Seeder
                     'slug' => 'client-config-status'
                 ],
                 'abilities' => ['list', 'show', 'store', 'update', 'destroy']
+            ],
+            [
+                'data'      => [
+                    'name' => 'Actividades',
+                    'slug' => 'client-activities'
+                ],
+                'abilities' => ['list', 'show', 'store', 'update', 'destroy']
+            ],
+            [
+                'data'      => [
+                    'name' => 'Plantillas',
+                    'slug' => 'client-templates'
+                ],
+                'abilities' => ['list', 'show', 'store', 'update', 'destroy']
+            ],
+            [
+                'data'      => [
+                    'name' => 'Plantillas',
+                    'slug' => 'client-activities-templates'
+                ],
+                'abilities' => ['list', 'show', 'store', 'update', 'destroy']
+            ],
+            [
+                'data'      => [
+                    'name' => 'Tipos de Programa',
+                    'slug' => 'client-activities-program-types'
+                ],
+                'abilities' => ['list', 'show', 'store', 'update', 'destroy']
+            ],
+            [
+                'data'      => [
+                    'name' => 'Unidades de Medida',
+                    'slug' => 'client-activities-measure-unit'
+                ],
+                'abilities' => ['list', 'show', 'store', 'update', 'destroy']
+            ],
+            [
+                'data'      => [
+                    'name' => 'Frecuencias',
+                    'slug' => 'client-activities-frequencies'
+                ],
+                'abilities' => ['list', 'show', 'store', 'update', 'destroy']
             ]
         ]);
         $modules->each(function ($module) {
