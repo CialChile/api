@@ -2,6 +2,7 @@
 
 namespace App\Etrack\Transformers\Activity;
 
+use App\Etrack\Transformers\Company\CompanyTransformer;
 use League\Fractal\TransformerAbstract;
 use App\Etrack\Entities\Activity\ProgramType;
 
@@ -16,7 +17,7 @@ class ProgramTypeTransformer extends TransformerAbstract
     ];
     /**
      * Transform the \ProgramType entity
-     * @param \ProgramType $model
+     * @param ProgramType $model
      *
      * @return array
      */

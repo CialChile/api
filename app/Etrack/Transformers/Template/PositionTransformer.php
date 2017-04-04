@@ -2,6 +2,7 @@
 
 namespace App\Etrack\Transformers\Template;
 
+use App\Etrack\Transformers\Company\CompanyTransformer;
 use League\Fractal\TransformerAbstract;
 use App\Etrack\Entities\Template\Position;
 
@@ -16,7 +17,7 @@ class PositionTransformer extends TransformerAbstract
     ];
     /**
      * Transform the \Position entity
-     * @param \Position $model
+     * @param Position $model
      *
      * @return array
      */

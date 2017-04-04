@@ -2,6 +2,7 @@
 
 namespace App\Etrack\Transformers\Template;
 
+use App\Etrack\Transformers\Company\CompanyTransformer;
 use League\Fractal\TransformerAbstract;
 use App\Etrack\Entities\Template\Speciality;
 
@@ -16,7 +17,7 @@ class SpecialityTransformer extends TransformerAbstract
     ];
     /**
      * Transform the \Speciality entity
-     * @param \Speciality $model
+     * @param Speciality $model
      *
      * @return array
      */

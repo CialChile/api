@@ -28,6 +28,8 @@ use Illuminate\Database\Query\Builder;
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\BaseModel inCompany()
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Assets\Category whereCompanyId($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Etrack\Entities\Assets\Subcategory[] $subcategories
+ * @property array $custom_fields_config
+ * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Assets\Category whereCustomFieldsConfig($value)
  */
 class Category extends BaseModel
 {

@@ -2,6 +2,7 @@
 
 namespace App\Etrack\Transformers\Activity;
 
+use App\Etrack\Transformers\Company\CompanyTransformer;
 use League\Fractal\TransformerAbstract;
 use App\Etrack\Entities\Activity\Frequency;
 
@@ -16,7 +17,7 @@ class FrequencyTransformer extends TransformerAbstract
     ];
     /**
      * Transform the \Frequency entity
-     * @param \Frequency $model
+     * @param Frequency $model
      *
      * @return array
      */

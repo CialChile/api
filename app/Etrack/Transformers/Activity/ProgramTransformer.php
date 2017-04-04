@@ -17,7 +17,7 @@ class ProgramTransformer extends TransformerAbstract
     ];
     /**
      * Transform the \Program entity
-     * @param \Program $model
+     * @param Program $model
      *
      * @return array
      */

@@ -2,6 +2,9 @@
 
 namespace App\Etrack\Transformers\Activity;
 
+use App\Etrack\Transformers\Company\CompanyTransformer;
+use App\Etrack\Transformers\Template\MeasureUnitTransformer;
+use App\Etrack\Transformers\Template\TemplateTransformer;
 use League\Fractal\TransformerAbstract;
 use App\Etrack\Entities\Activity\Activity;
 
@@ -19,7 +22,7 @@ class ActivityTransformer extends TransformerAbstract
     ];
     /**
      * Transform the \Activity entity
-     * @param \Activity $model
+     * @param Activity $model
      *
      * @return array
      */
@@ -35,7 +38,7 @@ class ActivityTransformer extends TransformerAbstract
             'name'              => $model->name,
             'description'       => $model->description,
             'process_type'      => $model->process_type,
-            'stimated_time'     => $model->stimated_time,
+            'estimated_time'     => $model->estimated_time,
             'start_date'        => $model->start_date ? $model->start_date->format('d/m/Y') : null,
             'end_date'          => $model->end_date ? $model->end_date->format('d/m/Y') : null,
             'start_hour'        => $model->start_hour,
@@ -53,13 +56,13 @@ class ActivityTransformer extends TransformerAbstract
 
     public function includeProgramType(Activity $model)
     {
-        return $this->item($model->program_type, new ProgramTypeTransformer(), 'parent');
+        return $this->item($model->programType, new ProgramTypeTransformer(), 'parent');
 
     }
 
     public function includeMeasureUnit(Activity $model)
     {
-        return $this->item($model->measure_unit, new MeasureUnitTransformer(), 'parent');
+        return $this->item($model->measureUnit, new MeasureUnitTransformer(), 'parent');
 
     }
 

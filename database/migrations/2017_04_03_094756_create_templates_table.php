@@ -24,7 +24,7 @@ class CreateTemplatesTable extends Migration
             $table->string('name_template')->nullable();
             $table->string('name_activity')->nullable();
             $table->string('description_activity')->nullable();
-            $table->integer('execution_stimated_time')->nullable();
+            $table->integer('execution_estimated_time')->nullable();
             $table->foreign('company_id')->references('id')->on('companies');
             $table->foreign('template_type_id')->references('id')->on('template_types');
             $table->foreign('program_type_id')->references('id')->on('program_types');

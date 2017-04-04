@@ -75,6 +75,8 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
  * @property string $name
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Etrack\Entities\Worker\Worker[] $workers
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Assets\Asset whereName($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\MediaLibrary\Media[] $media
+ * @property-read \App\Etrack\Entities\Assets\Workplace $workplace
  */
 class Asset extends BaseModel implements HasMediaConversions
 {

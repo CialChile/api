@@ -23,7 +23,7 @@ class CreateActivitiesTable extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->json('process_type')->nullable();
-            $table->integer('stimated_time')->nullable();
+            $table->integer('estimated_time')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->time('start_hour')->nullable();

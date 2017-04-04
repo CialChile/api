@@ -2,6 +2,7 @@
 
 namespace App\Etrack\Transformers\Activity;
 
+use App\Etrack\Transformers\Company\CompanyTransformer;
 use League\Fractal\TransformerAbstract;
 use App\Etrack\Entities\Activity\Periodicity;
 
@@ -16,7 +17,7 @@ class PeriodicityTransformer extends TransformerAbstract
     ];
     /**
      * Transform the \Periodicity entity
-     * @param \Periodicity $model
+     * @param Periodicity $model
      *
      * @return array
      */

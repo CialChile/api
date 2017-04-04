@@ -14,7 +14,7 @@ class MeasureUnitTransformer extends TransformerAbstract
 
     /**
      * Transform the \MeasureUnit entity
-     * @param \MeasureUnit $model
+     * @param MeasureUnit $model
      *
      * @return array
      */

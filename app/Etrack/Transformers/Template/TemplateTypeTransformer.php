@@ -2,6 +2,7 @@
 
 namespace App\Etrack\Transformers\Template;
 
+use App\Etrack\Transformers\Company\CompanyTransformer;
 use League\Fractal\TransformerAbstract;
 use App\Etrack\Entities\Template\TemplateType;
 
@@ -16,7 +17,7 @@ class TemplateTypeTransformer extends TransformerAbstract
     ];
     /**
      * Transform the \TemplateType entity
-     * @param \TemplateType $model
+     * @param TemplateType $model
      *
      * @return array
      */

@@ -1,6 +1,7 @@
 <?php
 namespace App\Etrack\Entities;
 
+use App\Etrack\Entities\Company\Company;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -8,9 +9,15 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\BaseModel inCompany()
  * @mixin \Eloquent
+ * @property-read \App\Etrack\Entities\Company\Company $company
  */
 class BaseModel extends Model
 {
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id');
+    }
 
     public function scopeInCompany($query)
     {
