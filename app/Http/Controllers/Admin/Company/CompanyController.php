@@ -9,6 +9,8 @@ use App\Etrack\Transformers\Company\CompanyTransformer;
 use App\Http\Controllers\Controller;
 use App\Http\Request\Company\CompanyStoreRequest;
 use App\Http\Request\Company\CompanyUpdateRequest;
+use DB;
+use Dotenv\Exception\ValidationException;
 use Yajra\Datatables\Datatables;
 
 class CompanyController extends Controller
@@ -63,9 +65,11 @@ class CompanyController extends Controller
         $data['active'] = true;
         $userData = $data['responsible'];
         unset($data['responsible']);
+        DB::beginTransaction();
         $company = $this->companyRepository->create($data);
         $worker = $this->companyService->saveWorker($company, $userData);
         $this->companyService->saveAdminUser($company, $userData, $worker);
+        DB::commit();
         return $this->response->item($company, new CompanyTransformer());
 
     }
@@ -77,10 +81,12 @@ class CompanyController extends Controller
         $data = $request->all();
         $userData = $data['responsible'];
         unset($data['responsible']);
+        DB::beginTransaction();
         $company->fill($data);
         $company->save();
         $user = $this->companyService->updateAdminUser($company, $userData);
         $worker = $this->companyService->updateWorker($userData, $user);
+        DB::commit();
 
         return $this->response->item($company, new CompanyTransformer());
 
@@ -89,8 +95,9 @@ class CompanyController extends Controller
     public function destroy(Company $company)
     {
         $this->userCan('destroy');
+        DB::beginTransaction();
         $company->delete();
-
+        DB::commit();
         return $this->response->accepted();
 
     }
@@ -98,9 +105,11 @@ class CompanyController extends Controller
     public function toggleActive($companyId)
     {
         $this->userCan('update');
+        DB::beginTransaction();
         $company = $this->companyRepository->find($companyId);
         $company->active = !$company->active;
         $company->save();
+        DB::commit();
         return $this->response->item($company, new CompanyTransformer());
     }
 

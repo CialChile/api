@@ -23,6 +23,13 @@ class ModulesSeeder extends Seeder
             ],
             [
                 'data'      => [
+                    'name' => 'Usuarios',
+                    'slug' => 'admin-users'
+                ],
+                'abilities' => ['list', 'show', 'store', 'update', 'destroy']
+            ],
+            [
+                'data'      => [
                     'name' => 'Trabajadores',
                     'slug' => 'client-rrhh-workers'
                 ],

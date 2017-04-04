@@ -20,7 +20,7 @@ $api = app('Dingo\Api\Routing\Router');
 $api->version('v1', function ($api) {
     /** @var Router $api */
     //protected Routes
-    $api->group(['prefix' => 'client', 'middleware' => ['api.auth'], 'namespace' => 'App\Http\Controllers'], function ($api) {
+    $api->group(['prefix' => 'client', 'middleware' => ['api.auth','user.active'], 'namespace' => 'App\Http\Controllers'], function ($api) {
         /** @var Router $api */
         $api->put('user/{id}', 'Client\Users\UsersController@update');
         $api->post('user/change-password', 'Client\Users\UsersController@changePassword');

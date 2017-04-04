@@ -23,7 +23,7 @@ class CompanyStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'responsible.email'        => 'email|unique:users,email|required',
+            'responsible.email'        => 'email|unique:users,email|required|unique:workers,email',
             'responsible.first_name'   => 'required',
             'responsible.last_name'    => 'required',
             'responsible.position'     => 'required',

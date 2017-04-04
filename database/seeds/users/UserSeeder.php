@@ -24,10 +24,10 @@ class UserSeeder extends Seeder
                 'email'         => 'pedro.gorrin@etrack.com',
                 'password'      => bcrypt('password'),
                 'active'        => true,
-               // 'rut_passport'  => '17259720',
-              //  'position'      => 'Ingeniero',
+                // 'rut_passport'  => '17259720',
+                //  'position'      => 'Ingeniero',
                 'company_admin' => false,
-                'worker_id' => '1'
+                'worker_id'     => '1'
             ],
             [
                 'first_name'    => 'Javier',
@@ -35,10 +35,10 @@ class UserSeeder extends Seeder
                 'email'         => 'javier.bastidas@etrack.com',
                 'password'      => bcrypt('password'),
                 'active'        => true,
-               // 'rut_passport'  => '17259720',
-               // 'position'      => 'Ingeniero',
+                // 'rut_passport'  => '17259720',
+                // 'position'      => 'Ingeniero',
                 'company_admin' => false,
-                'worker_id' => '1'
+                'worker_id'     => '1'
 
             ]
         ]);
@@ -48,30 +48,38 @@ class UserSeeder extends Seeder
             if (!$userDb) {
                 $userDb = new User($user);
                 $userDb->save();
-                if ($userDb->email == 'pedro.gorrin@etrack.com') {
-                    $userDb->assignRole('administrator');
-                    $role = Role::where('slug', 'administrator')->first();
-                    if ($role) {
-                        $adminModules = Module::where('slug', 'like', 'admin.%')->with('abilities')->get();
-                        $adminModules->each(function (Module $module) use ($role) {
-                            $permissions = [];
-                            $module->abilities->each(function (Ability $ability) use (&$permissions) {
-                                $permissions[$ability->ability] = true;
-                            });
-
-                            $permission = new Permission();
-                            $permissionsRole = $permission->create([
-                                'name'        => $module->slug,
-                                'slug'        => $permissions,
-                                'description' => 'Maneja los permisos del modulo ' . $module->name
-                            ]);
-                            $role->assignPermission($permissionsRole);
-                        });
-                    }
-                } else {
-                    $userDb->assignRole('client');
+                $userDb->assignRole('administrator');
+                $this->rolePermissions();
+            } else {
+                /** @var User $userDb */
+                if ($userDb->hasRole('administrator')) {
+                    $this->rolePermissions();
                 }
             }
         });
+    }
+
+    private function rolePermissions()
+    {
+        $role = Role::where('slug', 'administrator')->first();
+        $adminModules = Module::where('slug', 'like', 'admin-%')->with('abilities')->get();
+        $adminModules->each(function (Module $module) use ($role) {
+            $permissions = [];
+            $module->abilities->each(function (Ability $ability) use (&$permissions) {
+                $permissions[$ability->ability] = true;
+            });
+
+            $permission = Permission::where('name', $module->slug)->first();
+            if (!$permission) {
+                $permission = new Permission();
+                $permissionsRole = $permission->create([
+                    'name'        => $module->slug,
+                    'slug'        => $permissions,
+                    'description' => 'Maneja los permisos del modulo ' . $module->name
+                ]);
+                $role->assignPermission($permissionsRole);
+            }
+        });
+
     }
 }

@@ -89,4 +89,12 @@ class Controller extends BaseController
         return $this->loggedUser;
     }
 
+    public function cleanRequestData($requestData)
+    {
+        foreach ($requestData as $key => $data) {
+            $requestData[$key] = $requestData[$key] === 'null' ? null : $requestData[$key];
+        }
+
+        return $requestData;
+    }
 }

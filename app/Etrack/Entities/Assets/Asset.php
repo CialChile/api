@@ -194,6 +194,11 @@ class Asset extends BaseModel implements HasMediaConversions
         if ($value instanceof Carbon) {
             return $value;
         }
+
+        if (preg_match('/[0-9]+\/[0-9]+\/[0-9]+/', $value)) {
+            return Carbon::createFromFormat('d/m/Y', $value);
+        }
+
         return Carbon::parse($value);
     }
 

@@ -25,14 +25,12 @@ class WorkerUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        $worker = Worker::find($this->route('worker'));
-
         return [
             'first_name'          => 'required',
             'last_name'           => 'required',
             'rut_passport'        => 'required',
             'email'               => ['email',
-                                      Rule::unique('workers', 'email')->ignore($worker->id),
+                                      Rule::unique('workers', 'email')->ignore($this->route('worker')),
                                       'required'],
             'position'            => 'required',
             'birthday'            => 'required',

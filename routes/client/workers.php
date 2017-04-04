@@ -20,7 +20,7 @@ $api = app('Dingo\Api\Routing\Router');
 $api->version('v1', function ($api) {
     /** @var Router $api */
     //protected Routes
-    $api->group(['prefix' => 'client', 'middleware' => ['api.auth'], 'namespace' => 'App\Http\Controllers'], function ($api) {
+    $api->group(['prefix' => 'client', 'middleware' => ['api.auth', 'user.active'], 'namespace' => 'App\Http\Controllers'], function ($api) {
         /** @var Router $api */
         $api->get('workers/datatable', 'Client\Workers\WorkersController@datatable');
         $api->get('workers/search/by-name/{name?}', 'Client\Workers\WorkersController@searchByName');

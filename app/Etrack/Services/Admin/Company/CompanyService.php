@@ -7,6 +7,7 @@ use App\Etrack\Entities\Company\Company;
 use App\Etrack\Entities\Worker\Worker;
 use App\Etrack\Services\Auth\RoleService;
 use App\Etrack\Services\Auth\UserService;
+use Illuminate\Validation\ValidationException;
 
 class CompanyService
 {

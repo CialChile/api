@@ -27,7 +27,7 @@ class AssetUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'sku'                   => [Rule::unique('assets', 'sku')->ignore($this->route('asset')),
+            'sku'                   => [Rule::unique('assets', 'sku')->ignore($this->route('asset'))->whereNull('deleted_at'),
                                         'required'],
             'name'                  => 'required',
             'category_id'           => 'required',

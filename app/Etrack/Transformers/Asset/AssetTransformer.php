@@ -5,6 +5,7 @@ namespace App\Etrack\Transformers\Asset;
 use App\Etrack\Entities\Assets\Asset;
 use App\Etrack\Transformers\Company\CompanyTransformer;
 use App\Etrack\Transformers\StatusTransformer;
+use App\Etrack\Transformers\Worker\WorkerTransformer;
 use League\Fractal\TransformerAbstract;
 
 /**
@@ -22,7 +23,9 @@ class AssetTransformer extends TransformerAbstract
         'status',
         'workplace',
         'category',
-        'subcategory'
+        'subcategory',
+        'images',
+        'coverImage'
     ];
 
     /**
@@ -66,7 +69,7 @@ class AssetTransformer extends TransformerAbstract
     {
         $worker = $model->worker;
         if ($worker) {
-            return $this->item($worker, new CompanyTransformer(), 'parent');
+            return $this->item($worker, new WorkerTransformer(), 'parent');
         }
 
         return $this->null();
@@ -84,8 +87,6 @@ class AssetTransformer extends TransformerAbstract
         if ($brandModel) {
             return $this->item($brandModel, new BrandModelTransformer(), 'parent');
         }
-
-        return $this->null();
     }
 
     public function includeStatus(Asset $model)
@@ -112,6 +113,26 @@ class AssetTransformer extends TransformerAbstract
         if ($subcategory) {
             return $this->item($subcategory, new SubcategoryTransformer(), 'parent');
         }
-        return $this->null();
+    }
+
+    public function includeImages(Asset $model)
+    {
+        $assetImages = $model->getMedia('images');
+
+        if ($assetImages->isEmpty()) {
+            return $this->null();
+        }
+
+        return $this->collection($assetImages, new AssetImagesTransformer(), 'parent');
+    }
+
+    public function includeCoverImage(Asset $model)
+    {
+        $coverPicture = $model->getFirstMedia('cover');
+        if (!$coverPicture) {
+            return $this->null();
+        }
+
+        return $this->item($coverPicture, new AssetImagesTransformer(), 'parent');
     }
 }

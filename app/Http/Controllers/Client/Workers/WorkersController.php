@@ -91,24 +91,20 @@ class WorkersController extends Controller
         }
 
         DB::beginTransaction();
-        try {
-            $data = $request->all();
-            $data['company_id'] = $user->company_id;
-            $data['birthday'] = Carbon::createFromFormat('d/m/Y', $data['birthday'])->toDateString();
-            $data['active'] = $data['active'] == 'true' ? 1 : 0;
-            $data['medical_information'] = !$data['medical_information'] || $data['medical_information'] == 'null' ? NULL : $data['medical_information'];
-            $worker->fill($data);
-            $worker->save();
-            if ($request->hasFile('image')) {
-                $worker->clearMediaCollection('profile');
-                $worker->addMedia($request->file('image'))->preservingOriginal()->toMediaLibrary('profile');
-            } elseif ($request->has('removeImage')) {
-                $worker->clearMediaCollection('profile');
-            }
-        } catch (\Exception $e) {
-            DB::rollBack();
-            throw new Exception($e->getMessage());
+        $data = $request->all();
+        $data['company_id'] = $user->company_id;
+        $data['birthday'] = Carbon::createFromFormat('d/m/Y', $data['birthday'])->toDateString();
+        $data['active'] = $data['active'] == 'true' ? 1 : 0;
+        $data['medical_information'] = !$data['medical_information'] || $data['medical_information'] == 'null' ? NULL : $data['medical_information'];
+        $worker->fill($data);
+        $worker->save();
+        if ($request->hasFile('image')) {
+            $worker->clearMediaCollection('profile');
+            $worker->addMedia($request->file('image'))->preservingOriginal()->toMediaLibrary('profile');
+        } elseif ($request->has('removeImage')) {
+            $worker->clearMediaCollection('profile');
         }
+
         DB::commit();
 
         return $this->response->item($worker, new WorkerTransformer());
