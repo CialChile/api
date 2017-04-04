@@ -25,11 +25,11 @@ use Illuminate\Database\Query\Builder;
  * @property int $company_id
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Etrack\Entities\Assets\Asset[] $assets
  * @property-read \App\Etrack\Entities\Company\Company $company
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\BaseModel inCompany()
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Assets\Category whereCompanyId($value)
+ * @method static Builder|BaseModel inCompany()
+ * @method static Builder|Category whereCompanyId($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Etrack\Entities\Assets\Subcategory[] $subcategories
  * @property array $custom_fields_config
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Assets\Category whereCustomFieldsConfig($value)
+ * @method static Builder|Category whereCustomFieldsConfig($value)
  */
 class Category extends BaseModel
 {

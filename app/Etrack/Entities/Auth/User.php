@@ -5,6 +5,7 @@ namespace App\Etrack\Entities\Auth;
 use App\Etrack\Entities\Company\Company;
 use App\Etrack\Entities\Worker\Worker;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Kodeine\Acl\Traits\HasRole;
@@ -26,20 +27,20 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read \Illuminate\Database\Eloquent\Collection|\Kodeine\Acl\Models\Eloquent\Permission[] $permissions
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Etrack\Entities\Auth\Role[] $roles
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User role($role, $column = null)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User whereEmail($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User whereFirstName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User whereLastName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User wherePassword($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User whereRememberToken($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User whereUpdatedAt($value)
+ * @method static Builder|User role($role, $column = null)
+ * @method static Builder|User whereCreatedAt($value)
+ * @method static Builder|User whereEmail($value)
+ * @method static Builder|User whereFirstName($value)
+ * @method static Builder|User whereId($value)
+ * @method static Builder|User whereLastName($value)
+ * @method static Builder|User wherePassword($value)
+ * @method static Builder|User whereRememberToken($value)
+ * @method static Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property bool $active
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User whereActive($value)
+ * @method static Builder|User whereActive($value)
  * @property int $company_id
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User whereCompanyId($value)
+ * @method static Builder|User whereCompanyId($value)
  * @property-read \App\Etrack\Entities\Company\Company $company
  * @property string $rut_passport
  * @property string $position
@@ -53,24 +54,24 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
  * @property string $emergency_contact
  * @property string $medical_information
  * @property bool $company_admin
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User whereAddress($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User whereBirthday($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User whereCity($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User whereCompanyAdmin($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User whereCountry($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User whereEmergencyContact($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User whereEmergencyTelephone($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User whereMedicalInformation($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User wherePosition($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User whereRutPassport($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User whereState($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User whereTelephone($value)
+ * @method static Builder|User whereAddress($value)
+ * @method static Builder|User whereBirthday($value)
+ * @method static Builder|User whereCity($value)
+ * @method static Builder|User whereCompanyAdmin($value)
+ * @method static Builder|User whereCountry($value)
+ * @method static Builder|User whereEmergencyContact($value)
+ * @method static Builder|User whereEmergencyTelephone($value)
+ * @method static Builder|User whereMedicalInformation($value)
+ * @method static Builder|User wherePosition($value)
+ * @method static Builder|User whereRutPassport($value)
+ * @method static Builder|User whereState($value)
+ * @method static Builder|User whereTelephone($value)
  * @property int $worker_id
  * @property-read \App\Etrack\Entities\Worker\Worker $worker
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User whereWorkerId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User inCompany()
+ * @method static Builder|User whereWorkerId($value)
+ * @method static Builder|User inCompany()
  * @property \Carbon\Carbon $deleted_at
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User whereDeletedAt($value)
+ * @method static Builder|User whereDeletedAt($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\MediaLibrary\Media[] $media
  */
 class User extends Authenticatable implements HasMediaConversions
@@ -133,6 +134,7 @@ class User extends Authenticatable implements HasMediaConversions
     public function scopeInCompany($query)
     {
         $company_id = \Auth::user()->company_id;
+        /** @var Builder $query */
         return $query->where('company_id', $company_id);
     }
 }

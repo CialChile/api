@@ -2,10 +2,8 @@
 
 namespace App\Etrack\Entities\Auth;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Prettus\Repository\Contracts\Transformable;
-use Prettus\Repository\Traits\TransformableTrait;
+use Illuminate\Database\Query\Builder;
 use \Kodeine\Acl\Models\Eloquent\Role as KodeineRole;
 
 /**
@@ -20,18 +18,18 @@ use \Kodeine\Acl\Models\Eloquent\Role as KodeineRole;
  * @property \Carbon\Carbon $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\Kodeine\Acl\Models\Eloquent\Permission[] $permissions
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Etrack\Entities\Auth\User[] $users
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\Role whereCompanyId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\Role whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\Role whereDescription($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\Role whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\Role whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\Role whereSlug($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\Role whereUpdatedAt($value)
+ * @method static Builder|Role whereCompanyId($value)
+ * @method static Builder|Role whereCreatedAt($value)
+ * @method static Builder|Role whereDescription($value)
+ * @method static Builder|Role whereId($value)
+ * @method static Builder|Role whereName($value)
+ * @method static Builder|Role whereSlug($value)
+ * @method static Builder|Role whereUpdatedAt($value)
  * @mixin \Eloquent
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\Role company()
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\Role inCompany()
+ * @method static Builder|Role company()
+ * @method static Builder|Role inCompany()
  * @property \Carbon\Carbon $deleted_at
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\Role whereDeletedAt($value)
+ * @method static Builder|Role whereDeletedAt($value)
  */
 class Role extends KodeineRole
 {
@@ -42,6 +40,7 @@ class Role extends KodeineRole
     public function scopeInCompany($query)
     {
         $company_id = \Auth::user()->company_id;
+        /** @var Builder $query */
         return $query->where('company_id', $company_id);
     }
 }

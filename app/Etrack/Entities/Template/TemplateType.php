@@ -4,6 +4,7 @@ namespace App\Etrack\Entities\Template;
 
 use App\Etrack\Entities\BaseModel;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\Builder;
 
 /**
  * App\Etrack\Entities\Template\TemplateType
@@ -14,14 +15,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon $deleted_at
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Template\TemplateType whereCompanyId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Template\TemplateType whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Template\TemplateType whereDeletedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Template\TemplateType whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Template\TemplateType whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Template\TemplateType whereUpdatedAt($value)
+ * @method static Builder|TemplateType whereCompanyId($value)
+ * @method static Builder|TemplateType whereCreatedAt($value)
+ * @method static Builder|TemplateType whereDeletedAt($value)
+ * @method static Builder|TemplateType whereId($value)
+ * @method static Builder|TemplateType whereName($value)
+ * @method static Builder|TemplateType whereUpdatedAt($value)
  * @mixin \Eloquent
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\BaseModel inCompany()
+ * @method static Builder|BaseModel inCompany()
  * @property-read \App\Etrack\Entities\Company\Company $company
  */
 class TemplateType extends BaseModel

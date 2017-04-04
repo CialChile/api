@@ -4,6 +4,7 @@ namespace App\Etrack\Entities\Activity;
 
 use App\Etrack\Entities\BaseModel;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\Builder;
 
 /**
  * App\Etrack\Entities\Activity\ProgramType
@@ -14,15 +15,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon $deleted_at
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\ProgramType whereCompanyId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\ProgramType whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\ProgramType whereDeletedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\ProgramType whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\ProgramType whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\ProgramType whereUpdatedAt($value)
+ * @method static Builder|ProgramType whereCompanyId($value)
+ * @method static Builder|ProgramType whereCreatedAt($value)
+ * @method static Builder|ProgramType whereDeletedAt($value)
+ * @method static Builder|ProgramType whereId($value)
+ * @method static Builder|ProgramType whereName($value)
+ * @method static Builder|ProgramType whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property-read \App\Etrack\Entities\Company\Company $company
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\BaseModel inCompany()
+ * @method static Builder|BaseModel inCompany()
  */
 class ProgramType extends BaseModel
 {

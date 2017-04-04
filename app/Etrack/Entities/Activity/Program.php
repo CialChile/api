@@ -5,6 +5,7 @@ namespace App\Etrack\Entities\Activity;
 use App\Etrack\Entities\BaseModel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\Builder;
 
 /**
  * App\Etrack\Entities\Activity\Program
@@ -16,13 +17,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon $deleted_at
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\Program whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\Program whereDeletedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\Program whereFrequencyId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\Program whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\Program whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\Program wherePeriodicityId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\Program whereUpdatedAt($value)
+ * @method static Builder|Program whereCreatedAt($value)
+ * @method static Builder|Program whereDeletedAt($value)
+ * @method static Builder|Program whereFrequencyId($value)
+ * @method static Builder|Program whereId($value)
+ * @method static Builder|Program whereName($value)
+ * @method static Builder|Program wherePeriodicityId($value)
+ * @method static Builder|Program whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property-read \App\Etrack\Entities\Activity\Frequency $frequency
  * @property-read \App\Etrack\Entities\Activity\Periodicity $periodicity

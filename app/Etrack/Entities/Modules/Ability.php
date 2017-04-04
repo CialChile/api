@@ -3,6 +3,7 @@
 namespace App\Etrack\Entities\Modules;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
 
 /**
  * App\Etrack\Entities\Modules\Ability
@@ -10,8 +11,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $ability
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Etrack\Entities\Modules\Module[] $modules
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Modules\Ability whereAbility($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Modules\Ability whereId($value)
+ * @method static Builder|Ability whereAbility($value)
+ * @method static Builder|Ability whereId($value)
  * @mixin \Eloquent
  */
 class Ability extends Model

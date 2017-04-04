@@ -5,8 +5,8 @@ namespace App\Etrack\Entities\Company;
 use App\Etrack\Entities\Auth\User;
 use App\Etrack\Entities\BaseModel;
 use App\Etrack\Entities\Worker\Worker;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\Builder;
 
 /**
  * App\Etrack\Entities\Company\Company
@@ -30,29 +30,29 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $deleted_at
  * @property-read \App\Etrack\Entities\Company\CompanyFields $field
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Etrack\Entities\Auth\User[] $users
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereActive($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereAddress($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereCity($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereCommercialName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereCountry($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereDeletedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereEmail($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereFax($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereFieldId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereFiscalIdentification($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereState($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereTelephone($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereZipCode($value)
+ * @method static Builder|Company whereActive($value)
+ * @method static Builder|Company whereAddress($value)
+ * @method static Builder|Company whereCity($value)
+ * @method static Builder|Company whereCommercialName($value)
+ * @method static Builder|Company whereCountry($value)
+ * @method static Builder|Company whereCreatedAt($value)
+ * @method static Builder|Company whereDeletedAt($value)
+ * @method static Builder|Company whereEmail($value)
+ * @method static Builder|Company whereFax($value)
+ * @method static Builder|Company whereFieldId($value)
+ * @method static Builder|Company whereFiscalIdentification($value)
+ * @method static Builder|Company whereId($value)
+ * @method static Builder|Company whereName($value)
+ * @method static Builder|Company whereState($value)
+ * @method static Builder|Company whereTelephone($value)
+ * @method static Builder|Company whereUpdatedAt($value)
+ * @method static Builder|Company whereZipCode($value)
  * @mixin \Eloquent
  * @property int $users_number
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Company\Company whereUsersNumber($value)
+ * @method static Builder|Company whereUsersNumber($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Etrack\Entities\Worker\Worker[] $workers
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\BaseModel inCompany()
- * @property-read \App\Etrack\Entities\Company\Company $company
+ * @method static Builder|BaseModel inCompany()
+ * @property-read Company $company
  */
 class Company extends BaseModel
 {

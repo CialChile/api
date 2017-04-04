@@ -6,6 +6,7 @@ use App\Etrack\Entities\BaseModel;
 use App\Etrack\Entities\Template\MeasureUnit;
 use App\Etrack\Entities\Template\Template;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\Builder;
 
 /**
  * App\Etrack\Entities\Activity\Activity
@@ -28,32 +29,32 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon $deleted_at
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\Activity whereCompanyId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\Activity whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\Activity whereDeletedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\Activity whereDescription($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\Activity whereEndDate($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\Activity whereEndHour($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\Activity whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\Activity whereMeasureUnitId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\Activity whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\Activity whereNumber($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\Activity whereProcessType($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\Activity whereProgramTypeId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\Activity whereStartDate($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\Activity whereStartHour($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\Activity whereStimatedTime($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\Activity whereTemplateId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\Activity whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\Activity whereValidity($value)
+ * @method static Builder|Activity whereCompanyId($value)
+ * @method static Builder|Activity whereCreatedAt($value)
+ * @method static Builder|Activity whereDeletedAt($value)
+ * @method static Builder|Activity whereDescription($value)
+ * @method static Builder|Activity whereEndDate($value)
+ * @method static Builder|Activity whereEndHour($value)
+ * @method static Builder|Activity whereId($value)
+ * @method static Builder|Activity whereMeasureUnitId($value)
+ * @method static Builder|Activity whereName($value)
+ * @method static Builder|Activity whereNumber($value)
+ * @method static Builder|Activity whereProcessType($value)
+ * @method static Builder|Activity whereProgramTypeId($value)
+ * @method static Builder|Activity whereStartDate($value)
+ * @method static Builder|Activity whereStartHour($value)
+ * @method static Builder|Activity whereStimatedTime($value)
+ * @method static Builder|Activity whereTemplateId($value)
+ * @method static Builder|Activity whereUpdatedAt($value)
+ * @method static Builder|Activity whereValidity($value)
  * @mixin \Eloquent
  * @property-read \App\Etrack\Entities\Company\Company $company
  * @property-read \App\Etrack\Entities\Template\MeasureUnit $measureUnit
  * @property-read \App\Etrack\Entities\Activity\ProgramType $programType
  * @property-read \App\Etrack\Entities\Template\Template $template
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\BaseModel inCompany()
+ * @method static Builder|BaseModel inCompany()
  * @property int $estimated_time
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\Activity whereEstimatedTime($value)
+ * @method static Builder|Activity whereEstimatedTime($value)
  */
 class Activity extends BaseModel
 {

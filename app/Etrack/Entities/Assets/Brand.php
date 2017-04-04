@@ -25,8 +25,8 @@ use Illuminate\Database\Query\Builder;
  * @property int $company_id
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Etrack\Entities\Assets\Asset[] $assets
  * @property-read \App\Etrack\Entities\Company\Company $company
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\BaseModel inCompany()
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Assets\Brand whereCompanyId($value)
+ * @method static Builder|BaseModel inCompany()
+ * @method static Builder|Brand whereCompanyId($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Etrack\Entities\Assets\BrandModel[] $brandModels
  */
 class Brand extends BaseModel

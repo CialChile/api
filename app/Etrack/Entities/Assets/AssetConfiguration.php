@@ -3,6 +3,7 @@
 namespace App\Etrack\Entities\Assets;
 
 use App\Etrack\Entities\BaseModel;
+use Illuminate\Database\Query\Builder;
 
 /**
  * App\Etrack\Entities\Assets\AssetConfiguration
@@ -13,13 +14,13 @@ use App\Etrack\Entities\BaseModel;
  * @property string $sku_mask
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\BaseModel inCompany()
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Assets\AssetConfiguration whereCompanyId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Assets\AssetConfiguration whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Assets\AssetConfiguration whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Assets\AssetConfiguration whereSkuMask($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Assets\AssetConfiguration whereSkuType($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Assets\AssetConfiguration whereUpdatedAt($value)
+ * @method static Builder|BaseModel inCompany()
+ * @method static Builder|AssetConfiguration whereCompanyId($value)
+ * @method static Builder|AssetConfiguration whereCreatedAt($value)
+ * @method static Builder|AssetConfiguration whereId($value)
+ * @method static Builder|AssetConfiguration whereSkuMask($value)
+ * @method static Builder|AssetConfiguration whereSkuType($value)
+ * @method static Builder|AssetConfiguration whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property-read \App\Etrack\Entities\Company\Company $company
  */

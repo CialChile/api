@@ -4,13 +4,10 @@ namespace App\Etrack\Entities\Worker;
 
 use App\Etrack\Entities\Auth\User;
 use App\Etrack\Entities\BaseModel;
-use App\Etrack\Entities\Company\Company;
-use App\Etrack\Scopes\CompanyScope;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\Builder;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 use Venturecraft\Revisionable\RevisionableTrait;
 
@@ -36,33 +33,33 @@ use Venturecraft\Revisionable\RevisionableTrait;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property string $deleted_at
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Worker\Worker whereAddress($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Worker\Worker whereBirthday($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Worker\Worker whereCity($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Worker\Worker whereCompanyId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Worker\Worker whereCountry($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Worker\Worker whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Worker\Worker whereDeletedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Worker\Worker whereEmail($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Worker\Worker whereEmergencyContact($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Worker\Worker whereEmergencyTelephone($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Worker\Worker whereFirstName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Worker\Worker whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Worker\Worker whereLastName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Worker\Worker whereMedicalInformation($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Worker\Worker wherePosition($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Worker\Worker whereRutPassport($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Worker\Worker whereState($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Worker\Worker whereTelephone($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Worker\Worker whereUpdatedAt($value)
+ * @method static Builder|Worker whereAddress($value)
+ * @method static Builder|Worker whereBirthday($value)
+ * @method static Builder|Worker whereCity($value)
+ * @method static Builder|Worker whereCompanyId($value)
+ * @method static Builder|Worker whereCountry($value)
+ * @method static Builder|Worker whereCreatedAt($value)
+ * @method static Builder|Worker whereDeletedAt($value)
+ * @method static Builder|Worker whereEmail($value)
+ * @method static Builder|Worker whereEmergencyContact($value)
+ * @method static Builder|Worker whereEmergencyTelephone($value)
+ * @method static Builder|Worker whereFirstName($value)
+ * @method static Builder|Worker whereId($value)
+ * @method static Builder|Worker whereLastName($value)
+ * @method static Builder|Worker whereMedicalInformation($value)
+ * @method static Builder|Worker wherePosition($value)
+ * @method static Builder|Worker whereRutPassport($value)
+ * @method static Builder|Worker whereState($value)
+ * @method static Builder|Worker whereTelephone($value)
+ * @method static Builder|Worker whereUpdatedAt($value)
  * @mixin \Eloquent
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\BaseModel inCompany()
+ * @method static Builder|BaseModel inCompany()
  * @property bool $active
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Worker\Worker whereActive($value)
+ * @method static Builder|Worker whereActive($value)
  * @property-read \App\Etrack\Entities\Company\Company $company
  * @property-read \App\Etrack\Entities\Auth\User $user
  * @property string $zip_code
- * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Worker\Worker whereZipCode($value)
+ * @method static Builder|Worker whereZipCode($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\MediaLibrary\Media[] $media
  * @property-read \Illuminate\Database\Eloquent\Collection|\Venturecraft\Revisionable\Revision[] $revisionHistory
  */
@@ -107,8 +104,4 @@ class Worker extends BaseModel implements HasMediaConversions
         return $this->hasOne(User::class, 'worker_id');
     }
 
-    public function company()
-    {
-        return $this->belongsTo(Company::class);
-    }
 }
