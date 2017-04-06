@@ -48,11 +48,11 @@ class UserSeeder extends Seeder
             if (!$userDb) {
                 $userDb = new User($user);
                 $userDb->save();
-                $userDb->assignRole('administrator');
+                $userDb->assignRole('admin-administrator');
                 $this->rolePermissions();
             } else {
                 /** @var User $userDb */
-                if ($userDb->hasRole('administrator')) {
+                if ($userDb->hasRole('admin-administrator')) {
                     $this->rolePermissions();
                 }
             }
@@ -61,7 +61,7 @@ class UserSeeder extends Seeder
 
     private function rolePermissions()
     {
-        $role = Role::where('slug', 'administrator')->first();
+        $role = Role::where('slug', 'admin-administrator')->where('company_id', 0)->first();
         $adminModules = Module::where('slug', 'like', 'admin-%')->with('abilities')->get();
         $adminModules->each(function (Module $module) use ($role) {
             $permissions = [];

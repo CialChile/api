@@ -20,13 +20,16 @@ $api = app('Dingo\Api\Routing\Router');
 $api->version('v1', function ($api) {
     /** @var Router $api */
     //protected Routes
-    $api->group(['prefix' => 'client', 'middleware' => ['api.auth','user.active'], 'namespace' => 'App\Http\Controllers'], function ($api) {
+    $api->group(['prefix' => 'client', 'middleware' => ['api.auth', 'user.active'], 'namespace' => 'App\Http\Controllers'], function ($api) {
         /** @var Router $api */
         $api->get('assets/config', 'Client\Assets\AssetsConfigurationController@index');
         $api->post('assets/config', 'Client\Assets\AssetsConfigurationController@store');
 
         $api->get('assets/datatable', 'Client\Assets\AssetsController@datatable');
         $api->post('assets/{id}/images', 'Client\Assets\AssetsController@uploadImages');
+        $api->post('assets/{id}/documents', 'Client\Assets\AssetsController@uploadDocuments');
+        $api->get('assets/{assetId}/documents/{documentId}', 'Client\Assets\AssetsController@downloadDocument');
+        $api->delete('assets/{id}/documents/{documentId}', 'Client\Assets\AssetsController@removeDocument');
         $api->delete('assets/{id}/images/{imageId}', 'Client\Assets\AssetsController@removeImage');
         $api->resource('assets', 'Client\Assets\AssetsController', ['except' => ['edit', 'create']]);
 

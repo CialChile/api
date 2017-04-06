@@ -4,6 +4,7 @@ namespace App\Http\Request\Asset;
 
 
 use Dingo\Api\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class AssetStoreRequest extends FormRequest
 {
@@ -25,7 +26,8 @@ class AssetStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'sku'                   => 'required|unique:assets,sku',
+            'sku'                   => [Rule::unique('assets', 'sku')->whereNull('deleted_at'),
+                                        'required'],
             'name'                  => 'required',
             'category_id'           => 'required',
             'brand_id'              => 'required',

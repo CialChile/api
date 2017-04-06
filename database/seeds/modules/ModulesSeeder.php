@@ -24,7 +24,28 @@ class ModulesSeeder extends Seeder
             [
                 'data'      => [
                     'name' => 'Usuarios',
-                    'slug' => 'admin-users'
+                    'slug' => 'admin-security-users'
+                ],
+                'abilities' => ['list', 'show', 'store', 'update', 'destroy']
+            ],
+            [
+                'data'      => [
+                    'name' => 'Roles',
+                    'slug' => 'admin-security-roles'
+                ],
+                'abilities' => ['list', 'show', 'store', 'update', 'destroy']
+            ],
+            [
+                'data'      => [
+                    'name' => 'Industrias',
+                    'slug' => 'admin-configuration-industries'
+                ],
+                'abilities' => ['list', 'show', 'store', 'update', 'destroy']
+            ],
+            [
+                'data'      => [
+                    'name' => 'Plantillas',
+                    'slug' => 'admin-templates'
                 ],
                 'abilities' => ['list', 'show', 'store', 'update', 'destroy']
             ],

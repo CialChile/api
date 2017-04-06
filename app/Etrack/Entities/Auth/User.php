@@ -118,7 +118,9 @@ class User extends Authenticatable implements HasMediaConversions
 
     public function isSuperUser()
     {
-        return $this->hasRole('administrator') && $this->company_id == null;
+        $adminRoles = Role::where('slug', 'like', 'admin-%')->where('company_id', 0)->get();
+        $roles = $adminRoles->pluck('slug');
+        return $this->hasRole($roles->toArray(), 'or') && $this->company_id == null;
     }
 
     public function company()

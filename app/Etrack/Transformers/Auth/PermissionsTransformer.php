@@ -27,24 +27,38 @@ class PermissionsTransformer extends TransformerAbstract
             }
         }
         if ($resultPermissions->contains(function ($value, $key) {
-            return str_contains($value, 'rrhh');
+            return str_contains($value, 'client-rrhh');
         })
         ) {
             $resultPermissions->push('client-rrhh');
         }
 
         if ($resultPermissions->contains(function ($value, $key) {
-            return str_contains($value, 'config');
+            return str_contains($value, 'client-config');
         })
         ) {
             $resultPermissions->push('client-configuration');
         }
 
         if ($resultPermissions->contains(function ($value, $key) {
-            return str_contains($value, 'security');
+            return str_contains($value, 'client-security');
         })
         ) {
             $resultPermissions->push('client-security');
+        }
+
+        if ($resultPermissions->contains(function ($value, $key) {
+            return str_contains($value, 'admin-configuration');
+        })
+        ) {
+            $resultPermissions->push('admin-configuration');
+        }
+
+        if ($resultPermissions->contains(function ($value, $key) {
+            return str_contains($value, 'admin-security');
+        })
+        ) {
+            $resultPermissions->push('admin-security');
         }
         return $resultPermissions->toArray();
     }

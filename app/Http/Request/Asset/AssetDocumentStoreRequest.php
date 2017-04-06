@@ -1,10 +1,9 @@
 <?php
-
-namespace App\Http\Request\Asset\Config;
+namespace App\Http\Request\Asset;
 
 use Dingo\Api\Http\FormRequest;
 
-class WorkplaceUpdateRequest extends FormRequest
+class AssetDocumentStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +23,15 @@ class WorkplaceUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'      => 'required',
-            'latitude'  => 'required',
-            'longitude' => 'required'
+            'documents.*' => 'required|mimes:pdf,docx,xlsx'
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'documents.*.mimes' => 'El documento debe tener la extension docx, xlsx o pdf',
+        ];
+    }
+
 }

@@ -26,14 +26,23 @@ use Illuminate\Database\Query\Builder;
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Etrack\Entities\Assets\Asset[] $assets
  * @property-read \App\Etrack\Entities\Company\Company $company
+ * @property string $longitude
+ * @property string $latitude
+ * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Assets\Workplace whereLatitude($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Assets\Workplace whereLongitude($value)
  */
 class Workplace extends BaseModel
 {
     use SoftDeletes;
-    protected $fillable = ['name', 'company_id'];
+    protected $fillable = ['name', 'company_id', 'latitude', 'longitude'];
 
     protected $dates = [
         'deleted_at'
+    ];
+
+    protected $casts = [
+        'latitude'  => 'decimal',
+        'longitude' => 'decimal'
     ];
 
     public function company()

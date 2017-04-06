@@ -7,6 +7,7 @@ use App\Etrack\Entities\Company\Company;
 use App\Etrack\Entities\Status;
 use App\Etrack\Entities\Worker\Worker;
 use Carbon\Carbon;
+use DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\Builder;
 use Spatie\Image\Manipulations;
@@ -105,6 +106,8 @@ class Asset extends BaseModel implements HasMediaConversions
         'custom_fields'   => 'array',
     ];
 
+    protected $geofields = ['location'];
+
     public function registerMediaConversions()
     {
         $this->addMediaConversion('large')
@@ -116,10 +119,8 @@ class Asset extends BaseModel implements HasMediaConversions
             ->performOnCollections('cover', 'images');
 
         $this->addMediaConversion('thumbnail')
-            ->fit(Manipulations::FIT_CONTAIN, 133, 75)
+            ->fit(Manipulations::FIT_CONTAIN, 230, 129)
             ->performOnCollections('cover', 'images');
-
-
     }
 
     public function company()
@@ -204,4 +205,26 @@ class Asset extends BaseModel implements HasMediaConversions
         return Carbon::parse($value);
     }
 
+    public function setLocationAttribute($value)
+    {
+        $this->attributes['location'] = DB::raw("POINT($value)");
+    }
+
+    public function getLocationAttribute($value)
+    {
+        $loc = substr($value, 6);
+        $loc = preg_replace('/[ ,]+/', ',', $loc, 1);
+
+        return substr($loc, 0, -1);
+    }
+
+    public function newQuery($excludeDeleted = true)
+    {
+        $raw = '';
+        foreach ($this->geofields as $column) {
+            $raw .= ' astext(' . $column . ') as ' . $column . ' ';
+        }
+
+        return parent::newQuery()->addSelect('*', DB::raw($raw));
+    }
 }

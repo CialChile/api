@@ -28,6 +28,8 @@ class WorkplaceTransformer extends TransformerAbstract
         return [
             'id'         => (int)$model->id,
             'name'       => $model->name,
+            'latitude'   => (float)$model->latitude,
+            'longitude'  => (float)$model->longitude,
             'created_at' => $model->created_at ? $model->created_at->format('d/m/Y') : null,
         ];
     }

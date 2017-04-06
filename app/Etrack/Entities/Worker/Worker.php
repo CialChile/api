@@ -2,6 +2,7 @@
 
 namespace App\Etrack\Entities\Worker;
 
+use App\Etrack\Entities\Assets\Asset;
 use App\Etrack\Entities\Auth\User;
 use App\Etrack\Entities\BaseModel;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -88,12 +89,17 @@ class Worker extends BaseModel implements HasMediaConversions
 
     public function registerMediaConversions()
     {
+
+        $this->addMediaConversion('large')
+            ->fit(Manipulations::FIT_CONTAIN, 600, 800)
+            ->performOnCollections('profile');
+
         $this->addMediaConversion('normal')
             ->fit(Manipulations::FIT_CONTAIN, 300, 400)
             ->performOnCollections('profile');
 
         $this->addMediaConversion('thumbnail')
-            ->fit(Manipulations::FIT_CONTAIN, 100, 133)
+            ->fit(Manipulations::FIT_CONTAIN, 200, 267)
             ->performOnCollections('profile');
 
 
@@ -102,6 +108,11 @@ class Worker extends BaseModel implements HasMediaConversions
     public function user()
     {
         return $this->hasOne(User::class, 'worker_id');
+    }
+
+    public function assets()
+    {
+        return $this->hasMany(Asset::class, 'worker_id');
     }
 
 }

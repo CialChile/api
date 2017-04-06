@@ -19,6 +19,8 @@ class CompanyTransformer extends TransformerAbstract
 
     public function transform(Company $model)
     {
+        $logo = $model->getFirstMedia('logo');
+
         return [
             'id'                    => $model->id,
             'name'                  => $model->name,
@@ -34,7 +36,15 @@ class CompanyTransformer extends TransformerAbstract
             'zip_code'              => $model->zip_code,
             'field_id'              => $model->field_id,
             'users_number'          => $model->users_number,
-            'active'                => $model->active
+            'active'                => $model->active,
+            'image'                 => [
+                'large'      => env('APP_URL') . ($logo ? $logo->getUrl('large') : '/images/missing/assets/missing.jpg'),
+                'thumbnail'  => env('APP_URL') . ($logo ? $logo->getUrl('thumbnail') : '/images/missing/assets/missing.jpg'),
+                'source'     => env('APP_URL') . ($logo ? $logo->getUrl('normal') : '/images/missing/assets/missing.jpg'),
+                'original'   => env('APP_URL') . ($logo ? $logo->getUrl() : '/images/missing/assets/missing.jpg'),
+                'title'      => $model->name,
+                'notDefault' => $logo ? true : false
+            ]
         ];
     }
 

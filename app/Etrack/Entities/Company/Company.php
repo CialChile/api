@@ -7,6 +7,9 @@ use App\Etrack\Entities\BaseModel;
 use App\Etrack\Entities\Worker\Worker;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\Builder;
+use Spatie\Image\Manipulations;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
 /**
  * App\Etrack\Entities\Company\Company
@@ -54,8 +57,9 @@ use Illuminate\Database\Query\Builder;
  * @method static Builder|BaseModel inCompany()
  * @property-read Company $company
  */
-class Company extends BaseModel
+class Company extends BaseModel implements HasMediaConversions
 {
+    use HasMediaTrait;
     use SoftDeletes;
 
     protected $casts = [
@@ -82,6 +86,22 @@ class Company extends BaseModel
         'fax',
         'users_number'
     ];
+
+    public function registerMediaConversions()
+    {
+        $this->addMediaConversion('large')
+            ->fit(Manipulations::FIT_CONTAIN, 800, 450)
+            ->performOnCollections('logo');
+
+        $this->addMediaConversion('normal')
+            ->fit(Manipulations::FIT_CONTAIN, 400, 225)
+            ->performOnCollections('logo');
+
+        $this->addMediaConversion('thumbnail')
+            ->fit(Manipulations::FIT_CONTAIN, 230, 129)
+            ->performOnCollections('logo');
+    }
+
 
     public function users()
     {

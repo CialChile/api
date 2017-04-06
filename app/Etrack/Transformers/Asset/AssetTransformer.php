@@ -25,7 +25,8 @@ class AssetTransformer extends TransformerAbstract
         'category',
         'subcategory',
         'images',
-        'coverImage'
+        'coverImage',
+        'documents'
     ];
 
     /**
@@ -49,6 +50,8 @@ class AssetTransformer extends TransformerAbstract
             'name'                  => $model->name,
             'tag_rfid'              => $model->tag_rfid,
             'location'              => $model->location,
+            'latitude'              => $model->location ? explode(',', $model->location)[0] : null,
+            'longitude'             => $model->location ? explode(',', $model->location)[1] : null,
             'serial'                => $model->serial,
             'validity_time'         => $model->validity_time,
             'integration_date'      => $model->integration_date ? $model->integration_date->format('d/m/Y') : null,
@@ -126,13 +129,23 @@ class AssetTransformer extends TransformerAbstract
         return $this->collection($assetImages, new AssetImagesTransformer(), 'parent');
     }
 
-    public function includeCoverImage(Asset $model)
+
+    public function includeDocuments(Asset $model)
     {
-        $coverPicture = $model->getFirstMedia('cover');
-        if (!$coverPicture) {
+        $assetDocuments = $model->getMedia('documents');
+
+        if ($assetDocuments->isEmpty()) {
             return $this->null();
         }
 
-        return $this->item($coverPicture, new AssetImagesTransformer(), 'parent');
+        return $this->collection($assetDocuments, new AssetDocumentsTransformer(), 'parent');
+    }
+
+    public function includeCoverImage(Asset $model)
+    {
+        $coverPicture = $model->getFirstMedia('cover');
+        if ($coverPicture) {
+            return $this->item($coverPicture, new AssetImagesTransformer(), 'parent');
+        }
     }
 }

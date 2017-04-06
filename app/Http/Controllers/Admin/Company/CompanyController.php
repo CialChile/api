@@ -69,6 +69,11 @@ class CompanyController extends Controller
         $company = $this->companyRepository->create($data);
         $worker = $this->companyService->saveWorker($company, $userData);
         $this->companyService->saveAdminUser($company, $userData, $worker);
+        if ($request->hasFile('image')) {
+            $worker->clearMediaCollection('logo');
+            $worker->addMedia($request->file('image'))->preservingOriginal()->toMediaLibrary('logo');
+        }
+
         DB::commit();
         return $this->response->item($company, new CompanyTransformer());
 
@@ -86,8 +91,13 @@ class CompanyController extends Controller
         $company->save();
         $user = $this->companyService->updateAdminUser($company, $userData);
         $worker = $this->companyService->updateWorker($userData, $user);
+        if ($request->hasFile('image')) {
+            $company->clearMediaCollection('logo');
+            $company->addMedia($request->file('image'))->preservingOriginal()->toMediaLibrary('logo');
+        } elseif ($request->has('removeImage')) {
+            $company->clearMediaCollection('logo');
+        }
         DB::commit();
-
         return $this->response->item($company, new CompanyTransformer());
 
     }

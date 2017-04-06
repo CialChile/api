@@ -16,14 +16,8 @@ class RoleSeeder extends Seeder
             [
                 'company_id'  => 0,
                 'name'        => 'Administrator',
-                'slug'        => 'administrator',
+                'slug'        => 'admin-administrator',
                 'description' => 'Maneja los privilegios de administracion'
-            ],
-            [
-                'company_id'  => 0,
-                'name'        => 'Client',
-                'slug'        => 'client',
-                'description' => 'Cliente de la aplicacion'
             ]
         ]);
 
