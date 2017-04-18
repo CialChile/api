@@ -21,7 +21,6 @@ class PermissionsRoleTransformer extends TransformerAbstract
      */
     public function transform(Permission $model)
     {
-
         $module = Module::where('slug', $model->name)->first();
         $permissions = [
             'id'   => $model->id,

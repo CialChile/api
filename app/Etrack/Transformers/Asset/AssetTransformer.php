@@ -3,6 +3,7 @@
 namespace App\Etrack\Transformers\Asset;
 
 use App\Etrack\Entities\Assets\Asset;
+use App\Etrack\Entities\Certification\Certification;
 use App\Etrack\Transformers\Company\CompanyTransformer;
 use App\Etrack\Transformers\StatusTransformer;
 use App\Etrack\Transformers\Worker\WorkerTransformer;
@@ -26,7 +27,8 @@ class AssetTransformer extends TransformerAbstract
         'subcategory',
         'images',
         'coverImage',
-        'documents'
+        'documents',
+        'certifications'
     ];
 
     /**
@@ -147,5 +149,15 @@ class AssetTransformer extends TransformerAbstract
         if ($coverPicture) {
             return $this->item($coverPicture, new AssetImagesTransformer(), 'parent');
         }
+    }
+
+    public function IncludeCertifications(Asset $model)
+    {
+        $certifications = $model->certifications;
+        if (!$certifications->isEmpty()) {
+            return $this->collection($certifications, new AssetCertificationTransformer(), 'parent');
+        }
+
+        return $this->null();
     }
 }

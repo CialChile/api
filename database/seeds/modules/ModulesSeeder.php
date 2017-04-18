@@ -121,14 +121,7 @@ class ModulesSeeder extends Seeder
             [
                 'data'      => [
                     'name' => 'Actividades',
-                    'slug' => 'client-activities'
-                ],
-                'abilities' => ['list', 'show', 'store', 'update', 'destroy']
-            ],
-            [
-                'data'      => [
-                    'name' => 'Plantillas',
-                    'slug' => 'client-templates'
+                    'slug' => 'client-activities-activities'
                 ],
                 'abilities' => ['list', 'show', 'store', 'update', 'destroy']
             ],
@@ -157,6 +150,27 @@ class ModulesSeeder extends Seeder
                 'data'      => [
                     'name' => 'Frecuencias',
                     'slug' => 'client-activities-frequencies'
+                ],
+                'abilities' => ['list', 'show', 'store', 'update', 'destroy']
+            ],
+            [
+                'data'      => [
+                    'name' => 'Certificaciones',
+                    'slug' => 'client-certifications-certifications'
+                ],
+                'abilities' => ['list', 'show', 'store', 'update', 'destroy']
+            ],
+            [
+                'data'      => [
+                    'name' => 'Tipos de Certificaciones',
+                    'slug' => 'client-certifications-types'
+                ],
+                'abilities' => ['list', 'show', 'store', 'update', 'destroy']
+            ],
+            [
+                'data'      => [
+                    'name' => 'Institutos',
+                    'slug' => 'client-certifications-institutes'
                 ],
                 'abilities' => ['list', 'show', 'store', 'update', 'destroy']
             ]

@@ -25,6 +25,12 @@ $api->version('v1', function ($api) {
         $api->get('workers/datatable', 'Client\Workers\WorkersController@datatable');
         $api->get('workers/search/by-name/{name?}', 'Client\Workers\WorkersController@searchByName');
         $api->resource('workers', 'Client\Workers\WorkersController', ['except' => ['edit', 'create']]);
+
+        $api->post('workers/{id}/certifications/{certificationId}/documents', 'Client\Workers\WorkersCertificationsController@uploadDocuments');
+        $api->get('workers/{workerId}/certifications/{certificationId}/documents/{documentId}', 'Client\Workers\WorkersCertificationsController@downloadDocument');
+        $api->delete('workers/{id}/certifications/{certificationId}/documents/{documentId}', 'Client\Workers\WorkersCertificationsController@removeDocument');
+        $api->resource('workers/{id}/certifications', 'Client\Workers\WorkersCertificationsController', ['except' => ['edit', 'create']]);
+
     });
 
 });

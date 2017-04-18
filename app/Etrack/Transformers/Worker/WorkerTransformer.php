@@ -10,7 +10,8 @@ class WorkerTransformer extends TransformerAbstract
 {
     protected $availableIncludes = [
         'user',
-        'assets'
+        'assets',
+        'certifications'
     ];
 
     public function transform(Worker $model)
@@ -63,4 +64,13 @@ class WorkerTransformer extends TransformerAbstract
         return $this->null();
     }
 
+    public function IncludeCertifications(Worker $model)
+    {
+        $certifications = $model->certifications;
+        if (!$certifications->isEmpty()) {
+            return $this->collection($certifications, new WorkerCertificationTransformer(), 'parent');
+        }
+
+        return $this->null();
+    }
 }

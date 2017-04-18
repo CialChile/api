@@ -56,6 +56,7 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Etrack\Entities\Worker\Worker[] $workers
  * @method static Builder|BaseModel inCompany()
  * @property-read Company $company
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\MediaLibrary\Media[] $media
  */
 class Company extends BaseModel implements HasMediaConversions
 {

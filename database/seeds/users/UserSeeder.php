@@ -32,7 +32,7 @@ class UserSeeder extends Seeder
             [
                 'first_name'    => 'Javier',
                 'last_name'     => 'Bastidas',
-                'email'         => 'javier.bastidas@etrack.com',
+                'email'         => 'javier.bastidas2@etrack.com',
                 'password'      => bcrypt('password'),
                 'active'        => true,
                 // 'rut_passport'  => '17259720',
@@ -44,13 +44,14 @@ class UserSeeder extends Seeder
         ]);
 
         $users->each(function ($user) {
-            $userDb = User::where('email', $user['email'])->first();
-            if (!$userDb) {
+            $userDb = User::where('email', $user['email'])->get();
+            if ($userDb->isEmpty()) {
                 $userDb = new User($user);
                 $userDb->save();
                 $userDb->assignRole('admin-administrator');
                 $this->rolePermissions();
             } else {
+                $userDb = $userDb->first();
                 /** @var User $userDb */
                 if ($userDb->hasRole('admin-administrator')) {
                     $this->rolePermissions();

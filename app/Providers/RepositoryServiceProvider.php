@@ -38,6 +38,9 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(\App\Etrack\Repositories\Assets\CategoryRepository::class, \App\Etrack\Repositories\Assets\CategoryRepositoryEloquent::class);
         $this->app->bind(\App\Etrack\Repositories\Assets\SubcategoryRepository::class, \App\Etrack\Repositories\Assets\SubcategoryRepositoryEloquent::class);
         $this->app->bind(\App\Etrack\Repositories\Assets\AssetConfigurationRepository::class, \App\Etrack\Repositories\Assets\AssetConfigurationRepositoryEloquent::class);
+        $this->app->bind(\App\Etrack\Repositories\Certification\CertificationRepository::class, \App\Etrack\Repositories\Certification\CertificationRepositoryEloquent::class);
+        $this->app->bind(\App\Etrack\Repositories\Certification\CertificationWorkerAssetRepository::class, \App\Etrack\Repositories\Certification\CertificationWorkerAssetRepositoryEloquent::class);
+        $this->app->bind(\App\Etrack\Repositories\Institute\InstituteRepository::class, \App\Etrack\Repositories\Institute\InstituteRepositoryEloquent::class);
         //:end-bindings:
     }
 }

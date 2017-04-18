@@ -5,6 +5,7 @@ namespace App\Etrack\Entities\Worker;
 use App\Etrack\Entities\Assets\Asset;
 use App\Etrack\Entities\Auth\User;
 use App\Etrack\Entities\BaseModel;
+use App\Etrack\Entities\Certification\Certification;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\Builder;
 use Spatie\Image\Manipulations;
@@ -63,6 +64,8 @@ use Venturecraft\Revisionable\RevisionableTrait;
  * @method static Builder|Worker whereZipCode($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\MediaLibrary\Media[] $media
  * @property-read \Illuminate\Database\Eloquent\Collection|\Venturecraft\Revisionable\Revision[] $revisionHistory
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Etrack\Entities\Assets\Asset[] $assets
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Etrack\Entities\Certification\Certification[] $certifications
  */
 class Worker extends BaseModel implements HasMediaConversions
 {
@@ -113,6 +116,11 @@ class Worker extends BaseModel implements HasMediaConversions
     public function assets()
     {
         return $this->hasMany(Asset::class, 'worker_id');
+    }
+
+    public function certifications()
+    {
+        return $this->morphToMany(Certification::class, 'certificable', 'certifications_workers_assets')->withPivot('start_date', 'end_date', 'id');
     }
 
 }

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ProgramTypesTable extends Migration
+class InstitutesTable extends Migration
 {
 
 	/**
@@ -13,7 +13,7 @@ class ProgramTypesTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('activity/_program_types', function(Blueprint $table) {
+		Schema::create('institute/_institutes', function(Blueprint $table) {
             $table->increments('id');
 
             $table->timestamps();
@@ -27,7 +27,7 @@ class ProgramTypesTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::drop('activity/_program_types');
+		Schema::drop('institute/_institutes');
 	}
 
 }

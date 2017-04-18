@@ -41,6 +41,9 @@ class StatusController extends Controller
                 if ($keyword == 'documento' || $keyword == 'Documento') {
                     $query->where('type', [1]);
                 }
+                if ($keyword == 'certificación' || $keyword == 'Certificación' || $keyword == 'Certificacion' || $keyword == 'certificacion') {
+                    $query->where('type', [2]);
+                }
             })
             ->make(true);
     }

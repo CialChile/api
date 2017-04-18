@@ -102,6 +102,7 @@ class AssetsController extends Controller
     public function destroy($assetId)
     {
         $this->userCan('destroy');
+        /** @var Asset $assetToDestroy */
         $assetToDestroy = Asset::inCompany()->find($assetId);
         if (!$assetToDestroy) {
             $this->response->errorForbidden('No tiene permiso para eliminar este activo');

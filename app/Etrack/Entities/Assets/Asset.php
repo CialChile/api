@@ -3,6 +3,7 @@
 namespace App\Etrack\Entities\Assets;
 
 use App\Etrack\Entities\BaseModel;
+use App\Etrack\Entities\Certification\Certification;
 use App\Etrack\Entities\Company\Company;
 use App\Etrack\Entities\Status;
 use App\Etrack\Entities\Worker\Worker;
@@ -78,6 +79,7 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
  * @method static Builder|Asset whereName($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\MediaLibrary\Media[] $media
  * @property-read \App\Etrack\Entities\Assets\Workplace $workplace
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Etrack\Entities\Certification\Certification[] $certifications
  */
 class Asset extends BaseModel implements HasMediaConversions
 {
@@ -168,6 +170,11 @@ class Asset extends BaseModel implements HasMediaConversions
         return $this->belongsTo(Workplace::class, 'workplace_id');
     }
 
+    public function certifications()
+    {
+        return $this->morphToMany(Certification::class, 'certificable', 'certifications_workers_assets')->withPivot('start_date', 'end_date', 'id');
+    }
+
     public function setIntegrationDateAttribute($value)
     {
         $this->attributes['integration_date'] = $this->getDate($value);
@@ -222,9 +229,9 @@ class Asset extends BaseModel implements HasMediaConversions
     {
         $raw = '';
         foreach ($this->geofields as $column) {
-            $raw .= ' astext(' . $column . ') as ' . $column . ' ';
+            $raw .= ' astext(assets.' . $column . ') as ' . $column . ' ';
         }
 
-        return parent::newQuery()->addSelect('*', DB::raw($raw));
+        return parent::newQuery()->addSelect('assets.*', DB::raw($raw));
     }
 }

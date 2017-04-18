@@ -32,6 +32,12 @@ class PermissionsTransformer extends TransformerAbstract
         ) {
             $resultPermissions->push('client-rrhh');
         }
+        if ($resultPermissions->contains(function ($value, $key) {
+            return str_contains($value, 'client-config-assets') || str_contains($value, 'client-assets');
+        })
+        ) {
+            $resultPermissions->push('client-assets');
+        }
 
         if ($resultPermissions->contains(function ($value, $key) {
             return str_contains($value, 'client-config');
@@ -39,6 +45,21 @@ class PermissionsTransformer extends TransformerAbstract
         ) {
             $resultPermissions->push('client-configuration');
         }
+
+        if ($resultPermissions->contains(function ($value, $key) {
+            return str_contains($value, 'client-certifications');
+        })
+        ) {
+            $resultPermissions->push('client-certifications');
+        }
+
+        if ($resultPermissions->contains(function ($value, $key) {
+            return str_contains($value, 'client-activities');
+        })
+        ) {
+            $resultPermissions->push('client-activities');
+        }
+
 
         if ($resultPermissions->contains(function ($value, $key) {
             return str_contains($value, 'client-security');

@@ -25,6 +25,11 @@ $api->version('v1', function ($api) {
         $api->get('assets/config', 'Client\Assets\AssetsConfigurationController@index');
         $api->post('assets/config', 'Client\Assets\AssetsConfigurationController@store');
 
+        $api->post('assets/{id}/certifications/{certificationId}/documents', 'Client\Assets\AssetCertificationsController@uploadDocuments');
+        $api->get('assets/{assetId}/certifications/{certificationId}/documents/{documentId}', 'Client\Assets\AssetCertificationsController@downloadDocument');
+        $api->delete('assets/{id}/certifications/{certificationId}/documents/{documentId}', 'Client\Assets\AssetCertificationsController@removeDocument');
+        $api->resource('assets/{id}/certifications', 'Client\Assets\AssetCertificationsController', ['except' => ['edit', 'create']]);
+
         $api->get('assets/datatable', 'Client\Assets\AssetsController@datatable');
         $api->post('assets/{id}/images', 'Client\Assets\AssetsController@uploadImages');
         $api->post('assets/{id}/documents', 'Client\Assets\AssetsController@uploadDocuments');
