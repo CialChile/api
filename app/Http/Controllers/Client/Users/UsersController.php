@@ -3,8 +3,8 @@ namespace App\Http\Controllers\Client\Users;
 
 use App\Etrack\Transformers\Auth\UserTransformer;
 use App\Http\Controllers\Controller;
-use App\Http\Request\User\UserChangePasswordRequest;
-use App\Http\Request\User\UserUpdateRequest;
+use App\Http\Requests\User\UserChangePasswordRequest;
+use App\Http\Requests\User\UserUpdateRequest;
 
 class UsersController extends Controller
 {

@@ -5,8 +5,8 @@ use App\Etrack\Entities\Status;
 use App\Etrack\Repositories\StatusRepository;
 use App\Etrack\Transformers\StatusTransformer;
 use App\Http\Controllers\Controller;
-use App\Http\Request\Config\StatusStoreRequest;
-use App\Http\Request\Config\StatusUpdateRequest;
+use App\Http\Requests\Config\StatusStoreRequest;
+use App\Http\Requests\Config\StatusUpdateRequest;
 use DB;
 use Yajra\Datatables\Datatables;
 

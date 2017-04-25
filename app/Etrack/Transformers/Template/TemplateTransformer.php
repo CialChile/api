@@ -17,11 +17,11 @@ class TemplateTransformer extends TransformerAbstract
 {
     protected $availableIncludes = [
         'company',
-        'template_type',
-        'program_type',
-        'measure_unit',
+        'programType',
+        'measureUnit',
         'frequency',
-        'periodicity'
+        'periodicity',
+        'template'
     ];
 
     /**
@@ -35,15 +35,14 @@ class TemplateTransformer extends TransformerAbstract
         return [
             'id'                       => (int)$model->id,
             'company_id'               => $model->company_id,
-            'template_type_id'         => $model->template_type_id,
             'program_type_id'          => $model->program_type_id,
             'measure_unit_id'          => $model->measure_unit_id,
             'frequency_id'             => $model->frequency_id,
             'periodicity_id'           => $model->periodicity_id,
-            'name_template'            => $model->name_template,
-            'name_activity'            => $model->name_activity,
-            'description_activity'     => $model->description_activity,
-            'execution_estimated_time' => $model->execution_estimated_time,
+            'name'                     => $model->name,
+            'description'              => $model->description,
+            'estimated_execution_time' => $model->estimated_execution_time,
+            'is_custom'                => $model->is_custom,
             'created_at'               => $model->created_at ? $model->created_at->format('d/m/Y') : null,
             'updated_at'               => $model->updated_at ? $model->updated_at->format('d/m/Y') : null,
         ];
@@ -52,11 +51,6 @@ class TemplateTransformer extends TransformerAbstract
     public function includeCompany(Template $model)
     {
         return $this->item($model->company, new CompanyTransformer(), 'parent');
-    }
-
-    public function includeTemplateType(Template $model)
-    {
-        return $this->item($model->templateType, new TemplateTypeTransformer(), 'parent');
     }
 
     public function includeProgramType(Template $model)
@@ -77,5 +71,12 @@ class TemplateTransformer extends TransformerAbstract
     public function includePeriodicity(Template $model)
     {
         return $this->item($model->periodicity, new PeriodicityTransformer(), 'parent');
+    }
+
+    public function includeTemplate(Template $model)
+    {
+        return $this->item($model->template, function ($structure) {
+            return $structure;
+        }, 'parent');
     }
 }

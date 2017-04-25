@@ -15,7 +15,7 @@ class CreateTemplatesTable extends Migration
     {
         Schema::create('templates', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('company_id')->unsigned()->index();
+            $table->integer('company_id')->unsigned()->nullable()->index();
             $table->integer('template_type_id')->unsigned()->nullable();
             $table->integer('program_type_id')->unsigned()->nullable();
             $table->integer('measure_unit_id')->unsigned()->nullable();

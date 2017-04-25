@@ -12,9 +12,7 @@ use App\Etrack\Entities\Activity\ProgramType;
  */
 class ProgramTypeTransformer extends TransformerAbstract
 {
-    protected $availableIncludes = [
-        'company'
-    ];
+
     /**
      * Transform the \ProgramType entity
      * @param ProgramType $model
@@ -24,16 +22,11 @@ class ProgramTypeTransformer extends TransformerAbstract
     public function transform(ProgramType $model)
     {
         return [
-            'id'         => (int) $model->id,
-            'company_id' => $model->company_id,
-            'name'       => $model->name,
-            'created_at' => $model->created_at ? $model->created_at->format('d/m/Y') : null,
-            'updated_at' => $model->updated_at ? $model->updated_at->format('d/m/Y') : null,
+            'id'            => (int)$model->id,
+            'name'          => $model->name,
+            'is_inspection' => $model->is_inspection,
+            'created_at'    => $model->created_at ? $model->created_at->format('d/m/Y') : null,
+            'updated_at'    => $model->updated_at ? $model->updated_at->format('d/m/Y') : null,
         ];
-    }
-
-    public function includeCompany(ProgramType $model)
-    {
-        return $this->item($model->company, new CompanyTransformer(), 'parent');
     }
 }

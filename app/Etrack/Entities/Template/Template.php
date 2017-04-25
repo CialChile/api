@@ -14,50 +14,53 @@ use Illuminate\Database\Query\Builder;
  *
  * @property int $id
  * @property int $company_id
- * @property int $template_type_id
  * @property int $program_type_id
  * @property int $measure_unit_id
  * @property int $frequency_id
  * @property int $periodicity_id
- * @property string $name_template
- * @property string $name_activity
- * @property string $description_activity
+ * @property string $name
+ * @property string $description
+ * @property int $estimated_execution_time
+ * @property bool $is_custom
+ * @property array $template
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon $deleted_at
- * @method static Builder|Template whereCompanyId($value)
- * @method static Builder|Template whereCreatedAt($value)
- * @method static Builder|Template whereDeletedAt($value)
- * @method static Builder|Template whereDescriptionActivity($value)
- * @method static Builder|Template whereFrequencyId($value)
- * @method static Builder|Template whereId($value)
- * @method static Builder|Template whereMeasureUnitId($value)
- * @method static Builder|Template whereNameActivity($value)
- * @method static Builder|Template whereNameTemplate($value)
- * @method static Builder|Template wherePeriodicityId($value)
- * @method static Builder|Template whereProgramTypeId($value)
- * @method static Builder|Template whereTemplateTypeId($value)
- * @method static Builder|Template whereUpdatedAt($value)
- * @mixin \Eloquent
  * @property-read \App\Etrack\Entities\Company\Company $company
  * @property-read \App\Etrack\Entities\Activity\Frequency $frequency
  * @property-read \App\Etrack\Entities\Template\MeasureUnit $measureUnit
  * @property-read \App\Etrack\Entities\Activity\Periodicity $periodicity
  * @property-read \App\Etrack\Entities\Activity\ProgramType $programType
- * @property-read \App\Etrack\Entities\Template\TemplateType $templateType
  * @method static Builder|BaseModel inCompany()
- * @property int $execution_estimated_time
- * @method static Builder|Template whereExecutionEstimatedTime($value)
+ * @method static Builder|Template whereCompanyId($value)
+ * @method static Builder|Template whereCreatedAt($value)
+ * @method static Builder|Template whereDeletedAt($value)
+ * @method static Builder|Template whereDescription($value)
+ * @method static Builder|Template whereEstimatedExecutionTime($value)
+ * @method static Builder|Template whereFrequencyId($value)
+ * @method static Builder|Template whereId($value)
+ * @method static Builder|Template whereIsCustom($value)
+ * @method static Builder|Template whereMeasureUnitId($value)
+ * @method static Builder|Template whereName($value)
+ * @method static Builder|Template wherePeriodicityId($value)
+ * @method static Builder|Template whereProgramTypeId($value)
+ * @method static Builder|Template whereTemplate($value)
+ * @method static Builder|Template whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Template extends BaseModel
 {
     use SoftDeletes;
 
     protected $fillable = [
-        'company_id', 'template_type_id', 'program_type_id',
+        'company_id', 'program_type_id', 'is_custom',
         'measure_unit_id', 'frequency_id', 'periodicity_id',
-        'name_template', 'name_activity', 'description_activity',
-        'execution_estimated_time'
+        'name', 'estimated_execution_time', 'template', 'description'
+    ];
+
+    protected $casts = [
+        'is_custom' => 'boolean',
+        'template'  => 'array'
     ];
 
     protected $dates = [
@@ -82,11 +85,6 @@ class Template extends BaseModel
     public function measureUnit()
     {
         return $this->belongsTo(MeasureUnit::class, 'measure_unit_id');
-    }
-
-    public function templateType()
-    {
-        return $this->belongsTo(TemplateType::class, 'template_type_id');
     }
 
 }

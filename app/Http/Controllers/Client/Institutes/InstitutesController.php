@@ -5,8 +5,8 @@ use App\Etrack\Entities\Institute\Institute;
 use App\Etrack\Repositories\Institute\InstituteRepository;
 use App\Etrack\Transformers\Institute\InstituteTransformer;
 use App\Http\Controllers\Controller;
-use App\Http\Request\Institute\InstituteStoreRequest;
-use App\Http\Request\Institute\InstituteUpdateRequest;
+use App\Http\Requests\Institute\InstituteStoreRequest;
+use App\Http\Requests\Institute\InstituteUpdateRequest;
 use DB;
 use Yajra\Datatables\Datatables;
 

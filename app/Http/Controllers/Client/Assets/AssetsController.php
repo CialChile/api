@@ -8,13 +8,11 @@ use App\Etrack\Transformers\Asset\AssetDocumentsTransformer;
 use App\Etrack\Transformers\Asset\AssetImagesTransformer;
 use App\Etrack\Transformers\Asset\AssetTransformer;
 use App\Http\Controllers\Controller;
-use App\Http\Request\Asset\AssetDocumentStoreRequest;
-use App\Http\Request\Asset\AssetStoreRequest;
-use App\Http\Request\Asset\AssetUpdateRequest;
+use App\Http\Requests\Asset\AssetDocumentStoreRequest;
+use App\Http\Requests\Asset\AssetStoreRequest;
+use App\Http\Requests\Asset\AssetUpdateRequest;
 use DB;
 use Dingo\Api\Http\Request;
-use File;
-use Response;
 use Yajra\Datatables\Datatables;
 
 class AssetsController extends Controller

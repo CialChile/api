@@ -8,8 +8,8 @@ use App\Etrack\Repositories\Worker\WorkerRepository;
 use App\Etrack\Services\Auth\UserService;
 use App\Etrack\Transformers\Auth\UserTransformer;
 use App\Http\Controllers\Controller;
-use App\Http\Request\Admin\User\AdminUserStoreRequest;
-use App\Http\Request\Admin\User\AdminUserUpdateRequest;
+use App\Http\Requests\Admin\User\AdminUserStoreRequest;
+use App\Http\Requests\Admin\User\AdminUserUpdateRequest;
 use DB;
 use Yajra\Datatables\Datatables;
 

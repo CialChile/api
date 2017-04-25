@@ -5,8 +5,8 @@ use App\Etrack\Entities\Auth\Role;
 use App\Etrack\Repositories\Auth\RoleRepository;
 use App\Etrack\Transformers\Auth\RoleTransformer;
 use App\Http\Controllers\Controller;
-use App\Http\Request\Role\RoleStoreRequest;
-use App\Http\Request\Role\RoleUpdateRequest;
+use App\Http\Requests\Role\RoleStoreRequest;
+use App\Http\Requests\Role\RoleUpdateRequest;
 use DB;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
@@ -69,15 +69,17 @@ class RolesController extends Controller
             /** @var Role $role */
             $role = $this->roleRepository->create($dataRole);
             $permissions->each(function ($permission) use ($role) {
-                $permissionsData = [
-                    'name' => $permission['slug'],
-                ];
-                unset($permission['name']);
-                unset($permission['slug']);
-                $permissionsData['slug'] = $permission;
+                if (str_contains($permission['slug'], 'admin') !== false) {
+                    $permissionsData = [
+                        'name' => $permission['slug'],
+                    ];
+                    unset($permission['name']);
+                    unset($permission['slug']);
+                    $permissionsData['slug'] = $permission;
 
-                $perm = Permission::create($permissionsData);
-                $role->assignPermission($perm);
+                    $perm = Permission::create($permissionsData);
+                    $role->assignPermission($perm);
+                }
             });
         } catch (Exception $e) {
             DB::rollBack();
@@ -113,15 +115,17 @@ class RolesController extends Controller
             $role->permissions()->delete();
             $role->revokeAllPermissions();
             $permissions->each(function ($permission) use ($role) {
-                $permissionsData = [
-                    'name' => $permission['slug'],
-                ];
-                unset($permission['name']);
-                unset($permission['slug']);
-                $permissionsData['slug'] = $permission;
+                if (str_contains($permission['slug'], 'admin') !== false) {
+                    $permissionsData = [
+                        'name' => $permission['slug'],
+                    ];
+                    unset($permission['name']);
+                    unset($permission['slug']);
+                    $permissionsData['slug'] = $permission;
 
-                $perm = Permission::create($permissionsData);
-                $role->assignPermission($perm);
+                    $perm = Permission::create($permissionsData);
+                    $role->assignPermission($perm);
+                }
             });
         } catch (Exception $e) {
             DB::rollBack();

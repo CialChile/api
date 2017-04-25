@@ -8,9 +8,9 @@ use App\Etrack\Transformers\Asset\AssetCertificationTransformer;
 use App\Etrack\Transformers\Asset\AssetDocumentsTransformer;
 use App\Etrack\Transformers\Certification\CertificationTransformer;
 use App\Http\Controllers\Controller;
-use App\Http\Request\Asset\Certification\AssetCertificationDocumentStoreRequest;
-use App\Http\Request\Asset\Certification\AssetCertificationStoreRequest;
-use App\Http\Request\Asset\Certification\AssetCertificationUpdateRequest;
+use App\Http\Requests\Asset\Certification\AssetCertificationDocumentStoreRequest;
+use App\Http\Requests\Asset\Certification\AssetCertificationStoreRequest;
+use App\Http\Requests\Asset\Certification\AssetCertificationUpdateRequest;
 use Carbon\Carbon;
 use DB;
 

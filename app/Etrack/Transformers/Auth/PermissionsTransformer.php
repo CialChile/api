@@ -76,6 +76,13 @@ class PermissionsTransformer extends TransformerAbstract
         }
 
         if ($resultPermissions->contains(function ($value, $key) {
+            return str_contains($value, 'admin-templates') || str_contains($value, 'admin-program-types');
+        })
+        ) {
+            $resultPermissions->push('admin-activities');
+        }
+
+        if ($resultPermissions->contains(function ($value, $key) {
             return str_contains($value, 'admin-security');
         })
         ) {

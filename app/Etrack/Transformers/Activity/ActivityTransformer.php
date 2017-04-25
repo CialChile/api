@@ -16,8 +16,8 @@ class ActivityTransformer extends TransformerAbstract
 {
     protected $availableIncludes = [
         'company',
-        'program_type',
-        'measure_unit',
+        'programType',
+        'measureUnit',
         'template'
     ];
 

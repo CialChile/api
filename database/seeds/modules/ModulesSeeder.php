@@ -51,6 +51,13 @@ class ModulesSeeder extends Seeder
             ],
             [
                 'data'      => [
+                    'name' => 'Tipos de Programas',
+                    'slug' => 'admin-program-types'
+                ],
+                'abilities' => ['list', 'show', 'store', 'update', 'destroy']
+            ],
+            [
+                'data'      => [
                     'name' => 'Trabajadores',
                     'slug' => 'client-rrhh-workers'
                 ],

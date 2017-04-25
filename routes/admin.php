@@ -27,10 +27,18 @@ $api->version('v1', function ($api) {
         $api->resource('companies', 'Admin\Company\CompanyController', ['except' => ['edit', 'create']]);
 
         $api->get('permissions', 'Admin\Permissions\PermissionsAdminController@index');
+
         $api->get('users/datatable', 'Admin\Users\UsersAdminController@datatable');
-        $api->get('roles/datatable', 'Admin\Roles\RolesAdminController@datatable');
         $api->resource('roles', 'Admin\Roles\RolesAdminController', ['except' => ['edit', 'create']]);
+
+        $api->get('roles/datatable', 'Admin\Roles\RolesAdminController@datatable');
         $api->resource('users', 'Admin\Users\UsersAdminController', ['except' => ['edit', 'create']]);
+
+        $api->get('activities/program-types/datatable', 'Admin\Activities\ProgramTypesController@datatable');
+        $api->resource('activities/program-types', 'Admin\Activities\ProgramTypesController', ['except' => ['edit', 'create']]);
+
+        $api->get('activities/templates/datatable', 'Admin\Activities\TemplatesController@datatable');
+        $api->resource('activities/templates', 'Admin\Activities\TemplatesController', ['except' => ['edit', 'create']]);
     });
 
 });
