@@ -28,10 +28,10 @@ $api->version('v1', function ($api) {
 
         $api->get('permissions', 'Admin\Permissions\PermissionsAdminController@index');
 
-        $api->get('users/datatable', 'Admin\Users\UsersAdminController@datatable');
+        $api->get('roles/datatable', 'Admin\Roles\RolesAdminController@datatable');
         $api->resource('roles', 'Admin\Roles\RolesAdminController', ['except' => ['edit', 'create']]);
 
-        $api->get('roles/datatable', 'Admin\Roles\RolesAdminController@datatable');
+        $api->get('users/datatable', 'Admin\Users\UsersAdminController@datatable');
         $api->resource('users', 'Admin\Users\UsersAdminController', ['except' => ['edit', 'create']]);
 
         $api->get('activities/program-types/datatable', 'Admin\Activities\ProgramTypesController@datatable');
