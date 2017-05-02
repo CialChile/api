@@ -15,7 +15,7 @@ class WorkersPositionController extends Controller
 
         $positions = Worker::inCompany()->groupBy('position');
         if ($name) {
-            $positions->where("name", 'like', $name . '%');
+            $positions->where("position", 'like', $name . '%');
         }
 
 
