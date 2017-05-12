@@ -66,6 +66,11 @@ use Venturecraft\Revisionable\RevisionableTrait;
  * @property-read \Illuminate\Database\Eloquent\Collection|\Venturecraft\Revisionable\Revision[] $revisionHistory
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Etrack\Entities\Assets\Asset[] $assets
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Etrack\Entities\Certification\Certification[] $certifications
+ * @property string $specialty
+ * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Worker\Worker whereSpecialty($value)
+ * @property int $creator_id
+ * @property-read \App\Etrack\Entities\Auth\User $createdBy
+ * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Worker\Worker whereCreatorId($value)
  */
 class Worker extends BaseModel implements HasMediaConversions
 {
@@ -78,9 +83,9 @@ class Worker extends BaseModel implements HasMediaConversions
     ];
 
     protected $fillable = [
-        'company_id', 'first_name', 'last_name', 'emergency_contact',
+        'company_id', 'first_name', 'last_name', 'emergency_contact', 'creator_id',
         'emergency_telephone', 'telephone', 'city', 'state', 'zip_code', 'medical_information',
-        'country', 'address', 'birthday', 'position', 'rut_passport', 'email', 'active'
+        'country', 'address', 'birthday', 'position', 'rut_passport', 'email', 'active', 'specialty'
     ];
     protected $dates = ['birthday', 'deleted_at'];
 
@@ -121,6 +126,11 @@ class Worker extends BaseModel implements HasMediaConversions
     public function certifications()
     {
         return $this->morphToMany(Certification::class, 'certificable', 'certifications_workers_assets')->withPivot('start_date', 'end_date', 'id');
+    }
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'creator_id');
     }
 
 }

@@ -73,6 +73,10 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
  * @property \Carbon\Carbon $deleted_at
  * @method static Builder|User whereDeletedAt($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\MediaLibrary\Media[] $media
+ * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User hasCertifications($certificationsIds)
+ * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User hasPositions($positions)
+ * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User hasQueryRoles($roles)
+ * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User hasSpecialties($specialties)
  */
 class User extends Authenticatable implements HasMediaConversions
 {
@@ -138,5 +142,86 @@ class User extends Authenticatable implements HasMediaConversions
         $company_id = \Auth::user()->company_id;
         /** @var Builder $query */
         return $query->where('company_id', $company_id);
+    }
+
+    public function scopeHasQueryRoles($query, $roles)
+    {
+        $roles = $this->hasDelimiterToArray($roles);
+        if (is_array($roles)) {
+            return $query->where(function ($q) use ($roles) {
+                foreach ($roles as $index => $role) {
+                    $q = !$index ? $q->whereHas('roles', function ($q2) use ($role) {
+                        return $q2->where('slug', $role);
+                    }) : $q->orWhereHas('roles', function ($q2) use ($role) {
+                        return $q2->where('slug', $role);
+                    });
+                }
+                return $q;
+            });
+        }
+
+        return $query->whereHas('roles', function ($q2) use ($roles) {
+            return $q2->where('slug', $roles);
+        });
+    }
+
+    public function scopeHasCertifications($query, $certificationsIds)
+    {
+        $certificationsIds = $this->hasDelimiterToArray($certificationsIds);
+        if (is_array($certificationsIds)) {
+            return $query->where(function ($q) use ($certificationsIds) {
+                foreach ($certificationsIds as $index => $certificationId) {
+                    $q = $q->whereHas('worker.certifications', function ($q2) use ($certificationId) {
+                        return $q2->where('certifications.id', $certificationId);
+                    });
+                }
+                return $q;
+            });
+        }
+
+        return $query->whereHas('worker.certifications', function ($q2) use ($certificationsIds) {
+            return $q2->where('certifications.id', $certificationsIds);
+        });
+    }
+
+    public function scopeHasPositions($query, $positions)
+    {
+        $positions = $this->hasDelimiterToArray($positions);
+        if (is_array($positions)) {
+            return $query->where(function ($q) use ($positions) {
+                foreach ($positions as $index => $position) {
+                    $q = !$index ? $q->whereHas('worker', function ($q2) use ($position) {
+                        return $q2->where('workers.position', $position);
+                    }) : $q->orWhereHas('worker', function ($q2) use ($position) {
+                        return $q2->where('workers.position', $position);
+                    });
+                }
+                return $q;
+            });
+        }
+
+        return $query->whereHas('worker', function ($q2) use ($positions) {
+            return $q2->where('workers.position', $positions);
+        });
+    }
+
+    public function scopeHasSpecialties($query, $specialties)
+    {
+        $specialties = $this->hasDelimiterToArray($specialties);
+        if (is_array($specialties)) {
+            return $query->where(function ($q) use ($specialties) {
+                foreach ($specialties as $index => $specialty) {
+                    $q = !$index ? $q->whereHas('worker', function ($q2) use ($specialty) {
+                        return $q2->where('workers.specialty', $specialty);
+                    }) : $q->orWhereHas('worker', function ($q2) use ($specialty) {
+                        return $q2->where('workers.specialty', $specialty);
+                    });
+                }
+                return $q;
+            });
+        }
+        return $query->whereHas('worker', function ($q2) use ($specialties) {
+            return $q2->where('workers.specialty', $specialties);
+        });
     }
 }

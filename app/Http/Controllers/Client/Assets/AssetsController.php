@@ -34,10 +34,13 @@ class AssetsController extends Controller
 
     }
 
-    public function datatable()
+    public function datatable(Request $request)
     {
+        $except = $request->has('except') ? explode(',', $request->get('except')) : [];
         $this->userCan('list');
-        return Datatables::of(Asset::inCompany()->with(['brand', 'category', 'subcategory', 'brandModel', 'status', 'workplace']))
+        $query = Asset::inCompany()->with(['brand', 'category', 'subcategory', 'brandModel', 'status', 'workplace']);
+        $query = count($except) ? $query->whereNotIn('id', $except) : $query;
+        return Datatables::of($query)
             ->setTransformer(AssetTransformer::class)
             ->make(true);
     }
@@ -55,10 +58,12 @@ class AssetsController extends Controller
 
     public function store(AssetStoreRequest $request)
     {
+        $this->userCan('store');
         $user = $this->loggedInUser();
         $data = $request->all();
         DB::beginTransaction();
         $data['company_id'] = $user->company_id;
+        $data['creator_id'] = $user->id;
         $asset = new Asset();
         $asset->fill($data);
         $asset->save();

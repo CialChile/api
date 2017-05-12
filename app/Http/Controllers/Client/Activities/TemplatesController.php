@@ -22,7 +22,13 @@ class TemplatesController extends Controller
 
     public function index()
     {
+        $this->userCan('list');
+        $company_id = \Auth::user()->company_id;
+        $templates = Template::where(function (Builder $q) use ($company_id) {
+            return $q->where('company_id', $company_id)->orWhere('is_custom', false);
+        })->with(['programType'])->get();
 
+        return $this->response->collection($templates, new TemplateTransformer());
     }
 
     public function datatable()

@@ -25,6 +25,7 @@ class ProgramTypeTransformer extends TransformerAbstract
             'id'            => (int)$model->id,
             'name'          => $model->name,
             'is_inspection' => $model->is_inspection,
+            'has_assets'    => $model->has_assets,
             'created_at'    => $model->created_at ? $model->created_at->format('d/m/Y') : null,
             'updated_at'    => $model->updated_at ? $model->updated_at->format('d/m/Y') : null,
         ];

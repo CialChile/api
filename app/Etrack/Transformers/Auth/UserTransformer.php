@@ -32,6 +32,7 @@ class UserTransformer extends TransformerAbstract
             'id'            => (int)$model->id,
             'first_name'    => $model->first_name,
             'last_name'     => $model->last_name,
+            'full_name'     => $model->first_name . ' ' . $model->last_name,
             'email'         => $model->email,
             'isSuperUser'   => $model->isSuperUser(),
             'active'        => $model->active,

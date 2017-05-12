@@ -65,26 +65,21 @@ class RolesController extends Controller
             'company_id'  => $user->company_id
         ];
         DB::beginTransaction();
-        try {
-            /** @var Role $role */
-            $role = $this->roleRepository->create($dataRole);
-            $permissions->each(function ($permission) use ($role) {
-                if (str_contains($permission['slug'], 'admin') !== false) {
-                    $permissionsData = [
-                        'name' => $permission['slug'],
-                    ];
-                    unset($permission['name']);
-                    unset($permission['slug']);
-                    $permissionsData['slug'] = $permission;
+        /** @var Role $role */
+        $role = $this->roleRepository->create($dataRole);
+        $permissions->each(function ($permission) use ($role) {
+            if (str_contains($permission['slug'], 'admin') === false) {
+                $permissionsData = [
+                    'name' => $permission['slug'],
+                ];
+                unset($permission['name']);
+                unset($permission['slug']);
+                $permissionsData['slug'] = $permission;
 
-                    $perm = Permission::create($permissionsData);
-                    $role->assignPermission($perm);
-                }
-            });
-        } catch (Exception $e) {
-            DB::rollBack();
-            throw new Exception($e->getMessage());
-        }
+                $perm = Permission::create($permissionsData);
+                $role->assignPermission($perm);
+            }
+        });
 
         DB::commit();
         return $this->response->item($role, new RoleTransformer());
@@ -109,28 +104,23 @@ class RolesController extends Controller
             'slug'        => str_slug($user->company_id . '-' . $data['name']),
         ];
         DB::beginTransaction();
-        try {
-            /** @var Role $role */
-            $role = $this->roleRepository->update($dataRole, $roleId);
-            $role->permissions()->delete();
-            $role->revokeAllPermissions();
-            $permissions->each(function ($permission) use ($role) {
-                if (str_contains($permission['slug'], 'admin') !== false) {
-                    $permissionsData = [
-                        'name' => $permission['slug'],
-                    ];
-                    unset($permission['name']);
-                    unset($permission['slug']);
-                    $permissionsData['slug'] = $permission;
+        /** @var Role $role */
+        $role = $this->roleRepository->update($dataRole, $roleId);
+        $role->permissions()->delete();
+        $role->revokeAllPermissions();
+        $permissions->each(function ($permission) use ($role) {
+            if (str_contains($permission['slug'], 'admin') === false) {
+                $permissionsData = [
+                    'name' => $permission['slug'],
+                ];
+                unset($permission['name']);
+                unset($permission['slug']);
+                $permissionsData['slug'] = $permission;
 
-                    $perm = Permission::create($permissionsData);
-                    $role->assignPermission($perm);
-                }
-            });
-        } catch (Exception $e) {
-            DB::rollBack();
-            throw new Exception($e->getMessage());
-        }
+                $perm = Permission::create($permissionsData);
+                $role->assignPermission($perm);
+            }
+        });
 
         DB::commit();
         return $this->response->item($role, new RoleTransformer());

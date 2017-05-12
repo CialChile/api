@@ -11,6 +11,7 @@ use App\Http\Requests\Worker\WorkerUpdateRequest;
 use Carbon\Carbon;
 use DB;
 use Exception;
+use InvalidArgumentException;
 use Yajra\Datatables\Datatables;
 
 class WorkersController extends Controller
@@ -62,6 +63,7 @@ class WorkersController extends Controller
         $data = $request->all();
         $data['birthday'] = Carbon::parse($data['birthday'])->toDateString();
         $data['company_id'] = $user->company_id;
+        $data['creator_id'] = $user->id;
         $data['active'] = $data['active'] == 'true' ? 1 : 0;
         $data['medical_information'] = !$data['medical_information'] || $data['medical_information'] == 'null' ? NULL : $data['medical_information'];
         DB::beginTransaction();
@@ -93,7 +95,11 @@ class WorkersController extends Controller
         DB::beginTransaction();
         $data = $request->all();
         $data['company_id'] = $user->company_id;
-        $data['birthday'] = Carbon::createFromFormat('d/m/Y', $data['birthday'])->toDateString();
+        try {
+            $data['birthday'] = Carbon::createFromFormat('d/m/Y', $data['birthday'])->toDateString();
+        } catch (InvalidArgumentException $e) {
+            $data['birthday'] = Carbon::parse($data['birthday'])->toDateString();
+        }
         $data['active'] = $data['active'] == 'true' ? 1 : 0;
         $data['medical_information'] = !$data['medical_information'] || $data['medical_information'] == 'null' ? NULL : $data['medical_information'];
         $worker->fill($data);

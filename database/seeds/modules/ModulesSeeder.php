@@ -99,7 +99,7 @@ class ModulesSeeder extends Seeder
             ],
             [
                 'data'      => [
-                    'name' => 'Configuración Categoriás',
+                    'name' => 'Configuración Categorías',
                     'slug' => 'client-config-assets-categories'
                 ],
                 'abilities' => ['list', 'show', 'store', 'update', 'destroy']
@@ -134,6 +134,13 @@ class ModulesSeeder extends Seeder
             ],
             [
                 'data'      => [
+                    'name' => 'Programaciones',
+                    'slug' => 'client-activities-schedules'
+                ],
+                'abilities' => ['list', 'show', 'store', 'update', 'destroy']
+            ],
+            [
+                'data'      => [
                     'name' => 'Plantillas',
                     'slug' => 'client-activities-templates'
                 ],
@@ -143,20 +150,6 @@ class ModulesSeeder extends Seeder
                 'data'      => [
                     'name' => 'Tipos de Programa',
                     'slug' => 'client-activities-program-types'
-                ],
-                'abilities' => ['list', 'show', 'store', 'update', 'destroy']
-            ],
-            [
-                'data'      => [
-                    'name' => 'Unidades de Medida',
-                    'slug' => 'client-activities-measure-unit'
-                ],
-                'abilities' => ['list', 'show', 'store', 'update', 'destroy']
-            ],
-            [
-                'data'      => [
-                    'name' => 'Frecuencias',
-                    'slug' => 'client-activities-frequencies'
                 ],
                 'abilities' => ['list', 'show', 'store', 'update', 'destroy']
             ],

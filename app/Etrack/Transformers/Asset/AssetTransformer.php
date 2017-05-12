@@ -4,6 +4,7 @@ namespace App\Etrack\Transformers\Asset;
 
 use App\Etrack\Entities\Assets\Asset;
 use App\Etrack\Entities\Certification\Certification;
+use App\Etrack\Transformers\Auth\UserTransformer;
 use App\Etrack\Transformers\Company\CompanyTransformer;
 use App\Etrack\Transformers\StatusTransformer;
 use App\Etrack\Transformers\Worker\WorkerTransformer;
@@ -28,7 +29,8 @@ class AssetTransformer extends TransformerAbstract
         'images',
         'coverImage',
         'documents',
-        'certifications'
+        'certifications',
+        'createdBy'
     ];
 
     /**
@@ -156,6 +158,15 @@ class AssetTransformer extends TransformerAbstract
         $certifications = $model->certifications;
         if (!$certifications->isEmpty()) {
             return $this->collection($certifications, new AssetCertificationTransformer(), 'parent');
+        }
+
+        return $this->null();
+    }
+
+    public function includeCreatedBy(Asset $model)
+    {
+        if ($model->createdBy) {
+            return $this->item($model->createdBy, new UserTransformer(), 'parent');
         }
 
         return $this->null();

@@ -23,14 +23,17 @@ use Illuminate\Database\Query\Builder;
  * @method static Builder|ProgramType whereName($value)
  * @method static Builder|ProgramType whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property bool $has_assets
+ * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Activity\ProgramType whereHasAssets($value)
  */
 class ProgramType extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['name', 'is_inspection'];
+    protected $fillable = ['name', 'is_inspection', 'has_assets'];
     protected $casts = [
-        'is_inspection' => 'boolean'
+        'is_inspection' => 'boolean',
+        'has_assets'    => 'boolean',
     ];
     protected $dates = ['deleted_at'];
 

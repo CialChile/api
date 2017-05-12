@@ -70,6 +70,10 @@ class WorkersCertificationsController extends Controller
         } else {
             $endDate = $endDate->addYears($certification->validity_time);
         }
+        $hasCertification = $worker->certifications()->where('certifications.id', $certification->id)->first();
+        if ($hasCertification) {
+            $this->response->errorForbidden('Este trabajador ya posee esta certificación asociada');
+        }
         $certification = $worker->certifications()->save($certification, ['start_date' => $startDate->toDateString(), 'end_date' => $endDate->toDateString()]);
         DB::commit();
         return $this->response->item($certification, new CertificationTransformer());

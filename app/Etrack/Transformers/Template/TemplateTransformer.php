@@ -2,8 +2,6 @@
 
 namespace App\Etrack\Transformers\Template;
 
-use App\Etrack\Transformers\Activity\FrequencyTransformer;
-use App\Etrack\Transformers\Activity\PeriodicityTransformer;
 use App\Etrack\Transformers\Activity\ProgramTypeTransformer;
 use App\Etrack\Transformers\Company\CompanyTransformer;
 use League\Fractal\TransformerAbstract;
@@ -18,9 +16,6 @@ class TemplateTransformer extends TransformerAbstract
     protected $availableIncludes = [
         'company',
         'programType',
-        'measureUnit',
-        'frequency',
-        'periodicity',
         'template'
     ];
 
@@ -36,9 +31,6 @@ class TemplateTransformer extends TransformerAbstract
             'id'                       => (int)$model->id,
             'company_id'               => $model->company_id,
             'program_type_id'          => $model->program_type_id,
-            'measure_unit_id'          => $model->measure_unit_id,
-            'frequency_id'             => $model->frequency_id,
-            'periodicity_id'           => $model->periodicity_id,
             'name'                     => $model->name,
             'description'              => $model->description,
             'estimated_execution_time' => $model->estimated_execution_time,
@@ -56,21 +48,6 @@ class TemplateTransformer extends TransformerAbstract
     public function includeProgramType(Template $model)
     {
         return $this->item($model->programType, new ProgramTypeTransformer(), 'parent');
-    }
-
-    public function includeMeasureUnit(Template $model)
-    {
-        return $this->item($model->measureUnit, new MeasureUnitTransformer(), 'parent');
-    }
-
-    public function includeFrequency(Template $model)
-    {
-        return $this->item($model->frequency, new FrequencyTransformer(), 'parent');
-    }
-
-    public function includePeriodicity(Template $model)
-    {
-        return $this->item($model->periodicity, new PeriodicityTransformer(), 'parent');
     }
 
     public function includeTemplate(Template $model)

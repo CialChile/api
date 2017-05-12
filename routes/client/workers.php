@@ -23,6 +23,7 @@ $api->version('v1', function ($api) {
     $api->group(['prefix' => 'client', 'middleware' => ['api.auth', 'user.active'], 'namespace' => 'App\Http\Controllers'], function ($api) {
         /** @var Router $api */
         $api->get('workers/positions/search', 'Client\Workers\WorkersPositionController@search');
+        $api->get('workers/specialties/search', 'Client\Workers\WorkersSpecialtyController@search');
         $api->get('workers/datatable', 'Client\Workers\WorkersController@datatable');
         $api->get('workers/search/by-name/{name?}', 'Client\Workers\WorkersController@searchByName');
         $api->resource('workers', 'Client\Workers\WorkersController', ['except' => ['edit', 'create']]);

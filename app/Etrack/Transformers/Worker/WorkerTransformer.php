@@ -11,7 +11,8 @@ class WorkerTransformer extends TransformerAbstract
     protected $availableIncludes = [
         'user',
         'assets',
-        'certifications'
+        'certifications',
+        'createdBy'
     ];
 
     public function transform(Worker $model)
@@ -27,6 +28,7 @@ class WorkerTransformer extends TransformerAbstract
             'birthday'            => $model->birthday ? $model->birthday->format('d/m/Y') : null,
             'rut_passport'        => $model->rut_passport,
             'position'            => $model->position,
+            'specialty'           => $model->specialty,
             'address'             => $model->address,
             'country'             => $model->country,
             'state'               => $model->state,
@@ -69,6 +71,15 @@ class WorkerTransformer extends TransformerAbstract
         $certifications = $model->certifications;
         if (!$certifications->isEmpty()) {
             return $this->collection($certifications, new WorkerCertificationTransformer(), 'parent');
+        }
+
+        return $this->null();
+    }
+
+    public function includeCreatedBy(Worker $model)
+    {
+        if ($model->createdBy) {
+            return $this->item($model->createdBy, new UserTransformer(), 'parent');
         }
 
         return $this->null();

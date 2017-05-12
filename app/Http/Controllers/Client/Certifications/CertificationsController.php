@@ -174,13 +174,13 @@ class CertificationsController extends Controller
         if ($type === null) {
             return $this->response->errorForbidden('Debe establecer un tipo de certificación');
         }
-        $certfications = Certification::inCompany()->where('type', $type)->orWhere('type', 2);
+        $certifications = Certification::inCompany()->where('type', $type)->orWhere('type', 2);
         if ($name) {
-            $certfications->where("name", $name);
+            $certifications->where("name", $name);
         }
 
 
-        $certfications = $certfications->take(10)->get();
-        return $this->response->collection($certfications, new CertificationTransformer());
+        $certifications = $certifications->take(10)->get();
+        return $this->response->collection($certifications, new CertificationTransformer());
     }
 }

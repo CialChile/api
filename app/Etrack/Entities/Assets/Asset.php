@@ -2,6 +2,9 @@
 
 namespace App\Etrack\Entities\Assets;
 
+use App\Etrack\Entities\Activity\Activity;
+use App\Etrack\Entities\Activity\ActivitySchedule;
+use App\Etrack\Entities\Auth\User;
 use App\Etrack\Entities\BaseModel;
 use App\Etrack\Entities\Certification\Certification;
 use App\Etrack\Entities\Company\Company;
@@ -80,6 +83,10 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
  * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\MediaLibrary\Media[] $media
  * @property-read \App\Etrack\Entities\Assets\Workplace $workplace
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Etrack\Entities\Certification\Certification[] $certifications
+ * @property int $creator_id
+ * @property-read \App\Etrack\Entities\Auth\User $createdBy
+ * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Assets\Asset whereCreatorId($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Etrack\Entities\Activity\Activity[] $activities
  */
 class Asset extends BaseModel implements HasMediaConversions
 {
@@ -89,7 +96,7 @@ class Asset extends BaseModel implements HasMediaConversions
         'company_id', 'worker_id', 'status_id', 'workplace_id', 'brand_id', 'model_id', 'category_id',
         'sub_category_id', 'tag_rfid', 'location', 'sku', 'serial', 'validity_time',
         'integration_date', 'end_service_life_date', 'name',
-        'warranty_date', 'disincorporation_date', 'custom_fields'
+        'warranty_date', 'disincorporation_date', 'custom_fields', 'creator_id'
     ];
 
     protected $dates = [
@@ -233,5 +240,20 @@ class Asset extends BaseModel implements HasMediaConversions
         }
 
         return parent::newQuery()->addSelect('assets.*', DB::raw($raw));
+    }
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'creator_id');
+    }
+
+    public function activities()
+    {
+        return $this->belongsToMany(Activity::class, 'activity_assets');
+    }
+
+    public function schedules()
+    {
+        return $this->hasMany(ActivitySchedule::class);
     }
 }
