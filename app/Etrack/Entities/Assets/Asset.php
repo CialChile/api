@@ -87,6 +87,7 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
  * @property-read \App\Etrack\Entities\Auth\User $createdBy
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Assets\Asset whereCreatorId($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Etrack\Entities\Activity\Activity[] $activities
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Etrack\Entities\Activity\ActivitySchedule[] $schedules
  */
 class Asset extends BaseModel implements HasMediaConversions
 {

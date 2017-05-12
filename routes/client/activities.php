@@ -30,6 +30,7 @@ $api->version('v1', function ($api) {
         $api->resource('activities/{activityId}/schedules', 'Client\Activities\ActivitiesSchedulesController');
 
         $api->get('activities/templates/datatable', 'Client\Activities\TemplatesController@datatable');
+        $api->put('activities/templates/{templateId}/toggle-active', 'Client\Activities\TemplatesController@toggleActive');
         $api->resource('activities/templates', 'Client\Activities\TemplatesController', ['except' => ['edit', 'create']]);
 
         $api->get('activities/datatable', 'Client\Activities\ActivitiesController@datatable');

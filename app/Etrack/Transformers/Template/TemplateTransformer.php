@@ -35,6 +35,7 @@ class TemplateTransformer extends TransformerAbstract
             'description'              => $model->description,
             'estimated_execution_time' => $model->estimated_execution_time,
             'is_custom'                => $model->is_custom,
+            'active'                   => $model->active,
             'created_at'               => $model->created_at ? $model->created_at->format('d/m/Y') : null,
             'updated_at'               => $model->updated_at ? $model->updated_at->format('d/m/Y') : null,
         ];

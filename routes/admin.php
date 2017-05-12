@@ -38,6 +38,7 @@ $api->version('v1', function ($api) {
         $api->resource('activities/program-types', 'Admin\Activities\ProgramTypesController', ['except' => ['edit', 'create']]);
 
         $api->get('activities/templates/datatable', 'Admin\Activities\TemplatesController@datatable');
+        $api->put('activities/templates/{templateId}/toggle-active', 'Admin\Activities\TemplatesController@toggleActive');
         $api->resource('activities/templates', 'Admin\Activities\TemplatesController', ['except' => ['edit', 'create']]);
     });
 

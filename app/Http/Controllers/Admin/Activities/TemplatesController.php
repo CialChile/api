@@ -46,12 +46,12 @@ class TemplatesController extends Controller
 
     public function store(TemplateStoreRequest $request)
     {
-        $user = $this->loggedInUser();
         $data = $request->all();
         DB::beginTransaction();
         $data['company_id'] = null;
         $data['program_type_id'] = $data['program_type_id']['id'];
         $data['is_custom'] = false;
+        $data['active'] = true;
         $data['estimated_execution_time'] = 1;
         $template = new Template();
         $template->fill($data);
@@ -64,8 +64,10 @@ class TemplatesController extends Controller
     public function update(TemplateUpdateRequest $request, $id)
     {
         $this->userCan('update');
-        $template = Template::where('is_custom', false)->find($id);
-
+        $template = Template::where('is_custom', false)->with('activities')->find($id);
+        if ($template->activities->count()) {
+            $this->response->errorForbidden('No puede modificar esta plantilla pues existen actividades asociadas a ella');
+        }
         if (!$template) {
             $this->response->errorForbidden('No tiene permiso para actualizar esta plantilla');
         }
@@ -85,20 +87,35 @@ class TemplatesController extends Controller
     {
         $this->userCan('destroy');
         /** @var Template $template */
-        $company_id = \Auth::user()->company_id;
-        $template = Template::where('is_custom', false)->find($id);
+        $template = Template::where('is_custom', false)->with('activities')->find($id);
         if (!$template) {
             $this->response->errorForbidden('No tiene permiso para eliminar esta platilla');
         }
 
-        $templateActivities = Activity::where('template_id', $id)->get(['id']);
-        if ($templateActivities->count()) {
-            $this->response->errorForbidden('existen actividades asociadas a esta plantilla');
+        if ($template->activities->count()) {
+            $this->response->errorForbidden('No puede eliminar esta plantilla pues existen actividades asociadas a ella');
         }
+
         DB::beginTransaction();
         $template->delete();
         DB::commit();
         return response()->json(['message' => 'Plantilla Eliminada con Éxito']);
     }
+
+    public function toggleActive($id)
+    {
+        $this->userCan('update');
+        /** @var Template $template */
+        $template = Template::where('is_custom', false)->find($id);
+        if (!$template) {
+            $this->response->errorForbidden('No tiene permiso para actualizar esta platilla');
+        }
+        DB::beginTransaction();
+        $template->active = !$template->active;
+        $template->save();
+        DB::commit();
+        return response()->json(['message' => !$template->active ? 'Plantilla desactivada' : 'Plantilla activada']);
+    }
+
 
 }

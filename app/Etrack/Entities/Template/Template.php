@@ -2,6 +2,7 @@
 
 namespace App\Etrack\Entities\Template;
 
+use App\Etrack\Entities\Activity\Activity;
 use App\Etrack\Entities\Activity\Frequency;
 use App\Etrack\Entities\Activity\Periodicity;
 use App\Etrack\Entities\Activity\ProgramType;
@@ -38,18 +39,22 @@ use Illuminate\Database\Query\Builder;
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Template\Template whereTemplate($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Template\Template whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Etrack\Entities\Activity\Activity[] $activities
+ * @property bool $active
+ * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Template\Template whereActive($value)
  */
 class Template extends BaseModel
 {
     use SoftDeletes;
 
     protected $fillable = [
-        'company_id', 'program_type_id', 'is_custom',
+        'company_id', 'program_type_id', 'is_custom', 'active',
         'name', 'estimated_execution_time', 'template', 'description'
     ];
 
     protected $casts = [
         'is_custom' => 'boolean',
+        'active'  => 'boolean',
         'template'  => 'array'
     ];
 
@@ -60,6 +65,11 @@ class Template extends BaseModel
     public function programType()
     {
         return $this->belongsTo(ProgramType::class, 'program_type_id');
+    }
+
+    public function activities()
+    {
+        return $this->hasMany(Activity::class);
     }
 
 }
