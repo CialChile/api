@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.4.16 on 2017-03-23.
+ * Generated for Laravel 5.4.23 on 2017-05-12.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -101,56 +101,61 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the path to the application "app" directory.
          *
+         * @param string $path Optionally, a path to append to the app path
          * @return string 
          * @static 
          */
-        public static function path()
+        public static function path($path = '')
         {
-            return \Illuminate\Foundation\Application::path();
+            return \Illuminate\Foundation\Application::path($path);
         }
         
         /**
          * Get the base path of the Laravel installation.
          *
+         * @param string $path Optionally, a path to append to the base path
          * @return string 
          * @static 
          */
-        public static function basePath()
+        public static function basePath($path = '')
         {
-            return \Illuminate\Foundation\Application::basePath();
+            return \Illuminate\Foundation\Application::basePath($path);
         }
         
         /**
          * Get the path to the bootstrap directory.
          *
+         * @param string $path Optionally, a path to append to the bootstrap path
          * @return string 
          * @static 
          */
-        public static function bootstrapPath()
+        public static function bootstrapPath($path = '')
         {
-            return \Illuminate\Foundation\Application::bootstrapPath();
+            return \Illuminate\Foundation\Application::bootstrapPath($path);
         }
         
         /**
          * Get the path to the application configuration files.
          *
+         * @param string $path Optionally, a path to append to the config path
          * @return string 
          * @static 
          */
-        public static function configPath()
+        public static function configPath($path = '')
         {
-            return \Illuminate\Foundation\Application::configPath();
+            return \Illuminate\Foundation\Application::configPath($path);
         }
         
         /**
          * Get the path to the database directory.
          *
+         * @param string $path Optionally, a path to append to the database path
          * @return string 
          * @static 
          */
-        public static function databasePath()
+        public static function databasePath($path = '')
         {
-            return \Illuminate\Foundation\Application::databasePath();
+            return \Illuminate\Foundation\Application::databasePath($path);
         }
         
         /**
@@ -213,12 +218,13 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the path to the resources directory.
          *
+         * @param string $path
          * @return string 
          * @static 
          */
-        public static function resourcePath()
+        public static function resourcePath($path = '')
         {
-            return \Illuminate\Foundation\Application::resourcePath();
+            return \Illuminate\Foundation\Application::resourcePath($path);
         }
         
         /**
@@ -1348,13 +1354,13 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $command
          * @param array $parameters
-         * @return void 
+         * @return \Illuminate\Foundation\Bus\PendingDispatch 
          * @static 
          */
         public static function queue($command, $parameters = array())
         {
             //Method inherited from \Illuminate\Foundation\Console\Kernel            
-            \App\Console\Kernel::queue($command, $parameters);
+            return \App\Console\Kernel::queue($command, $parameters);
         }
         
         /**
@@ -1907,6 +1913,31 @@ namespace Illuminate\Support\Facades {
         public static function guest()
         {
             return \Illuminate\Auth\SessionGuard::guest();
+        }
+        
+        /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param callable $macro
+         * @return void 
+         * @static 
+         */
+        public static function macro($name, $macro)
+        {
+            \Illuminate\Auth\SessionGuard::macro($name, $macro);
+        }
+        
+        /**
+         * Checks if macro is registered.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */
+        public static function hasMacro($name)
+        {
+            return \Illuminate\Auth\SessionGuard::hasMacro($name);
         }
         
     }         
@@ -4073,7 +4104,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string|\Closure $listener
          * @param bool $wildcard
-         * @return mixed 
+         * @return \Closure 
          * @static 
          */
         public static function makeListener($listener, $wildcard = false)
@@ -4743,6 +4774,17 @@ namespace Illuminate\Support\Facades {
         public static function forUser($user)
         {
             return \Illuminate\Auth\Access\Gate::forUser($user);
+        }
+        
+        /**
+         * Get all of the defined abilities.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function abilities()
+        {
+            return \Illuminate\Auth\Access\Gate::abilities();
         }
         
     }         
@@ -5568,6 +5610,31 @@ namespace Illuminate\Support\Facades {
         public static function setQueue($queue)
         {
             return \Illuminate\Mail\Mailer::setQueue($queue);
+        }
+        
+        /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param callable $macro
+         * @return void 
+         * @static 
+         */
+        public static function macro($name, $macro)
+        {
+            \Illuminate\Mail\Mailer::macro($name, $macro);
+        }
+        
+        /**
+         * Checks if macro is registered.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */
+        public static function hasMacro($name)
+        {
+            return \Illuminate\Mail\Mailer::hasMacro($name);
         }
         
     }         
@@ -6993,7 +7060,7 @@ namespace Illuminate\Support\Facades {
          * ("Client-Ip" for instance), configure it via "setTrustedHeaderName()" with
          * the "client-ip" key.
          *
-         * @return string The client IP address
+         * @return string|null The client IP address
          * @see getClientIps()
          * @see http://en.wikipedia.org/wiki/X-Forwarded-For
          * @static 
@@ -7096,7 +7163,7 @@ namespace Illuminate\Support\Facades {
          * If your reverse proxy uses a different header name than "X-Forwarded-Port",
          * configure it via "setTrustedHeaderName()" with the "client-port" key.
          *
-         * @return string 
+         * @return int|string can be a string if fetched from the server bag
          * @static 
          */
         public static function getPort()
@@ -9288,7 +9355,7 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Checks if an a key is present and not null.
+         * Checks if a key is present and not null.
          *
          * @param string|array $key
          * @return bool 
@@ -9920,7 +9987,7 @@ namespace Illuminate\Support\Facades {
          * Store the uploaded file on the disk.
          *
          * @param string $path
-         * @param \Illuminate\Http\UploadedFile $file
+         * @param \Illuminate\Http\File|\Illuminate\Http\UploadedFile $file
          * @param array $options
          * @return string|false 
          * @static 
@@ -10581,6 +10648,20 @@ namespace Illuminate\Support\Facades {
         public static function extendImplicit($rule, $extension, $message = null)
         {
             \Illuminate\Validation\Factory::extendImplicit($rule, $extension, $message);
+        }
+        
+        /**
+         * Register a custom implicit validator extension.
+         *
+         * @param string $rule
+         * @param \Closure|string $extension
+         * @param string $message
+         * @return void 
+         * @static 
+         */
+        public static function extendDependent($rule, $extension, $message = null)
+        {
+            \Illuminate\Validation\Factory::extendDependent($rule, $extension, $message);
         }
         
         /**
@@ -11256,7 +11337,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get an instance of the last loop in the stack.
          *
-         * @return \StdClass|null 
+         * @return \stdClass|null 
          * @static 
          */
         public static function getLastLoop()
@@ -11843,6 +11924,18 @@ namespace {
     
     class Eloquent extends \Illuminate\Database\Eloquent\Model {    
         /**
+         * Create and return and un-saved model instance.
+         *
+         * @param array $attributes
+         * @return \Illuminate\Database\Eloquent\Model 
+         * @static 
+         */
+        public static function make($attributes = array())
+        {
+            return \Illuminate\Database\Eloquent\Builder::make($attributes);
+        }
+        
+        /**
          * Register a new global scope.
          *
          * @param string $identifier
@@ -11905,7 +11998,7 @@ namespace {
         /**
          * Add a basic where clause to the query.
          *
-         * @param string|\Closure $column
+         * @param string|array|\Closure $column
          * @param string $operator
          * @param mixed $value
          * @param string $boolean
@@ -11961,7 +12054,7 @@ namespace {
          *
          * @param mixed $id
          * @param array $columns
-         * @return mixed 
+         * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|static[]|static|null 
          * @static 
          */
         public static function find($id, $columns = array())
@@ -12261,6 +12354,18 @@ namespace {
         public static function without($relations)
         {
             return \Illuminate\Database\Eloquent\Builder::without($relations);
+        }
+        
+        /**
+         * Create a new instance of the model being queried.
+         *
+         * @param array $attributes
+         * @return \Illuminate\Database\Eloquent\Model 
+         * @static 
+         */
+        public static function newModelInstance($attributes = array())
+        {
+            return \Illuminate\Database\Eloquent\Builder::newModelInstance($attributes);
         }
         
         /**

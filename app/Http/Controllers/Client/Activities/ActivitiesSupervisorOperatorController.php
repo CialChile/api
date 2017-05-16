@@ -45,26 +45,29 @@ class ActivitiesSupervisorOperatorController extends Controller
             'positions'      => '',
             'experience'     => null
         ];
-        $templateValidations = collect($template->template['persons'][$subject]);
-        $templateValidations->each(function ($validation) use (&$validations) {
-            switch ($validation['value']['name']) {
-                case 'role':
-                    $validations['roles'] .= $validation['validation']['slug'] . ',';
-                    break;
-                case 'certifications':
-                    $validations['certifications'] .= $validation['validation']['id'] . ',';
-                    break;
-                case 'position':
-                    $validations['positions'] .= $validation['validation']['name'] . ',';
-                    break;
-                case 'specialty':
-                    $validations['specialties'] .= $validation['validation']['name'] . ',';
-                    break;
-                case 'experience':
-                    $validations['experience'] = $validation['validation'];
-                    break;
-            }
-        });
+        if (array_key_exists('persons', $template->template)) {
+            $templateValidations = collect($template->template['persons'][$subject]);
+            $templateValidations->each(function ($validation) use (&$validations) {
+                switch ($validation['value']['name']) {
+                    case 'role':
+                        $validations['roles'] .= $validation['validation']['slug'] . ',';
+                        break;
+                    case 'certifications':
+                        $validations['certifications'] .= $validation['validation']['id'] . ',';
+                        break;
+                    case 'position':
+                        $validations['positions'] .= $validation['validation']['name'] . ',';
+                        break;
+                    case 'specialty':
+                        $validations['specialties'] .= $validation['validation']['name'] . ',';
+                        break;
+                    case 'experience':
+                        $validations['experience'] = $validation['validation'];
+                        break;
+                }
+            });
+        }
+
 
         if ($validations['roles']) {
             $validations['roles'] = substr($validations['roles'], 0, strlen($validations['roles']) - 1);

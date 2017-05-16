@@ -1,10 +1,13 @@
 <?php
 namespace App\Http\Controllers\Client\Users;
 
+use App\Etrack\Entities\Activity\ActivityScheduleExecution;
 use App\Etrack\Transformers\Auth\UserTransformer;
+use App\Etrack\Transformers\Events\UserEventTransformer;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UserChangePasswordRequest;
 use App\Http\Requests\User\UserUpdateRequest;
+use Dingo\Api\Http\Request;
 
 class UsersController extends Controller
 {
@@ -14,6 +17,7 @@ class UsersController extends Controller
         $user = $this->loggedInUser();
         $user->first_name = $request->get('first_name');
         $user->last_name = $request->get('last_name');
+        $user->timezone = $request->get('timezone');
         $user->save();
         if ($request->hasFile('image')) {
             $user->clearMediaCollection('profile');
@@ -36,6 +40,25 @@ class UsersController extends Controller
         $user->save();
 
         return response()->json(['message' => 'Contraseña actualizada con exito']);
+    }
+
+    public function events(Request $request)
+    {
+        $start = $request->get('start');
+        $end = $request->get('end');
+        $user = $this->loggedInUser();
+        $executions = ActivityScheduleExecution::whereBetween('execution_date', [$start, $end])->where(function ($q) use ($user) {
+            $q->whereHas('activitySchedule', function ($q2) use ($user) {
+                $q2->where('operator_id', $user->id);
+            })->orWhereHas('activitySchedule.activity', function ($q3) use ($user) {
+                $q3->where('supervisor_id', $user->id);
+            });
+        })
+            ->with(['status', 'activitySchedule.activity'])
+            ->get();
+
+        return $this->response->collection($executions, new UserEventTransformer());
+
     }
 
 }

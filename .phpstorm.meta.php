@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2017-03-23.
+    * Generated on 2017-05-12.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -41,6 +41,7 @@ namespace PHPSTORM_META {
             'view.engine.resolver' instanceof \Illuminate\View\Engines\EngineResolver,
             'api.router' instanceof \Dingo\Api\Routing\Router,
             'Dingo\Api\Routing\ResourceRegistrar' instanceof \Dingo\Api\Routing\ResourceRegistrar,
+            'api.url' instanceof \Dingo\Api\Routing\UrlGenerator,
             'api.limiting' instanceof \Dingo\Api\Http\RateLimit\Handler,
             'api.http.validator' instanceof \Dingo\Api\Http\RequestValidator,
             'Dingo\Api\Http\Validation\Domain' instanceof \Dingo\Api\Http\Validation\Domain,
@@ -99,6 +100,10 @@ namespace PHPSTORM_META {
             'App\Etrack\Repositories\StatusRepository' instanceof \App\Etrack\Repositories\StatusRepositoryEloquent,
             'App\Etrack\Repositories\Assets\CategoryRepository' instanceof \App\Etrack\Repositories\Assets\CategoryRepositoryEloquent,
             'App\Etrack\Repositories\Assets\SubcategoryRepository' instanceof \App\Etrack\Repositories\Assets\SubcategoryRepositoryEloquent,
+            'App\Etrack\Repositories\Assets\AssetConfigurationRepository' instanceof \App\Etrack\Repositories\Assets\AssetConfigurationRepositoryEloquent,
+            'App\Etrack\Repositories\Certification\CertificationRepository' instanceof \App\Etrack\Repositories\Certification\CertificationRepositoryEloquent,
+            'App\Etrack\Repositories\Certification\CertificationWorkerAssetRepository' instanceof \App\Etrack\Repositories\Certification\CertificationWorkerAssetRepositoryEloquent,
+            'App\Etrack\Repositories\Institute\InstituteRepository' instanceof \App\Etrack\Repositories\Institute\InstituteRepositoryEloquent,
             'Tymon\JWTAuth\JWTAuth' instanceof \Tymon\JWTAuth\JWTAuth,
             'Tymon\JWTAuth\Providers\User\UserInterface' instanceof \Tymon\JWTAuth\Providers\User\EloquentUserAdapter,
             'Tymon\JWTAuth\Providers\JWT\JWTInterface' instanceof \Tymon\JWTAuth\Providers\JWT\NamshiAdapter,
@@ -230,6 +235,7 @@ namespace PHPSTORM_META {
             'view.engine.resolver' instanceof \Illuminate\View\Engines\EngineResolver,
             'api.router' instanceof \Dingo\Api\Routing\Router,
             'Dingo\Api\Routing\ResourceRegistrar' instanceof \Dingo\Api\Routing\ResourceRegistrar,
+            'api.url' instanceof \Dingo\Api\Routing\UrlGenerator,
             'api.limiting' instanceof \Dingo\Api\Http\RateLimit\Handler,
             'api.http.validator' instanceof \Dingo\Api\Http\RequestValidator,
             'Dingo\Api\Http\Validation\Domain' instanceof \Dingo\Api\Http\Validation\Domain,
@@ -288,6 +294,10 @@ namespace PHPSTORM_META {
             'App\Etrack\Repositories\StatusRepository' instanceof \App\Etrack\Repositories\StatusRepositoryEloquent,
             'App\Etrack\Repositories\Assets\CategoryRepository' instanceof \App\Etrack\Repositories\Assets\CategoryRepositoryEloquent,
             'App\Etrack\Repositories\Assets\SubcategoryRepository' instanceof \App\Etrack\Repositories\Assets\SubcategoryRepositoryEloquent,
+            'App\Etrack\Repositories\Assets\AssetConfigurationRepository' instanceof \App\Etrack\Repositories\Assets\AssetConfigurationRepositoryEloquent,
+            'App\Etrack\Repositories\Certification\CertificationRepository' instanceof \App\Etrack\Repositories\Certification\CertificationRepositoryEloquent,
+            'App\Etrack\Repositories\Certification\CertificationWorkerAssetRepository' instanceof \App\Etrack\Repositories\Certification\CertificationWorkerAssetRepositoryEloquent,
+            'App\Etrack\Repositories\Institute\InstituteRepository' instanceof \App\Etrack\Repositories\Institute\InstituteRepositoryEloquent,
             'Tymon\JWTAuth\JWTAuth' instanceof \Tymon\JWTAuth\JWTAuth,
             'Tymon\JWTAuth\Providers\User\UserInterface' instanceof \Tymon\JWTAuth\Providers\User\EloquentUserAdapter,
             'Tymon\JWTAuth\Providers\JWT\JWTInterface' instanceof \Tymon\JWTAuth\Providers\JWT\NamshiAdapter,
@@ -419,6 +429,7 @@ namespace PHPSTORM_META {
             'view.engine.resolver' instanceof \Illuminate\View\Engines\EngineResolver,
             'api.router' instanceof \Dingo\Api\Routing\Router,
             'Dingo\Api\Routing\ResourceRegistrar' instanceof \Dingo\Api\Routing\ResourceRegistrar,
+            'api.url' instanceof \Dingo\Api\Routing\UrlGenerator,
             'api.limiting' instanceof \Dingo\Api\Http\RateLimit\Handler,
             'api.http.validator' instanceof \Dingo\Api\Http\RequestValidator,
             'Dingo\Api\Http\Validation\Domain' instanceof \Dingo\Api\Http\Validation\Domain,
@@ -477,6 +488,10 @@ namespace PHPSTORM_META {
             'App\Etrack\Repositories\StatusRepository' instanceof \App\Etrack\Repositories\StatusRepositoryEloquent,
             'App\Etrack\Repositories\Assets\CategoryRepository' instanceof \App\Etrack\Repositories\Assets\CategoryRepositoryEloquent,
             'App\Etrack\Repositories\Assets\SubcategoryRepository' instanceof \App\Etrack\Repositories\Assets\SubcategoryRepositoryEloquent,
+            'App\Etrack\Repositories\Assets\AssetConfigurationRepository' instanceof \App\Etrack\Repositories\Assets\AssetConfigurationRepositoryEloquent,
+            'App\Etrack\Repositories\Certification\CertificationRepository' instanceof \App\Etrack\Repositories\Certification\CertificationRepositoryEloquent,
+            'App\Etrack\Repositories\Certification\CertificationWorkerAssetRepository' instanceof \App\Etrack\Repositories\Certification\CertificationWorkerAssetRepositoryEloquent,
+            'App\Etrack\Repositories\Institute\InstituteRepository' instanceof \App\Etrack\Repositories\Institute\InstituteRepositoryEloquent,
             'Tymon\JWTAuth\JWTAuth' instanceof \Tymon\JWTAuth\JWTAuth,
             'Tymon\JWTAuth\Providers\User\UserInterface' instanceof \Tymon\JWTAuth\Providers\User\EloquentUserAdapter,
             'Tymon\JWTAuth\Providers\JWT\JWTInterface' instanceof \Tymon\JWTAuth\Providers\JWT\NamshiAdapter,
@@ -608,6 +623,7 @@ namespace PHPSTORM_META {
             'view.engine.resolver' instanceof \Illuminate\View\Engines\EngineResolver,
             'api.router' instanceof \Dingo\Api\Routing\Router,
             'Dingo\Api\Routing\ResourceRegistrar' instanceof \Dingo\Api\Routing\ResourceRegistrar,
+            'api.url' instanceof \Dingo\Api\Routing\UrlGenerator,
             'api.limiting' instanceof \Dingo\Api\Http\RateLimit\Handler,
             'api.http.validator' instanceof \Dingo\Api\Http\RequestValidator,
             'Dingo\Api\Http\Validation\Domain' instanceof \Dingo\Api\Http\Validation\Domain,
@@ -666,6 +682,10 @@ namespace PHPSTORM_META {
             'App\Etrack\Repositories\StatusRepository' instanceof \App\Etrack\Repositories\StatusRepositoryEloquent,
             'App\Etrack\Repositories\Assets\CategoryRepository' instanceof \App\Etrack\Repositories\Assets\CategoryRepositoryEloquent,
             'App\Etrack\Repositories\Assets\SubcategoryRepository' instanceof \App\Etrack\Repositories\Assets\SubcategoryRepositoryEloquent,
+            'App\Etrack\Repositories\Assets\AssetConfigurationRepository' instanceof \App\Etrack\Repositories\Assets\AssetConfigurationRepositoryEloquent,
+            'App\Etrack\Repositories\Certification\CertificationRepository' instanceof \App\Etrack\Repositories\Certification\CertificationRepositoryEloquent,
+            'App\Etrack\Repositories\Certification\CertificationWorkerAssetRepository' instanceof \App\Etrack\Repositories\Certification\CertificationWorkerAssetRepositoryEloquent,
+            'App\Etrack\Repositories\Institute\InstituteRepository' instanceof \App\Etrack\Repositories\Institute\InstituteRepositoryEloquent,
             'Tymon\JWTAuth\JWTAuth' instanceof \Tymon\JWTAuth\JWTAuth,
             'Tymon\JWTAuth\Providers\User\UserInterface' instanceof \Tymon\JWTAuth\Providers\User\EloquentUserAdapter,
             'Tymon\JWTAuth\Providers\JWT\JWTInterface' instanceof \Tymon\JWTAuth\Providers\JWT\NamshiAdapter,

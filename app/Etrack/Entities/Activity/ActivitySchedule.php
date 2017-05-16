@@ -51,6 +51,7 @@ use Illuminate\Database\Query\Builder;
  * @method static Builder|ActivitySchedule whereStartTime($value)
  * @method static Builder|ActivitySchedule whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Etrack\Entities\Activity\ActivityScheduleExecution[] $executions
  */
 class ActivitySchedule extends Model
 {
@@ -91,5 +92,10 @@ class ActivitySchedule extends Model
     public function asset()
     {
         return $this->belongsTo(Asset::class);
+    }
+
+    public function executions()
+    {
+        return $this->hasMany(ActivityScheduleExecution::class, 'activity_schedule_id');
     }
 }

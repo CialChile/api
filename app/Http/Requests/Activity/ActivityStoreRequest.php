@@ -32,6 +32,7 @@ class ActivityStoreRequest extends FormRequest
     {
         $templateId = $this->request->get('template_id');
         $company_id = \Auth::user()->company_id;
+        $hasSupervisor = false;
         $this->template = Template::where(function (Builder $q) use ($company_id) {
             return $q->where('company_id', $company_id)->orWhere('is_custom', false);
         })->find($templateId);
@@ -40,7 +41,9 @@ class ActivityStoreRequest extends FormRequest
             return [];
         }
         $descriptionRequired = $this->template->template['general'][1]['required'];
-        $hasSupervisor = array_key_exists('persons', $this->template->template) ? $this->template->template['persons']['hasSupervisor'] : false;
+        if (array_key_exists('persons', $this->template->template)) {
+            $hasSupervisor = array_key_exists('hasSupervisor', $this->template->template['persons']) ? $this->template->template['persons']['hasSupervisor'] : false;
+        }
         $rules = [
             'name'            => 'required',
             'program_type_id' => 'required',

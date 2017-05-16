@@ -3,10 +3,12 @@
 namespace App\Etrack\Entities\Auth;
 
 use App\Etrack\Entities\Company\Company;
+use App\Etrack\Entities\Notification\Notification;
 use App\Etrack\Entities\Worker\Worker;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\Notifiable;
 use Kodeine\Acl\Traits\HasRole;
 use Spatie\Image\Manipulations;
@@ -77,6 +79,8 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User hasPositions($positions)
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User hasQueryRoles($roles)
  * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User hasSpecialties($specialties)
+ * @property string $timezone
+ * @method static \Illuminate\Database\Query\Builder|\App\Etrack\Entities\Auth\User whereTimezone($value)
  */
 class User extends Authenticatable implements HasMediaConversions
 {
@@ -93,7 +97,7 @@ class User extends Authenticatable implements HasMediaConversions
 
     protected $fillable = [
         'first_name', 'last_name', 'email', 'password', 'active', 'company_id',
-        'company_admin', 'worker_id'
+        'company_admin', 'worker_id', 'timezone'
     ];
 
     /**
@@ -223,5 +227,14 @@ class User extends Authenticatable implements HasMediaConversions
         return $query->whereHas('worker', function ($q2) use ($specialties) {
             return $q2->where('workers.specialty', $specialties);
         });
+    }
+
+    /**
+     * Get the entity's notifications.
+     */
+    public function notifications()
+    {
+        return $this->morphMany(Notification::class, 'notifiable')
+            ->orderBy('created_at', 'desc');
     }
 }

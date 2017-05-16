@@ -34,7 +34,9 @@ class ActivitiesAssetsController extends Controller
         if (!$activity) {
             return $this->response->errorForbidden('No tienes permiso para ver estos activos');
         }
-        $query = $activity->assets();
+        $query = $activity->assets()->whereDoesntHave('schedules', function ($q) use ($activity) {
+            $q->where('activity_id', $activity->id);
+        });
         $query = count($except) ? $query->whereNotIn('assets.id', $except) : $query;
         return Datatables::of($query)
             ->setTransformer(AssetTransformer::class)

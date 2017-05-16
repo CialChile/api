@@ -24,7 +24,8 @@
     "spatie/laravel-medialibrary": "^5.0.0",
     "tymon/jwt-auth": "0.5.*",
     "yajra/laravel-datatables-oracle": "^7.2",
-    "venturecraft/revisionable": "1.*"
+    "venturecraft/revisionable": "1.*",
+    "camroncade/timezone": "0.1"
 
   },
   "require-dev": {

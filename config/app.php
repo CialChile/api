@@ -177,6 +177,7 @@ return [
         PragmaRX\Countries\ServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
         Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
+        Camroncade\Timezone\TimezoneServiceProvider::class,
 
         /*
          * Application Service Providers...

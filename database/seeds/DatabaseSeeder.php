@@ -16,5 +16,6 @@ class DatabaseSeeder extends Seeder
         $this->call(AbilitiesSeeder::class);
         $this->call(ModulesSeeder::class);
         $this->call(ModulesRelationsSeeder::class);
+        $this->call(ActivityScheduleExecutionStatusSeeder::class);
     }
 }
